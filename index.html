@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Login</title>
+	<link rel="stylesheet" href="master.css">
+	<link rel="shortcut icon" type="image/png" href="img/icono2.png">
+	<link rel="stylesheet" href="BootstrapCSS/bootstrap.min.css">
+</head>
+<body>
+	<div class= "login">
+		<img class="imagen" src="img/icono2.png" alt="logo">
+		<h1>Iniciar Sesión</h1>
+		<form>
+			<div>
+			<label for="Nombre de Usuario">Usuario</label>
+			<input type="text" id="usuario" class="form-control" placeholder="Escriba el Nombre de Usuario" value="">
+			
+			<div class="valid-feedback" style="text-align:right">Ok
+			</div>
+			
+            <div class="invalid-feedback" style="text-align:right">
+            Campo obligatorio
+			</div>
+			</div>
+		
+
+			<div>
+			<label for="password">Contraseña</label>
+			<input type="password" id="clave" class="form-control" placeholder="Escriba la contraseña" value="">
+			<div class="valid-feedback" style="text-align:right">Ok
+			</div>
+			
+			<div class="invalid-feedback" style="text-align:right; margin-bottom:9px">
+            Campo obligatorio
+			</div>
+			<select name="tipo-ingreso" id="tipo">
+				<option value="Empresa">Empresa</option>
+				<option value="Cliente">Cliente</option>
+				<option value="Admin">Super Administrador</option>
+			</select>
+
+		</div>
+				
+			<input type="button" value="Entrar" onclick="registrarLogin()">
+
+		</form>
+	</div>
+
+    <script src="controlador.js"></script>
+</body>
+
+</html>

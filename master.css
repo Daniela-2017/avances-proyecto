@@ -1,0 +1,485 @@
+*{
+	margin: 0;
+	padding: 0;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+body{
+	margin: 0;
+	padding: 0;
+	background: url(img/fondo1.jpg);
+	font-family: sams-serif !important;
+	height: 100vh;
+}
+
+/**
+Formulario de login
+**/
+.login{
+	width: 320px;
+	height:460px;
+	background:black;
+	color: #fff;
+	top: 50%;
+	left: 50%;
+	position: absolute;
+	transform: translate(-50%, -50%);
+	box-sizing: border-box;
+	padding: 70px 30px;
+	border: 5px solid blue;
+	border-right-color: blue;
+	border-bottom-color: blue;
+	border-left-color: blue;
+    box-shadow: 6px 6px 6px black;
+	opacity: .9;
+
+}
+
+.login .imagen{
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	position:absolute;
+	top:-50px;
+	left: calc(50% - 50px);
+}
+
+.login h1{
+	margin: 0;
+	padding: 0 0 20px;
+	text-align: center;
+	font-size: 22px;
+	
+}
+
+.login label{
+	margin: 0;
+	padding: 0;
+	font-weight: bold;
+	display: block;
+}
+
+.login input, .login select, .empresa button,  .cliente button{
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+
+.login input[type="text"],
+.login input[type="password"],
+.login select{
+	border: none;
+	border-bottom: 1px solid #fff;
+	color:white;
+	background: transparent;
+	outline: none;
+	height: 40px;
+	font-size: 16px;
+}
+
+.login input[type="button"], .empresa button, .cliente button{
+	border: none;
+	outline: none;
+	font-size: 18px;
+	color: #fff;
+	background: blue;
+	border-radius: 20px;
+	height: 30px;
+	cursor: pointer
+}
+
+.login a{
+	text-decoration: none;
+	font-size: 12px;
+	line-height: 20px;
+	color: darkgrey;
+}
+
+.login a:hover{
+color: white;
+}
+
+ul{
+	list-style: none;
+}
+
+img{
+	max-width: 100%;
+}
+
+/**
+Pagina Principal**/
+/**Banner**/
+#banner{
+	height: 400px;
+	width: 1500px;
+	padding-top: 0px
+}
+/**
+Formulario de menú
+**/
+.navegacion, .navegacion-empresa{
+	width: 100%;
+	background: linear-gradient(white,blue,white); 
+	display: flex;
+	justify-content: center;
+}
+
+.menu, .menu-empresa{
+	width: 1000px;
+	display: flex;
+	flex-wrap: wrap;
+	background:linear-gradient(blue,white);
+	height: 90px;
+}
+.menu li, .menu-empresa li{
+	flex-basis: 0;
+	flex-grow: 1;
+	border-right: 1px solid #363636;
+	position: relative;
+
+
+}
+.menu li a, .menu-empresa li a  {
+	display: flex;
+	flex-direction: column;
+	font-size: 18px;
+}
+
+.menu .imagen, .menu-empresa .imagen{
+	position: absolute;
+	width: 0%;
+	bottom: 0;
+	z-index: 20;
+	-webkit-transition: all 300ms cubic-bezier(0.390, 0.575, 0.565, 1.000);
+	   -moz-transition: all 300ms cubic-bezier(0.390, 0.575, 0.565, 1.000);
+	     -o-transition: all 300ms cubic-bezier(0.390, 0.575, 0.565, 1.000);
+	        transition: all 300ms cubic-bezier(0.390, 0.575, 0.565, 1.000); /* easeOutSine */
+
+	-webkit-transition-timing-function: cubic-bezier(0.390, 0.575, 0.565, 1.000);
+	   -moz-transition-timing-function: cubic-bezier(0.390, 0.575, 0.565, 1.000);
+	     -o-transition-timing-function: cubic-bezier(0.390, 0.575, 0.565, 1.000);
+	        transition-timing-function: cubic-bezier(0.390, 0.575, 0.565, 1.000); /* easeOutSine */
+	-webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.51);
+	-moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.51);
+	box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.51);
+}
+
+.menu li a .down-item, .menu-empresa li a .down-item{
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(white,blue,white,blue,white); 
+	position: absolute;
+	top: 0%;
+	-webkit-transition: all 200ms cubic-bezier(0.215, 0.610, 0.355, 1.000);
+	   -moz-transition: all 200ms cubic-bezier(0.215, 0.610, 0.355, 1.000);
+	     -o-transition: all 200ms cubic-bezier(0.215, 0.610, 0.355, 1.000);
+	        transition: all 200ms cubic-bezier(0.215, 0.610, 0.355, 1.000); /* easeOutCubic */
+
+	-webkit-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+	   -moz-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+	     -o-transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+	        transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000); /* easeOutCubic */
+}
+
+.menu li a .text-item, .menu-empresa li a .text-item{
+	width: 100%;
+	height: 100%;
+	justify-content: center;
+	display: flex;
+	align-items: center;
+	text-align: center;
+	color: black;
+	position: absolute;
+	top:0%;
+	z-index:10;
+
+	-webkit-transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1); /* older webkit */
+-webkit-transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1.275);
+   -moz-transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1.275);
+     -o-transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1.275);
+        transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1.275); /* easeOutBack */
+
+-webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1); /* older webkit */
+-webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.275);
+   -moz-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.275);
+     -o-transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.275);
+        transition-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.275); /* easeOutBack */
+
+}
+
+.menu .first-item, .menu-empresa .first-item{
+	border-left: 1px solid #363636;
+}
+
+
+
+.menu .seccion:hover .down-item, .menu .seccion:hover .text-item{
+	top:100%;
+	height: 115%;
+}
+
+.menu .seccion-menu:hover .down-item, .menu .seccion-menu:hover .text-item, .menu .seccion-menu:hover .text-item{
+	height: 125%;
+	
+}
+.menu .seccion-menu:hover .submenu{
+display: block
+}
+
+.menu li:hover .imagen{
+	 width: 100%
+
+}
+
+/**
+Formulario de registro de empresa
+**/
+
+.empresa{
+	width: 100%;
+	height: auto;
+	background: #000;
+	color: #fff;
+	top: 50%;
+	left: 50%;
+	position: absolute;
+	transform: translate(-50%, -50%);
+	box-sizing: border-box;
+	padding: 20px 30px;
+	border: 5px solid blue;
+	border-right-color: blue;
+	border-bottom-color: blue;
+	border-left-color: blue;
+
+    box-shadow: 6px 6px 6px black;
+	opacity: .9;
+	margin-left:auto;
+	margin-top: 40%;
+	
+}
+#BtnMapa{
+	background-image: url('img/iconoMap.png');
+	background-size: 65%;
+	background-repeat: no-repeat;
+	width: 10%;
+	height: 80px;
+	background-position-x: center;
+	margin-top: -50px;
+	background-color: black;
+}
+
+
+.empresa label, .cliente label{
+	margin: 0;
+	padding: 0;
+	font-weight: bold;
+	display: block;
+}
+
+.empresa input, .cliente input{
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+.empresa input[type="text"],
+.empresa input[type="number"],
+.empresa input[type="password"],
+.cliente input{
+	border: none;
+	border-bottom: 1px solid #fff;
+	color:white;
+	background: transparent;
+	outline: none;
+	height: 40px;
+	font-size: 16px;
+}
+
+.empresa textarea, .cliente textarea{
+	border: none;
+	border-bottom: 1px solid #fff;
+	color:white;
+	background: transparent;
+	outline: none;
+	height: 40px;
+	font-size: 16px;
+}
+
+.empresa input[type="file"]{
+	border: none;
+	color:blue;
+	background: transparent;
+	outline: none;
+	height: 30px;
+	font-size: 16px;
+}
+/**
+Formulario de registro de cliente
+**/
+ .cliente{
+	width: 920px;
+	height:auto;
+	background: #000;
+	color: #fff;
+	top: 50%;
+	left: 50%;
+	position: absolute;
+	transform: translate(-50%, -50%);
+	box-sizing: border-box;
+	padding: 20px 30px;
+	border: 5px solid blue;
+	border-right-color: blue;
+	border-bottom-color: blue;
+	border-left-color: blue;
+
+    box-shadow: 6px 6px 6px black;
+    opacity: .9;
+}
+/*estilos para los input, banner y logotipos */
+.cargar{
+  	text-align: center;
+    background-color: blue;
+    color: #fff;
+    display: block;
+    border-radius: 3px;
+    width: 190px;
+    height: 30px;
+    font-size: 18px;
+    float: left;
+	line-height: 1.6em;
+	margin-top: -3px
+}
+
+.input-url{
+	float: left !important;
+    border: 1px solid gray !important;
+    background: #DEDEDE!important;
+	height: 26px;color: #0e0ebf !important;
+	width: auto !important;
+	height: 29px !important;
+}
+@media (max-width: 600px) {
+  #banner {
+    height: 165px;
+  }
+ .navegacion{
+	 padding-top: 80px;
+	  padding-bottom: 80px;
+	  margin-top: 60px
+ }
+.first-item, #mision, #contacto{
+	display: none
+}
+#confirmacion-clave{
+	display: none
+}
+.menu .li .a{
+	height: 10px
+}
+
+ .empresa{
+	width: 100%;
+	height: auto;
+	top: 60%;
+	left: 50%;
+	margin-top: 60%;
+
+ }
+.cliente{
+height: auto;
+margin-top: 30%;
+width: 100%;
+}
+
+#url-archivo, #url-archivo2 {
+width: 170px !important;
+
+margin: 5px;
+}
+  #ContainerEmpresa{
+	margin-left: 260px;
+}
+#mapa{
+	display: none!important
+
+}
+.mostrarMapa{
+	display: none!important
+}
+
+}
+
+@media (min-width: 602px) {
+ .empresa{
+	width: 100%;
+	height: auto;
+	top: 60%;
+	left: 50%;
+	margin-top: 60%
+ }
+
+.cliente{
+height: auto;
+margin-top: 30%;
+width: 100%;
+}
+
+#mapa{
+	display: none!important
+}
+.mostrarMapa{
+	display: none!important
+}
+}
+
+@media (min-width: 800px) {
+ .empresa{
+	width: 100%;
+	height: auto;
+	top: 60%;
+	left: 50%;
+	margin-top: 50%;
+ }
+.cliente{
+height: auto;
+margin-top: 30%;
+width: 100%;
+}
+
+#mapa{
+	display: block!important
+}
+.mostrarMapa{
+	display: block!important
+}
+}
+
+
+/* empresa existente */
+.navegacion-empresa{
+ padding: 40px
+}
+
+.navegacion .submenu{
+	list-style: none;
+
+}
+
+.navegacion .submenu{
+	border-width: 2px;
+	padding-left: 1px;
+	background-color: black;
+	opacity: .9;
+	margin-top:90px;
+	text-align: center;
+	display: none
+}
+.menu .opciones{
+	width: 99.5%;
+	margin-bottom: 3px;
+	cursor: pointer;
+	font-style: none;
+	text-decoration: none; 
+}
