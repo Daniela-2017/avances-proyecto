@@ -114,9 +114,10 @@ img{
 Pagina Principal**/
 /**Banner**/
 #banner{
-	height: 400px;
+	height: 450px;
 	width: 1500px;
-	padding-top: 0px
+	padding-top: 0px;
+	
 }
 /**
 Formulario de menú

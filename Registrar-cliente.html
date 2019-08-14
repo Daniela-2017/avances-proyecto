@@ -45,15 +45,22 @@
 		</div>
 		</div>
 			
-		<div>
-			<label for="Correo">Correo Electrónico</label>
-			<input value="" type="text" class="form-control" id="correoCliente" placeholder="Escriba aquí su Correo">
+<div class="form-row align-items-center"> 
+	<label for="correo">Correo</label>
+	<div class="input-group">
+		<div class="input-group-prepend" style="height: 40px;">
+			<div class="input-group-text">@</div>
+	<input type="text" id="correoCliente" class="form-control" placeholder="Escriba el correo electrónico">
 		<div class="valid-feedback" style="text-align:right">Ok</div>
 		<div class="invalid-feedback" style="text-align:right; margin-bottom:9px">
-		Campo Obligatorio
+		Correo no válido
 		</div>
-		</div>
+				
+		</div>			
+	</div>	
 
+</div>
+<br>
 			<div style="float:left">
 				
 				<label for="clave">Contraseña</label>
@@ -74,6 +81,8 @@
 			<button onclick="validarRegistroCliente()">Registrarme</button>
 				
 	</div>
-	  <script src="controlador.js"></script>
+	<script src="jquery/jquery-3.4.1.min.js"></script>
+	<script src="popper/popper.min.js"></script>
+	<script src="controlador.js"></script>
 </body>
 </html>

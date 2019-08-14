@@ -6,7 +6,7 @@ var CamposLogin =[
   
 ];
 
-var tiposAcceso=["Empresa", "Ususario", "Super Administrador"];
+var tiposAcceso=["Empresa", "Usuario", "Super Administrador"];
 
 var CamposEmpresaRegistro=[
     {campo:'nombreEmpresa', valido:false},
@@ -16,9 +16,8 @@ var CamposEmpresaRegistro=[
     {campo:'longitud', valido:false},
     {campo:'url-archivo', valido:false},
     {campo:'url-archivo2', valido:false},
-    {campo:'RedesSociales', valido:false},
     {campo:'correo',valido:false},
-    {campo:'ClaveEmpresa',valido:false}
+    {campo:'ClaveEmpresa',valido:false},
     
 ];
 
@@ -35,8 +34,8 @@ var camposClienteRegistro=[
 //rellenar select de tipos de acceso en la seccion login
 
 for(let i=0; i<tiposAcceso.length; i++){
-     if($("#tipo").length){
-    document.getElementById("tipo").innerHTML+=`<option value="${tiposAcceso[i]}">${tiposAcceso[i]}</option>`}
+     if($("#tipo").length)
+    document.getElementById("tipo").innerHTML+=`<option value="${tiposAcceso[i]}">${tiposAcceso[i]}</option>`
 
 }
 
@@ -84,7 +83,6 @@ let correo=document.getElementById('correoCliente').value;
         if(localStorage.length==0){
              localStorage.setItem(document.getElementById('nombreEmpresa').value,JSON.stringify(empresa));
              alert('Su empresa ha sido agregada satisfactoriamente');
-              alert('primer if')
         }
         else{
         for(let i=0; i<localStorage.length;i++){
@@ -133,22 +131,46 @@ function registrarLogin(){
     //    console.log(registros);
         //`${}`
 
-
+if(tipo=='Empresa'){
     for(let i=0; i<localStorage.length;i++){
         let registro = JSON.parse(localStorage.getItem(localStorage.key(i)));
-        if(tipo=='Empresa'){
+        var empresaEncontrada= false;
+        
             if(registro.nombreEmpresa){
                 if(usuario==registro.nombreEmpresa && clave==registro.ClaveEmpresa){
-                    seccionEmpresa(registro);
+                    //seccionEmpresa(registro);
+                    empresaEncontrada=true;
                     location.href="empresa.html";
                     
+                    
                 }
-                else alert('Usuario o clave incorrecta')
 
             }
         }
-
+    if(empresaEncontrada==false) alert('Usuario o clave incorrecta');
     }
+
+    //cliente
+    else if(tipo=='Usuario'){
+    for(let i=0; i<localStorage.length;i++){
+        let registro = JSON.parse(localStorage.getItem(localStorage.key(i)));
+        var clienteEncontrado=false;
+        
+            if(registro.nombreCliente){
+                if(usuario==registro.correoCliente && clave==registro.claveCliente){
+                    clienteEncontrado=true;
+                   // location.href="empresa.html";
+                   alert('cliente encontrado');
+                   return
+                    
+                    
+                }
+
+            }
+        }
+    if(clienteEncontrado==false) alert('Usuario o clave incorrecta');
+    }
+
 }
 
 /*Seccion de registro de empresa*/
@@ -171,7 +193,7 @@ function validarCampos(id){
     }
     else{
         document.getElementById(id).classList.remove('is-invalid');
-        //document.getElementById(id).classList.add('is-valid');
+        document.getElementById(id).classList.add('is-valid');
         return true;
     }
 }
@@ -199,7 +221,7 @@ function validarCorreo(id){//empresa
     if (valido==true){
         document.getElementById(id).classList.remove('is-invalid');
         document.getElementById(id).classList.add('is-valid');
-         CamposEmpresaRegistro[8].valido=true;
+         CamposEmpresaRegistro[7].valido=true;
         for(let i=0; i<CamposEmpresaRegistro.length; i++)
         if(!CamposEmpresaRegistro[i].valido) return;
 /*seccion para agregar al localstorage la empresa, se ubica en esta funcion
@@ -212,8 +234,12 @@ function validarCorreo(id){//empresa
             longitud:document.getElementById('longitud').value,
             banner:document.getElementById('url-archivo').value,
             logotipo:document.getElementById('url-archivo2').value,
-            RedesSociales:document.getElementById('RedesSociales').value,
-            correo:document.getElementById('correo').value,
+            RedesSociales:{facebook:document.getElementById('facebook').value,
+            whatsapp:document.getElementById('whatsapp').value,
+            instagram:document.getElementById('instagram').value,
+            twitter:document.getElementById('twitter').value,
+            otras:document.getElementById('RedesSociales').value},
+
             ClaveEmpresa:document.getElementById('ClaveEmpresa').value,
             ConfirmacionEmpresa:document.getElementById('ConfirmacionEmpresa').value
             }
@@ -248,14 +274,14 @@ function validarCorreo(id){//empresa
 /*Seccion de empresas de empresa*/
 function seccionEmpresa(empresa){
             
-     if($("#banner").length){
+     /**if($("#banner").length){
          alert('ente');
     document.getElementById("banner").innerHTML+=`<div class="banner"><img class="bannerImagen" src="${empresa.banner}" alt="banner">
 	<div class="logotipo" style="background-image:url('${empresa.logotipo}')"></div><h1 style="color:wheat;text-align: center">${empresa.nombreEmpresa}</h1>
 		
 	
     </div>`;
-     }
+     }**/
 
 
 }
@@ -272,17 +298,18 @@ function ValidarClave(){//empresa
 }
 
 function CompararClave(clave,confirmar,id){//empresa
+
     if(clave!= confirmar || clave==''){
         document.getElementById(id).classList.remove('is-valid');
         document.getElementById(id).classList.add('is-invalid');
-            CamposEmpresaRegistro[9].valido=false;
+            CamposEmpresaRegistro[8].valido=false;
         }
 
 
     else if (clave==confirmar){
         document.getElementById(id).classList.remove('is-invalid');
         document.getElementById(id).classList.add('is-valid');
-            CamposEmpresaRegistro[9].valido=true;
+            CamposEmpresaRegistro[8].valido=true;
         }
 
 }

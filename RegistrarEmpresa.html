@@ -25,7 +25,7 @@
 			</div>
 <div>
 			<label for="pais">País de Origen</label>
-			<input class="form-control" type="text" id="pais" placeholder="Escriba el País de Origen" value=""><br>
+			<img src="img/facebook.png" style="height: 40px;"><input class="form-control" type="text" id="pais" placeholder="Escriba el País de Origen" value=""><br>
 			<div class="valid-feedback" style="text-align:right">Ok
 			</div>
             <div class="invalid-feedback" style="text-align:right">
@@ -116,25 +116,33 @@
 <br><br><br>
 <div>
 			<label for="redes">Redes Sociales</label>
-			<textarea  class="form-control" id="RedesSociales" name="redes" placeholder="Escriba aquí sus redes sociales" style="width: -moz-available"></textarea> 
-
-			<div class="valid-feedback" style="text-align:right">Ok
+			<br>
+			<div class="row">
+			<img src="img/facebook.png" style="height: 40px;"><input id="facebook" type="text" value="" class="col-xl-2">
+			<img src="img/whatsapp.jpg" style="height: 40px; margin-left: 20px;"><input id="whatsapp" type="text" value="" class="col-xl-2">
+			<img src="img/twitter.jpg" style="height: 40px; margin-left: 20px;"><input id="twitter" type="text" value="" class="col-xl-2">
+			<img src="img/instagram.png" style="height: 40px; margin-left: 20px;"><input id="instagram" type="text" value="" class="col-xl-2">
 			</div>
+			<textarea  class="form-control" id="RedesSociales" name="redes" placeholder="Otras..." style="width: -moz-available"></textarea> 
 			
-            <div class="invalid-feedback" style="text-align:right">
-            Campo obligatorio
-			</div>
 			<br>
 </div>
-<div> 
+<div class="form-row align-items-center"> 
 	<label for="correo">Correo</label>
-		<input type="text" id="correo" class="form-control" placeholder="Escriba el correo electrónico">
+	<div class="input-group">
+		<div class="input-group-prepend" style="height: 40px;">
+			<div class="input-group-text">@</div>
+	<input type="text" id="correo" class="form-control" placeholder="Escriba el correo electrónico">
 		<div class="valid-feedback" style="text-align:right">Ok</div>
 		<div class="invalid-feedback" style="text-align:right; margin-bottom:9px">
 		Correo no válido
 		</div>
+				
+		</div>			
+	</div>	
+
 </div>
-			
+	<br>		
 <div>
 			<div style="float:left">
 				
@@ -158,8 +166,9 @@
 	</div>
 
 
-	<script src="controlador.js"></script>
 	<script src="jquery/jquery-3.4.1.min.js"></script>
+	<script src="popper/popper.min.js"></script>
+	<script src="controlador.js"></script>
 	<script> // Script para el mapa
 function initMap() {
  // Creamos un objeto mapa y especificamos el elemento DOM donde se va a mostrar.
