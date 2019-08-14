@@ -6,6 +6,8 @@ var CamposLogin =[
   
 ];
 
+var tiposAcceso=["Empresa", "Ususario", "Super Administrador"];
+
 var CamposEmpresaRegistro=[
     {campo:'nombreEmpresa', valido:false},
     {campo:'pais', valido:false},
@@ -29,6 +31,14 @@ var camposClienteRegistro=[
     {campo:'claveCliente',valido:false}
 ] 
 ;
+
+//rellenar select de tipos de acceso en la seccion login
+
+for(let i=0; i<tiposAcceso.length; i++){
+     if($("#tipo").length){
+    document.getElementById("tipo").innerHTML+=`<option value="${tiposAcceso[i]}">${tiposAcceso[i]}</option>`}
+
+}
 
 function validar(){//llamada desde el boton de registro de empresa
     RegistrarEmpresa();
@@ -105,7 +115,9 @@ function ValidarClaveCliente(){
     CompararClaveCliente(ClaveCliente,confirmacionCliente,'claveCliente');
 
 }
-function registrarLogin(){ //para el formuario de login
+
+//para el formuario de login
+function registrarLogin(){ 
 /*Seccion de login*/
     for(let i=0; i<CamposLogin.length; i++)
          CamposLogin[i].valido=validarCampos(CamposLogin[i].campo);
@@ -113,14 +125,32 @@ function registrarLogin(){ //para el formuario de login
     for(let i=0; i<CamposLogin.length; i++)
        if(!CamposLogin[i].valido==true) return;
 
-    let empresa={
-        clave:document.getElementById('clave').value,
-        usuario:document.getElementById('usuario').value,
-        tipo:document.getElementById('tipo').value,
-    };
-    registros.push(empresa);
-        console.log(registros);
+        let clave=document.getElementById('clave').value;
+        let usuario= document.getElementById('usuario').value;
+        let  tipo =document.getElementById('tipo').value;
+
+  //  registros.push(login);
+    //    console.log(registros);
+        //`${}`
+
+
+    for(let i=0; i<localStorage.length;i++){
+        let registro = JSON.parse(localStorage.getItem(localStorage.key(i)));
+        if(tipo=='Empresa'){
+            if(registro.nombreEmpresa){
+                if(usuario==registro.nombreEmpresa && clave==registro.ClaveEmpresa){
+                    seccionEmpresa(registro);
+                    location.href="empresa.html";
+                    
+                }
+                else alert('Usuario o clave incorrecta')
+
+            }
+        }
+
+    }
 }
+
 /*Seccion de registro de empresa*/
 function RegistrarEmpresa(){
 
@@ -141,7 +171,7 @@ function validarCampos(id){
     }
     else{
         document.getElementById(id).classList.remove('is-invalid');
-        document.getElementById(id).classList.add('is-valid');
+        //document.getElementById(id).classList.add('is-valid');
         return true;
     }
 }
@@ -200,6 +230,7 @@ function validarCorreo(id){//empresa
         }
     localStorage.setItem(document.getElementById('nombreEmpresa').value,JSON.stringify(empresa));
     alert('Su empresa ha sido agregada satisfactoriamente');
+    
   }
     return true;
     }
@@ -213,6 +244,22 @@ function validarCorreo(id){//empresa
     
    
 }
+
+/*Seccion de empresas de empresa*/
+function seccionEmpresa(empresa){
+            
+     if($("#banner").length){
+         alert('ente');
+    document.getElementById("banner").innerHTML+=`<div class="banner"><img class="bannerImagen" src="${empresa.banner}" alt="banner">
+	<div class="logotipo" style="background-image:url('${empresa.logotipo}')"></div><h1 style="color:wheat;text-align: center">${empresa.nombreEmpresa}</h1>
+		
+	
+    </div>`;
+     }
+
+
+}
+
 
 /*Seccion de registro de empresa y cliente*/
 
