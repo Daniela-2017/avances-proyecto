@@ -236,6 +236,16 @@ display: block
 
 }
 
+/*Carrousel*/
+.imgCarousel{
+	height: 300px;
+}
+
+.carousel{
+	background-color: black;
+
+}
+
 /**
 Formulario de registro de empresa
 **/
@@ -410,10 +420,26 @@ margin: 5px;
 .mostrarMapa{
 	display: none!important
 }
+/*empresa existente*/
+.logotipo {
+
+margin-left: 0px!important;
+margin-right: 0px!important;
 
 }
 
-@media (min-width: 602px) {
+#actualizar, #dashboard, #ficha{
+	display: none;
+	font-size: 10px
+}
+.menuEmp{
+	font-size: 10px
+}
+
+}
+
+
+@media (min-width: 602px){
  .empresa{
 	width: 100%;
 	height: auto;
@@ -421,7 +447,9 @@ margin: 5px;
 	left: 50%;
 	margin-top: 60%
  }
-
+.logotipo {
+margin-left: 15rem!important;
+}
 .cliente{
 height: auto;
 margin-top: 30%;
@@ -434,7 +462,12 @@ width: 100%;
 .mostrarMapa{
 	display: none!important
 }
+
+.menuEmp{
+	font-size: 12px
 }
+}
+
 
 @media (min-width: 800px) {
  .empresa{
@@ -455,6 +488,22 @@ width: 100%;
 }
 .mostrarMapa{
 	display: block!important
+}
+
+.logotipo
+{
+background-size: cover;
+height: 130px;
+background-repeat: no-repeat;
+margin-left: 37rem!important;
+margin-right: 40rem;
+background-color: red;
+border-style: solid;
+width: 150px;
+}
+
+.menuEmp{
+	font-size: 17px
 }
 }
 

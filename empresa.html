@@ -5,17 +5,18 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<link rel="stylesheet" type="text/css" href="master.css">
 	<link rel="shortcut icon" type="image/png" href="img/empresa.png">
+	<link rel="stylesheet" href="BootstrapCSS/bootstrap.min.css">
 </head>
 
 <body>
 	<div style="color: white; padding: 12px; background: linear-gradient(white,blue);" align="center">
 	</div>
- <div id="banner">
+ <div id="bannerEmpresa" style="width: auto;">
 <div class="banner"><img class="bannerImagen" src="img/banner.jpg" alt="banner">
 	<div class="logotipo" style="background-image:url('img/contacto.png')">
 		
 	</div>
-		<h1 style="color:wheat;text-align: center;margin-left: -8rem;">Nombre Empresa</h1>
+		<h1 style="color:wheat;text-align: center;" id="tituloEmpresa">Nombre Empresa</h1>
 	
     </div>
 </div>	
@@ -30,10 +31,10 @@
 		
 	<nav class="navegacion-empresa">
 		<ul class="menu">
-			<li class="seccion">
-				<a href="#">
+			<li class="seccion" id="actualizar">
+				<a type="button" data-toggle="modal" data-target="#formulario-actualizar-Empresa">
 					<img src="img/empresa/actualizar.png" alt="Actualizar" class="imagen" >
-					<span class="text-item" id="inicio">Actualizar Perfil</span>
+					<span class="text-item menuEmp">Actualizar Perfil</span>
 					<span class="down-item"></span>
 				</a>
 			</li>
@@ -41,7 +42,7 @@
 			<li class="seccion">
 				<a href="#">
 					<img src="img/empresa/visualizar.png" alt="cliente" class="imagen">
-					<span class="text-item">Visualización de Perfil </span>
+					<span class="text-item menuEmp" id="visualizacion">Visualización de Perfil </span>
 					<span class="down-item"></span>
 				</a>
 			</li>
@@ -49,7 +50,7 @@
 			<li class="seccion">
 				<a href="#">
 					<img src="img/empresa/sucursales.png" alt="empresa" class="imagen">
-					<span class="text-item">Registro de Sucursales</span>
+					<span class="text-item menuEmp" >Registro de Sucursales</span>
 					<span class="down-item"></span>
 				</a>
 			</li>
@@ -57,7 +58,7 @@
 			<li class="seccion">
 				<a href="#">
 					<img src="img/empresa/productos.png" alt="Administrador" class="imagen">
-					<span class="text-item">Registro de Productos</span>
+					<span class="text-item menuEmp" >Registro de Productos</span>
 					<span class="down-item"></span>
 				</a>
 			</li>
@@ -65,30 +66,89 @@
 			<li class="seccion">
 				<a href="#">
 					<img src="img/empresa/promociones.jpg" alt="Misión y Visión" class="imagen">
-					<span class="text-item">Registro de Promociones</span>
+					<span class="text-item menuEmp" >Registro de Promociones</span>
 					<span class="down-item"></span>
 				</a>
 			</li>
 
-			<li  class="seccion">
+			<li  class="seccion" id="dashboard">
 				<a href="#">
 					<img src="img/empresa/dashboard.png" alt="contacto" class="imagen">
-					<span class="text-item" >Dashboard Administrativo</span>
+					<span class="text-item menuEmp">Dashboard Administrativo</span>
 					<span class="down-item"></span>
 				</a>
             </li>
-             <li  class="seccion">
+             <li  class="seccion" id="ficha">
 				<a href="#">
 					<img src="img/empresa/ficha.png" alt="contacto" class="imagen">
-					<span class="text-item" style="text-decoration:none">Creación de ficha promocional</span>
+					<span class="text-item menuEmp"  style="text-decoration:none">Creación de ficha promocional</span>
 					<span class="down-item"></span>
 				</a>
 			</li>
 
 	</nav>
 
+	  <!-- Modal -->
+  <div class="modal fade" id="formulario-actualizar-Empresa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" style="background-image:url(img/fondo1.jpg)">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Actualizar Empresa</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input class="form-control" type="text" id="nombreEmpresa-nuevo" value="" placeholder="Escriba el Nombre de la Empresa">
+          <input class="form-control" type="text" id="pais-nuevo" placeholder="Escriba el País de Origen" value="">
+		  <textarea class="form-control" style="width:-moz-available" id="direccion-nuevo" name="Dirección" placeholder="Escriba aquí la Dirección" rows="3" cols="20" value=""></textarea>
+		  
+<input class="form-control" type="text" id="latitud-nuevo" placeholder="Escriba su latitud" value="" style="width:-moz-available"/>
+<input class="form-control" id="longitud-nuevo" type="text" placeholder="Escriba aqui su longitud"  value="" style="width:-moz-available">
+
+<label>Subir Banner</label><input type="file" value="" id="url-archivo-nuevo" class="input-url"/>
+<label>Subir Logotipo</label><input type="file" value="" id="url-archivo2-nuevo"  class="input-url" /><br>
+
+<div class="row">
+	<br>
+<input id="facebook-nuevo" type="text" value="" placeholder="Facebook" class="col-xl-6" style="width:-moz-available;padding:5px">
+<input id="whatsapp-nuevo" type="text" value="" placeholder="Whatsapp" class="col-xl-6" style="width:-moz-available;padding:5px">
+</div>
+
+<div class="row">
+<input id="twitter-nuevo" type="text" value="" placeholder="Twitter" class="col-xl-6" style="width:-moz-available;padding:5px">
+<input id="instagram-nuevo" type="text" value="" placeholder="Instagram" class="col-xl-6" style="width:-moz-available;padding:5px">
+</div>
+
+<textarea  class="form-control" id="RedesSociales-nuevo" style="width:90%;" name="redes" placeholder="Otras Redes Sociales..."></textarea> 
+<div class="form-row align-items-center"> 
+	<div class="input-group">
+		<div class="input-group-prepend" style="height: 40px">
+			<div class="input-group-text">@</div>
+	<input type="text" id="correo-nuevo" class="form-control" placeholder="Escriba el correo electrónico" style="width:-moz-available">
+		<div class="valid-feedback" style="text-align:right">Ok</div>
+		<div class="invalid-feedback" style="text-align:right; margin-bottom:9px">
+		Correo no válido
+		</div>
+				
+		</div>			
+	</div>	
+
+</div>
+<input type="password" id="ClaveEmpresa" class="form-control" placeholder="Escriba una contraseña segura" style="width:-moz-available" value="">	
+<input type="password" value="" id="ConfirmacionEmpresa" class="form-control" placeholder="Confirme su Contraseña" style="width:-moz-available; margin-left:auto">		
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button id="btn-guardar" type="button" class="btn btn-primary">Guardar Cambios</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 	<script src="jquery/jquery-3.4.1.min.js"></script>
 	<script src="popper/popper.min.js"></script>
+	<script src="BootstrapJS/bootstrap.min.js"></script>
 	<script src="controlador.js"></script>
 	
 </body>

@@ -2,8 +2,7 @@ var registros=[];
 var localStorage=window.localStorage;
 var CamposLogin =[
    {campo:'clave', valido:false},
-   {campo:'usuario', valido:false},
-  
+   {campo:'usuario', valido:false}, 
 ];
 
 var tiposAcceso=["Empresa", "Usuario", "Super Administrador"];
