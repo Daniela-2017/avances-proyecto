@@ -34,7 +34,6 @@ Formulario de login
 	border-left-color: blue;
     box-shadow: 6px 6px 6px black;
 	opacity: .9;
-
 }
 
 .login .imagen{
@@ -62,7 +61,7 @@ Formulario de login
 	display: block;
 }
 
-.login input, .login select, .empresa button,  .cliente button{
+.login input, .login select, .empresa button,  .cliente button, .mostrarPerfil button{
 	width: 100%;
 	margin-bottom: 20px;
 }
@@ -80,7 +79,7 @@ Formulario de login
 	font-size: 16px;
 }
 
-.login input[type="button"], .empresa button, .cliente button{
+.login input[type="button"], .empresa button, .cliente button, .mostrarPerfil button{
 	border: none;
 	outline: none;
 	font-size: 18px;
@@ -372,6 +371,79 @@ Formulario de registro de cliente
 	width: auto !important;
 	height: 29px !important;
 }
+
+/*Modal actualizar empresa*/
+.ActualizarEmpresa, .inputProducto, .inputPromocion{
+	border: none!important;
+	color:white!important;
+	background: transparent!important;
+	outline: none!important;
+	height: 30px!important;
+	font-size: 16px!important;
+	border-bottom: 1px solid #fff!important;
+	padding: 0px !important
+}
+.producto, .promocion{
+	background-color:black!important;
+	opacity: .8!important;
+	padding: 1rem;
+}
+.divProductos, .divPromociones{
+	padding-left: 30px;
+color: white;
+text-align: center;
+
+}
+.modals{ /*modal de actualizar empresa y agregar producto*/
+	background-color:black!important;
+	opacity:.8!important;
+	border-color: blue!important;
+	border-width: thick!important;
+}
+
+.categoria{
+	background-color: red;
+opacity: .8;
+text-align: center;
+font-size: 40px;
+}
+
+.precio{
+background-size: cover;
+background-repeat: no-repeat;
+height: 200px;
+background-image: url(img/empresa/Variable-Precio.jpeg);
+text-align: center;
+font-size: 40px;
+padding-left: 5rem;
+color: black;
+padding-top: 5rem;
+}
+.precioRebaja{
+	background-image: url('img/precios.jpg');
+	background-size: cover;
+background-repeat: no-repeat;
+height: 250px;
+text-align: center;
+font-size: 40px;
+padding-left: 5rem;
+color: black;
+padding-top: 5rem;
+}
+.precioOferta{
+	margin-top: -25px;
+}
+.precioNormal{
+	margin-top: 25px;
+}
+.descuento{
+	font-size: 3rem;
+}
+.fecha{
+	background-color: red;
+
+font-size: 1.5rem;
+}
 @media (max-width: 600px) {
   #banner {
     height: 165px;
@@ -420,6 +492,7 @@ margin: 5px;
 .mostrarMapa{
 	display: none!important
 }
+
 /*empresa existente*/
 .logotipo {
 
@@ -535,6 +608,10 @@ width: 150px;
 	text-decoration: none; 
 }
 
+#mapaSuc { height: 500px; }
+/*.mostrarPerfil{
+	display: none
+}*/
 /*div de bannery logotipo de empresa*/
 .banner{
 	background-color: black;

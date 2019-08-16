@@ -7,11 +7,11 @@
 		<link rel="stylesheet" type="text/css" href="master.css">
 	<link rel="shortcut icon" type="image/png" href="img/empresa.png">
 	<link rel="stylesheet" href="BootstrapCSS/bootstrap.min.css">
-<!--	<script type="text/javascript" src="https://maps.google.com/maps/api/js"></script> --><!--llamado para cargar el mapa-->
+<!--<script type="text/javascript" src="https://maps.google.com/maps/api/js"></script>--><!--llamado para cargar el mapa-->
 
 
 </head>
-<body>
+<body> 
 	<div class="empresa">
 		<button style="width: 200px;"><a href="login.html" style="color: white;background-color: transparent;text-decoration-style: -moz-none;"> Acceder a mi empresa</a></button>
 		<h1 align="center" style="font-family: nyala; font-weight: bolder">Ingresar Empresa</h1>
@@ -70,7 +70,7 @@
 
 	<label class="mostrarMapa" for="Ver en Google Maps" style="margin-top: 10px; font-size: small; margin-left: 50px; color: aquamarine">Ver en Google Maps->
 	</label>
-	<button class="mostrarMapa" id="BtnMapa"  style="margin-top: 10px"onclick="initMap()" type="button"></button>
+	<button class="mostrarMapa" id="BtnMapa"  style="margin-top: 10px" onclick="initMap()" type="button"></button>
 			<br>
 </div>
 		
@@ -164,44 +164,8 @@
 		</form>
 				<button onclick="validar()">Añadir Empresa</button>
 	</div>
-
-
-	<script src="jquery/jquery-3.4.1.min.js"></script>
-	<script src="popper/popper.min.js"></script>
-	<script src="controlador.js"></script>
-	<script> // Script para el mapa
-function initMap() {
- // Creamos un objeto mapa y especificamos el elemento DOM donde se va a mostrar.
- var map = new google.maps.Map(document.getElementById('mapa'), {
- center: {lat: parseFloat(document.getElementById('latitud').value), lng: parseFloat(document.getElementById('longitud').value)}, 
- scrollwheel: false,
- zoom: 8,
- zoomControl: true,
- rotateControl : false,
- mapTypeControl: true,
- streetViewControl: false,
- });
- // Creamos el marcador
- var marker = new google.maps.Marker({
- position: {lat: parseFloat(document.getElementById('latitud').value), lng: parseFloat(document.getElementById('longitud').value)},
- draggable: true
- });
- // Le asignamos el mapa a los marcadores.
- marker.setMap(map);
- // creamos el objeto geodecoder
- var geocoder = new google.maps.Geocoder();
-// le asignamos una funcion al eventos dragend del marcado
- google.maps.event.addListener(marker, 'dragend', function() {
- geocoder.geocode({'latLng': marker.getPosition()}, function(results, status) {
- if (status == google.maps.GeocoderStatus.OK) {
- var address=results[0]['formatted_address'];
- alert(address);
- }
- });
-});
-}
-
-/* Seccion para obtener y simular la url del input file
+<script>
+	/* Seccion para obtener y simular la url del input file
  En el change del campo file, cambiamos el val del campo ficticio por el del verdadero */
     $('#archivo').change(function(){
 		$('#url-archivo').val($(this).val());
@@ -210,8 +174,12 @@ function initMap() {
     $('#archivo2').change(function(){
 		$('#url-archivo2').val($(this).val());
 	});
-
 </script>
+
+	<script src="jquery/jquery-3.4.1.min.js"></script>
+	<script src="popper/popper.min.js"></script>
+	<script src="controlador.js"></script>
+
 </body>
 
 </html>

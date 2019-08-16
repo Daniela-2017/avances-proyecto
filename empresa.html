@@ -6,6 +6,8 @@
 	<link rel="stylesheet" type="text/css" href="master.css">
 	<link rel="shortcut icon" type="image/png" href="img/empresa.png">
 	<link rel="stylesheet" href="BootstrapCSS/bootstrap.min.css">
+<!--<script type="text/javascript" src="https://maps.google.com/maps/api/js"></script>--><!--llamado para cargar el mapa-->
+<!--<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>--><!--llamado parael mapa de sucursales-->
 </head>
 
 <body>
@@ -40,7 +42,7 @@
 			</li>
 
 			<li class="seccion">
-				<a href="#">
+				<a type="button" onclick="mostrarPerfil()" id="visualizar">
 					<img src="img/empresa/visualizar.png" alt="cliente" class="imagen">
 					<span class="text-item menuEmp" id="visualizacion">Visualización de Perfil </span>
 					<span class="down-item"></span>
@@ -48,7 +50,7 @@
 			</li>
 
 			<li class="seccion">
-				<a href="#">
+				<a type="button" data-toggle="modal" data-target="#formulario-agregar-sucursal">
 					<img src="img/empresa/sucursales.png" alt="empresa" class="imagen">
 					<span class="text-item menuEmp" >Registro de Sucursales</span>
 					<span class="down-item"></span>
@@ -56,7 +58,7 @@
 			</li>
 
 			<li class="seccion">
-				<a href="#">
+				<a type="button" data-toggle="modal" data-target="#formulario-agregar-producto">
 					<img src="img/empresa/productos.png" alt="Administrador" class="imagen">
 					<span class="text-item menuEmp" >Registro de Productos</span>
 					<span class="down-item"></span>
@@ -64,7 +66,7 @@
 			</li>
 
 			<li class="seccion">
-				<a href="#">
+				<a a type="button" data-toggle="modal" data-target="#formulario-agregar-promocion">
 					<img src="img/empresa/promociones.jpg" alt="Misión y Visión" class="imagen">
 					<span class="text-item menuEmp" >Registro de Promociones</span>
 					<span class="down-item"></span>
@@ -88,10 +90,10 @@
 
 	</nav>
 
-	  <!-- Modal -->
-  <div class="modal fade" id="formulario-actualizar-Empresa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <!-- Modal para agregar empresa-->
+  <div class="modal fade" id="formulario-actualizar-Empresa" style="color: aliceblue"; tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content" style="background-image:url(img/fondo1.jpg)">
+      <div class="modal-content modals">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Actualizar Empresa</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -99,33 +101,59 @@
           </button>
         </div>
         <div class="modal-body">
-          <input class="form-control" type="text" id="nombreEmpresa-nuevo" value="" placeholder="Escriba el Nombre de la Empresa">
-          <input class="form-control" type="text" id="pais-nuevo" placeholder="Escriba el País de Origen" value="">
-		  <textarea class="form-control" style="width:-moz-available" id="direccion-nuevo" name="Dirección" placeholder="Escriba aquí la Dirección" rows="3" cols="20" value=""></textarea>
-		  
-<input class="form-control" type="text" id="latitud-nuevo" placeholder="Escriba su latitud" value="" style="width:-moz-available"/>
-<input class="form-control" id="longitud-nuevo" type="text" placeholder="Escriba aqui su longitud"  value="" style="width:-moz-available">
+          <input class="form-control ActualizarEmpresa" type="text" id="nombreEmpresa-nuevo" value="" placeholder="Escriba el Nombre de la Empresa">
+		 <br> 
+		  <input class="form-control ActualizarEmpresa" type="text" id="pais-nuevo" placeholder="Escriba el País de Origen" value="">
+		 <br> 
+		  <textarea class="form-control ActualizarEmpresa" style="width:-moz-available" id="direccion-nuevo" name="Dirección" placeholder="Escriba aquí la Dirección" rows="3" cols="20" value=""></textarea>
+		  <br> 
+<input class="form-control ActualizarEmpresa" type="text" id="latitud-nuevo" placeholder="Escriba su latitud" value="" style="width:-moz-available"/>
+			<br> 
+<input class="form-control ActualizarEmpresa" id="longitud-nuevo" type="text" placeholder="Escriba aqui su longitud"  value="" style="width:-moz-available">
+<br> 
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroupFileAddon01">Subir Banner</span>
+  </div>
+  <div class="custom-file">
+    <input type="file" class="custom-file-input" multiple id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+    <label class="custom-file-label" for="inputGroupFile01">Buscar Archivos</label>
+  </div>
+</div>
 
-<label>Subir Banner</label><input type="file" value="" id="url-archivo-nuevo" class="input-url"/>
-<label>Subir Logotipo</label><input type="file" value="" id="url-archivo2-nuevo"  class="input-url" /><br>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroupFileAddon01">Subir Banner</span>
+  </div>
+  <div class="custom-file">
+    <input type="file" class="custom-file-input" multiple id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+    <label class="custom-file-label" for="inputGroupFile01">Buscar Archivos</label>
+  </div>
+</div>
 
+<br> 
 <div class="row">
 	<br>
-<input id="facebook-nuevo" type="text" value="" placeholder="Facebook" class="col-xl-6" style="width:-moz-available;padding:5px">
-<input id="whatsapp-nuevo" type="text" value="" placeholder="Whatsapp" class="col-xl-6" style="width:-moz-available;padding:5px">
+<input id="facebook-nuevo" type="text" value="" placeholder="Facebook" class="col-xl-6 ActualizarEmpresa" style="width:-moz-available;padding:5px">
+<br> 
+<input id="whatsapp-nuevo" type="text" value="" placeholder="Whatsapp" class="col-xl-6 ActualizarEmpresa" style="width:-moz-available;padding:5px">
+<br> 
 </div>
 
 <div class="row">
-<input id="twitter-nuevo" type="text" value="" placeholder="Twitter" class="col-xl-6" style="width:-moz-available;padding:5px">
-<input id="instagram-nuevo" type="text" value="" placeholder="Instagram" class="col-xl-6" style="width:-moz-available;padding:5px">
+	<br> 
+<input id="twitter-nuevo" type="text" value="" placeholder="Twitter" class="col-xl-6 ActualizarEmpresa" style="width:-moz-available;padding:5px">
+<br> 
+<input id="instagram-nuevo" type="text" value="" placeholder="Instagram" class="col-xl-6 ActualizarEmpresa" style="width:-moz-available;padding:5px">
 </div>
-
-<textarea  class="form-control" id="RedesSociales-nuevo" style="width:90%;" name="redes" placeholder="Otras Redes Sociales..."></textarea> 
+<br> 
+<textarea  class="form-control ActualizarEmpresa" id="RedesSociales-nuevo"  name="redes" placeholder="Otras Redes Sociales..."></textarea> 
+<br>
 <div class="form-row align-items-center"> 
 	<div class="input-group">
 		<div class="input-group-prepend" style="height: 40px">
 			<div class="input-group-text">@</div>
-	<input type="text" id="correo-nuevo" class="form-control" placeholder="Escriba el correo electrónico" style="width:-moz-available">
+	<input type="text" id="correo-nuevo" class="form-control ActualizarEmpresa" placeholder="Escriba el correo electrónico" style="width:-moz-available">
 		<div class="valid-feedback" style="text-align:right">Ok</div>
 		<div class="invalid-feedback" style="text-align:right; margin-bottom:9px">
 		Correo no válido
@@ -135,8 +163,10 @@
 	</div>	
 
 </div>
-<input type="password" id="ClaveEmpresa" class="form-control" placeholder="Escriba una contraseña segura" style="width:-moz-available" value="">	
-<input type="password" value="" id="ConfirmacionEmpresa" class="form-control" placeholder="Confirme su Contraseña" style="width:-moz-available; margin-left:auto">		
+<br> 
+<input type="password" id="ClaveEmpresa" class="form-control ActualizarEmpresa" placeholder="Escriba una contraseña segura" style="width:-moz-available" value="">	
+<br> 
+<input type="password" value="" id="ConfirmacionEmpresa" class="form-control ActualizarEmpresa" placeholder="Confirme su Contraseña" style="width:-moz-available; margin-left:auto">		
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -144,8 +174,366 @@
         </div>
       </div>
     </div>
+	</div>
+	
+	<!--__________Modal para agregar productos_________-->
+<div id="formulario-agregar-producto" class="modal" style="color:aliceblue" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content modals">
+      <div class="modal-header">
+        <h5 class="modal-title">Agregar Producto</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+<div>
+				<input type="text" id="CodigoProducto" class="form-control inputProducto" placeholder="Codigo" style="width:-moz-available" value="">	
+			<div class="valid-feedback" style="text-align:right">Ok
+			</div>
+            <div class="invalid-feedback" style="text-align:right">
+            Campo obligatorio
+			</div>
+</div>
+				<br>
+<div>
+<input type="text" id="NombreProducto" class="form-control inputProducto" placeholder="Nombre del producto" style="width:-moz-available" value="">	
+
+			<div class="valid-feedback" style="text-align:right">Ok
+			</div>
+            <div class="invalid-feedback" style="text-align:right">
+            Campo obligatorio
+			</div>
+</div>
+<br>
+<div>
+<input type="text" id="PrecioProducto" class="form-control inputProducto" placeholder="Precio" style="width:-moz-available" value="">	
+			<div class="valid-feedback" style="text-align:right">Ok
+			</div>
+            <div class="invalid-feedback" style="text-align:right">
+            Campo obligatorio
+			</div>
+</div>
+<br>
+<div>
+<textarea  class="form-control inputProducto" id="descripcionProducto" name="redes" placeholder="Descripción"></textarea> 
+			<div class="valid-feedback" style="text-align:right">Ok
+			</div>
+            <div class="invalid-feedback" style="text-align:right">
+            Campo obligatorio
+			</div>
+</div>
+<br>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroupFileAddon01">Subir Fotos</span>
+  </div>
+  <div class="custom-file">
+		<div>
+		<input id="imagenProducto" type="file" class="custom-file-input" multiple id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+		<label class="custom-file-label" for="inputGroupFile01">Buscar Archivos</label>
+				<div class="valid-feedback" style="text-align:right">Ok
+			</div>
+            <div class="invalid-feedback" style="text-align:right">
+            Campo obligatorio
+			</div>	
+	</div>
+  </div>
+</div>
+
+</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-primary" onclick="agregarProducto()">Guardar Producto</button>
+				
+				<br>	
+				 <button type="button" class="btn btn-primary">Ver Registro de Productos</button>			
+      </div>
+    </div>
+  </div>
+</div>
+
+
+	<!--____________Modal para agregar Promociones___________-->
+
+<div id="formulario-agregar-promocion" class="modal" style="color:aliceblue" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content modals">
+      <div class="modal-header">
+        <h5 class="modal-title">Agregar Promoción</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+<div>
+<select name="" id="producto" class="custom-select form-control">
+	<option value="1">Seleccione el Producto en Promoción</option>
+</select>
+			<div class="valid-feedback" style="text-align:right">Ok
+			</div>
+            <div class="invalid-feedback" style="text-align:right">
+            Campo obligatorio
+			</div>
+</div>
+<br>
+<br>
+<div>
+<input type="text" id="descuento" class="form-control inputPromocion" placeholder="% de descuento" style="width:-moz-available" value="">	
+			<div class="valid-feedback" style="text-align:right">Ok
+			</div>
+            <div class="invalid-feedback" style="text-align:right">
+            Campo obligatorio
+			</div>
+</div>
+<br>
+<div>
+<input type="text" id="precioProductoPromocion" class="form-control inputPromocion" placeholder="Precio Real" style="width:-moz-available" value="">	<br>
+				<div class="valid-feedback" style="text-align:right">Ok
+			</div>
+            <div class="invalid-feedback" style="text-align:right">
+            Campo obligatorio
+			</div>
+</div>
+
+<div>
+<input type="text" id="precioOferta" class="form-control inputPromocion" placeholder="Precio" style="width:-moz-available" value="">	<br>
+						<div class="valid-feedback" style="text-align:right">Ok
+			</div>
+            <div class="invalid-feedback" style="text-align:right">
+            Campo obligatorio
+			</div>
+		
+
+</div>
+<label>Fecha de Inicio de promoción</label>
+<div>
+<input type="date" id="fechaInicio" class="form-control inputPromocion" placeholder="Precio" style="width:-moz-available" value="">	<br>
+			<div class="valid-feedback" style="text-align:right">Ok
+			</div>
+            <div class="invalid-feedback" style="text-align:right">
+            Campo obligatorio
+			</div>
+</div>
+<label>Fecha final de promoción</label>
+<div>
+<input type="date" id="fechaFinal" class="form-control inputPromocion" placeholder="Precio" style="width:-moz-available" value="">	<br>
+							<div class="valid-feedback" style="text-align:right">Ok
+			</div>
+            <div class="invalid-feedback" style="text-align:right">
+            Campo obligatorio
+			</div>
+</div>
+
+<br>
+
+
+<div class="input-group mb-3 row">
+
+			<input class="col-xl-4" type="checkbox" aria-label="Checkbox for following text input"><label class="col-xl-6">Sucursal 1</label><br>
+			
+			<input class="col-xl-4" type="checkbox" aria-label="Checkbox for following text input"><label class="col-xl-6">Sucursal 2</label><br>
+			
+			<input class="col-xl-4" type="checkbox" aria-label="Checkbox for following text input"><label class="col-xl-6">Sucursal 3</label><br>
+			
+
+</div>
+
+<div>
+<select name="" id="sucursal" class="custom-select form-control">
+	<option value="1">Seleccione la sucursal en la que existe la Promoción</option>
+</select>
+			<div class="valid-feedback" style="text-align:right">Ok
+			</div>
+            <div class="invalid-feedback" style="text-align:right">
+            Campo obligatorio
+			</div>
+</div>
+</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-primary" onclick="agregarPromocion()">Guardar Producto</button>
+				
+				<br>	
+				 <button type="button" class="btn btn-primary">Ver Registro de Promociones</button>			
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--__________modal para agregar sucursales______-->
+<div id="formulario-agregar-sucursal" class="modal" style="color:aliceblue" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content modals">
+      <div class="modal-header">
+        <h5 class="modal-title">Agregar Sucursal</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+<div>
+				<input type="text" id="nombreSucursal" class="form-control inputProducto" placeholder="Nombre del lugar donde está ubicada la sucursal" style="width:-moz-available" value="">	
+			<div class="valid-feedback" style="text-align:right">Ok
+			</div>
+            <div class="invalid-feedback" style="text-align:right">
+            Campo obligatorio
+			</div>
+</div>
+				<br>
+<div>
+<input type="text" id="latitudSucursal" class="form-control inputProducto" placeholder="Ingrese la latitud" style="width:-moz-available" value="">	
+
+			<div class="valid-feedback" style="text-align:right">Ok
+			</div>
+            <div class="invalid-feedback" style="text-align:right">
+            Campo obligatorio
+			</div>
+</div>
+<br>
+<div>
+<input type="text" id="longitudSucursal" class="form-control inputProducto" placeholder="Ingrese la longitud" style="width:-moz-available" value="">	
+			<div class="valid-feedback" style="text-align:right">Ok
+			</div>
+            <div class="invalid-feedback" style="text-align:right">
+            Campo obligatorio
+			</div>
+</div>
+
+</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-primary" onclick="agregarSucursal()">Guardar Producto</button>
+				
+				<br>	
+				 <button type="button" class="btn btn-primary">Ver Registro de Sucursales</button>			
+      </div>
+    </div>
+  </div>
+</div>
+<!--_______________________________-->
+
+
+
+<!--Visualizacion de Perfil-->
+
+
+	<!--Productos-->
+<section class="mostrarPerfil" id="perfil">
+<div class="row divProductos">
+		<h5 class="categoria col-xl-12 col-md-12 col-sm-12">Ubicación Principal</h5>
+	<div class="col-md-12 d-none d-sm-block" id="mapaEnPerfil" style="width: 450px; height: 350px">
+
+		
+	</div>
+
+	<h5 class="categoria col-xl-12 col-md-12 col-sm-12">Productos</h5>
+  <div class="col-xl-3 col-md-2 col-sm-12">
+	  <div class="producto">
+	<h3>Nombre</h3>
+	<p class="descripcion">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, dolorem.</p>
+	<div class="precio">100.00 lps</div>
+	<!--imagenes-->
+	<div id="carouselExampleSlidesOnly" class="carousel slide carousel" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+        <img src="img/index/descuentos.jpg" class="d-block w-100 imgCarousel"  alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="img/index/ofertas.jpeg" class="d-block w-100 imgCarousel" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="img/index/rebajas.png" class="d-block w-100 imgCarousel"  alt="...">
+    </div>
+  </div>
+</div>
+	<hr>
+	</div>
   </div>
 
+ 
+    <div class="col-xl-3 col-md-2 col-sm-12">
+		 <div class="producto">
+	<h3>Nombre</h3>
+	<p class="descripcion">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, dolorem.</p>
+	<div class="precio">500.00 lps</div>
+	<!--imagenes-->
+	<div id="carouselExampleSlidesOnly" class="carousel slide carousel" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+        <img src="img/index/descuentos.jpg" class="d-block w-100 imgCarousel"  alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="img/index/ofertas.jpeg" class="d-block w-100 imgCarousel" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="img/index/rebajas.png" class="d-block w-100 imgCarousel"  alt="...">
+    </div>
+  </div>
+</div>
+	<hr>
+  </div>
+  </div>
+</div>
+
+
+<!--Promociones-->
+  <div class="row divPromociones">
+	<h5 class="categoria col-xl-12 col-md-12 col-sm-12">Promociones</h5>
+  <div class="col-xl-3 col-md-2 col-sm-12">
+	  <div class="promocion">
+			<span class="descuento">15%</span>
+			<img src="img/oferta.png">
+	<h3>Nombre</h3>
+	<div class="precioRebaja"><div class="precioNormal">100</div>
+	<div class="precioOferta">200</div></div>
+	<!--imagenes-->
+	<div id="carouselExampleSlidesOnly" class="carousel slide carousel" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+        <img src="img/index/descuentos.jpg" class="d-block w-100 imgCarousel"  alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="img/index/ofertas.jpeg" class="d-block w-100 imgCarousel" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="img/index/rebajas.png" class="d-block w-100 imgCarousel"  alt="...">
+    </div>
+  </div>
+</div>
+	<hr>
+	</div>
+  </div>
+
+ 
+  <div class="col-xl-3 col-md-2 col-sm-12">
+	  <div class="promocion">
+			<span class="descuento">15%</span>
+			<img src="img/oferta.png">
+	<h3>Nombre</h3>
+	<div class="precioRebaja"><div class="precioNormal">100</div>
+	<div class="precioOferta">200</div></div>
+	<!--imagenes-->
+	<div id="carouselExampleSlidesOnly" class="carousel slide carousel" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+        <img src="img/index/descuentos.jpg" class="d-block w-100 imgCarousel"  alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="img/index/ofertas.jpeg" class="d-block w-100 imgCarousel" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="img/index/rebajas.png" class="d-block w-100 imgCarousel"  alt="...">
+    </div>
+  </div>
+</div>
+	<hr>
+	</div>
+  </div>
+</section>
 	<script src="jquery/jquery-3.4.1.min.js"></script>
 	<script src="popper/popper.min.js"></script>
 	<script src="BootstrapJS/bootstrap.min.js"></script>

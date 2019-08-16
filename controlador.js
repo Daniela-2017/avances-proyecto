@@ -1,5 +1,17 @@
 var registros=[];
 var localStorage=window.localStorage;
+
+var arrayProductos=[
+
+];
+
+var arrayPromociones=[
+
+];
+var arraySucursales=[
+
+];
+
 var CamposLogin =[
    {campo:'clave', valido:false},
    {campo:'usuario', valido:false}, 
@@ -30,8 +42,31 @@ var camposClienteRegistro=[
 ] 
 ;
 
-//rellenar select de tipos de acceso en la seccion login
+var camposProducto=[
+     {campo:'CodigoProducto', valido: false},
+    {campo:'NombreProducto', valido: false},
+    {campo:'PrecioProducto', valido: false},
+    {campo:'descripcionProducto', valido: false},
+    {campo:'imagenProducto',valido:false}   
+]
 
+var camposPromocion=[
+    {campo:'producto', valido: false},
+    {campo:'descuento', valido: false},
+    {campo:'precioProductoPromocion', valido: false},
+    {campo:'precioOferta', valido: false},
+    {campo:'sucursal',valido:false},
+    {campo:'fechaInicio', valido: false},
+    {campo:'fechaFinal',valido:false}  
+];
+
+var camposSucursal=[
+    {campo:'nombreSucursal', valido: false},
+    {campo:'latitudSucursal', valido: false},
+    {campo:'longitudSucursal', valido: false},
+]
+
+//rellenar select de tipos de acceso en la seccion login
 for(let i=0; i<tiposAcceso.length; i++){
      if($("#tipo").length)
     document.getElementById("tipo").innerHTML+=`<option value="${tiposAcceso[i]}">${tiposAcceso[i]}</option>`
@@ -159,7 +194,7 @@ if(tipo=='Empresa'){
                 if(usuario==registro.correoCliente && clave==registro.claveCliente){
                     clienteEncontrado=true;
                    // location.href="empresa.html";
-                   alert('cliente encontrado');
+                    location.href="promociones.html";
                    return
                     
                     
@@ -181,6 +216,81 @@ function RegistrarEmpresa(){
     }
        
 
+}
+
+
+
+//para agregar productos
+function RegistrarProducto(){
+     for(let i=0; i<camposProducto.length; i++)
+         camposProducto[i].valido=validarCampos(camposProducto[i].campo);
+
+    }
+
+function agregarProducto(){
+RegistrarProducto();
+
+ for(let i=0; i<camposProducto.length; i++)
+        if(!camposProducto[i].valido) return;
+     let produto=
+        {   CodigoProducto:document.getElementById('CodigoProducto').value,
+            NombreProducto:document.getElementById('NombreProducto').value,
+            PrecioProducto:document.getElementById('PrecioProducto').value,
+            descripcionProducto:document.getElementById('descripcionProducto').value,
+            imagenProducto:document.getElementById('imagenProducto').value,
+            }
+    
+    arrayProductos.push(produto);
+        alert('Producto agregado con éxito');
+console.log(arrayProductos);
+}
+
+
+//para agregar promociones 
+function agregarPromocion(){
+RegistrarPromocion();
+for(let i=0; i<camposPromocion.length; i++)
+        if(!camposPromocion[i].valido) return;
+     let promocion=
+        {   producto:document.getElementById('producto').value,
+            descuento:document.getElementById('descuento').value,
+            precioProductoPromocion:document.getElementById('precioProductoPromocion').value,
+            precioOferta:document.getElementById('precioOferta').value,
+            fechaFinal:document.getElementById('fechaFinal').value,          
+            sucursal:document.getElementById('sucursal').value,
+            fechaInicio:document.getElementById('fechaInicio').value,
+            fechaFinal:document.getElementById('fechaFinal').value,          
+        }
+    
+    arrayPromociones.push(promocion);
+    alert('Promoción agregara con éxito');
+console.log(arrayPromociones);
+}
+
+function RegistrarPromocion(){
+     for(let i=0; i<camposPromocion.length; i++)
+         camposPromocion[i].valido=validarCampos(camposPromocion[i].campo);
+}
+
+//para agregar sucursales 
+function agregarSucursal(){
+RegistrarSucursal();
+for(let i=0; i<camposSucursal.length; i++)
+        if(!camposSucursal[i].valido) return;
+     let sucursal=
+        {   nombreSucursal:document.getElementById('nombreSucursal').value,
+            latitudSucursal:document.getElementById('latitudSucursal').value,
+            longitudSucursal:document.getElementById('longitudSucursal').value,
+        }
+    
+    arraySucursales.push(sucursal);
+    alert('Sucursal agregara con éxito');
+console.log(arraySucursales);
+}
+
+function RegistrarSucursal(){
+     for(let i=0; i<camposSucursal.length; i++)
+         camposSucursal[i].valido=validarCampos(camposSucursal[i].campo);
 }
 
 function validarCampos(id){
@@ -313,3 +423,109 @@ function CompararClave(clave,confirmar,id){//empresa
 
 }
 
+
+//funcion utilizadas en registrar empresa
+function initMap() {
+ // Creamos un objeto mapa y especificamos el elemento DOM donde se va a mostrar.
+ var map = new google.maps.Map(document.getElementById('mapa'), {
+ center: {lat: parseFloat(document.getElementById('latitud').value), lng: parseFloat(document.getElementById('longitud').value)}, 
+ scrollwheel: false,
+ zoom: 8,
+ zoomControl: true,
+ rotateControl : false,
+ mapTypeControl: true,
+ streetViewControl: false,
+ });
+ // Creamos el marcador
+ var marker = new google.maps.Marker({
+ position: {lat: parseFloat(document.getElementById('latitud').value), lng: parseFloat(document.getElementById('longitud').value)},
+ draggable: true
+ });
+ // Le asignamos el mapa a los marcadores.
+ marker.setMap(map);
+ // creamos el objeto geodecoder
+ var geocoder = new google.maps.Geocoder();
+// le asignamos una funcion al eventos dragend del marcado
+ google.maps.event.addListener(marker, 'dragend', function() {
+ geocoder.geocode({'latLng': marker.getPosition()}, function(results, status) {
+ if (status == google.maps.GeocoderStatus.OK) {
+ var address=results[0]['formatted_address'];
+ alert(address);
+ }
+ });
+});
+}
+
+//ejecutar para mostrar perfil
+function mostrarPerfil(){
+    mostrarmapa();
+    agregarAlPerfil();
+}
+//funcion por ahora estatica para mostrar la ubicacion en el mapa
+function mostrarmapa(){
+    // Creamos un objeto mapa y especificamos el elemento DOM donde se va a mostrar.
+ var map = new google.maps.Map(document.getElementById('mapaEnPerfil'), {
+ center: {lat: 14.1, lng: -87.2167}, 
+ scrollwheel: false,
+ zoom: 8,
+ zoomControl: true,
+ rotateControl : false,
+ mapTypeControl: true,
+ streetViewControl: false,
+ });
+ // Creamos el marcador
+ var marker = new google.maps.Marker({
+ position: {lat: 14.1, lng: -87.2167},
+ draggable: true
+ });
+ // Le asignamos el mapa a los marcadores.
+ marker.setMap(map);
+ // creamos el objeto geodecoder
+ var geocoder = new google.maps.Geocoder();
+// le asignamos una funcion al eventos dragend del marcado
+ google.maps.event.addListener(marker, 'dragend', function() {
+ geocoder.geocode({'latLng': marker.getPosition()}, function(results, status) {
+ if (status == google.maps.GeocoderStatus.OK) {
+ var address=results[0]['formatted_address'];
+ alert(address);
+ }
+ });
+});
+
+}
+
+
+//funcion de mapa para sucursales
+function initialize() {
+          var marcadores = [
+            ['León', 42.603, -5.577],
+            ['Salamanca', 40.963, -5.669],
+            ['Zamora', 41.503, -5.744]
+          ];
+          var map = new google.maps.Map(document.getElementById('mapaSuc'), {
+            zoom: 7,
+            center: new google.maps.LatLng(41.503, -5.744),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+          });
+          var infowindow = new google.maps.InfoWindow();
+          var marker, i;
+          for (i = 0; i < marcadores.length; i++) {  
+            marker = new google.maps.Marker({
+              position: new google.maps.LatLng(marcadores[i][1], marcadores[i][2]),
+              map: map
+            });
+            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+              return function() {
+                infowindow.setContent(marcadores[i][0]);
+                infowindow.open(map, marker);
+              }
+            })(marker, i));
+          }
+        }
+    google.maps.event.addDomListener(window, 'load', initialize); //creo debo agregarlo a una funcion
+
+
+
+function agregarAlPerfil(){
+document.getElementById('perfil').innerHTML+=``;
+    }
