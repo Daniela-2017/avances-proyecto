@@ -61,7 +61,7 @@ Formulario de login
 	display: block;
 }
 
-.login input, .login select, .empresa button,  .cliente button, .mostrarPerfil button{
+.login input, .login select, .empresa button, .admin button, .cliente button, .mostrarPerfil button{
 	width: 100%;
 	margin-bottom: 20px;
 }
@@ -79,7 +79,7 @@ Formulario de login
 	font-size: 16px;
 }
 
-.login input[type="button"], .empresa button, .cliente button, .mostrarPerfil button{
+.login input[type="button"], .empresa button, .cliente button, .mostrarPerfil button, .perfil{
 	border: none;
 	outline: none;
 	font-size: 18px;
@@ -116,7 +116,11 @@ Pagina Principal**/
 	height: 450px;
 	width: 1500px;
 	padding-top: 0px;
-	
+}
+
+/**Formulario de administrador**/
+.admin{
+	margin-top: 3rem!important;
 }
 /**
 Formulario de menú
@@ -249,7 +253,7 @@ display: block
 Formulario de registro de empresa
 **/
 
-.empresa{
+.empresa, .admin{
 	width: 100%;
 	height: auto;
 	background: #000;
@@ -283,14 +287,14 @@ Formulario de registro de empresa
 }
 
 
-.empresa label, .cliente label{
+.empresa label, .cliente label, .admin label{
 	margin: 0;
 	padding: 0;
 	font-weight: bold;
 	display: block;
 }
 
-.empresa input, .cliente input{
+.empresa input, .cliente input, .admin input{
 	width: 100%;
 	margin-bottom: 20px;
 }
@@ -298,7 +302,7 @@ Formulario de registro de empresa
 .empresa input[type="text"],
 .empresa input[type="number"],
 .empresa input[type="password"],
-.cliente input{
+.cliente input, .admin input{
 	border: none;
 	border-bottom: 1px solid #fff;
 	color:white;
@@ -373,7 +377,7 @@ Formulario de registro de cliente
 }
 
 /*Modal actualizar empresa*/
-.ActualizarEmpresa, .inputProducto, .inputPromocion, .ActualizarCliente{
+.ActualizarEmpresa, .inputProducto, .inputPromocion, .ActualizarCliente, .ActualizarAdmin{
 	border: none!important;
 	color:white!important;
 	background: transparent!important;
@@ -388,12 +392,12 @@ Formulario de registro de cliente
 	opacity: .8!important;
 	padding: 1rem;
 }
-.divProductos, .divPromociones{
+.divProductos, .divPromociones, .divDashboard{
 	padding-left: 30px;
-color: white;
-text-align: center;
-
+	color: white;
+	text-align: center;
 }
+
 .modals{ /*modal de actualizar empresa y agregar producto*/
 	background-color:black!important;
 	opacity:.8!important;
@@ -628,7 +632,7 @@ padding: 10px
 }
 
 .bannerImagen{
-	width: 100%;
+	width: 95%;
 height: 300px;
 }
 

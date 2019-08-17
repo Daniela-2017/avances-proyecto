@@ -1,6 +1,8 @@
 var registros=[];
 var localStorage=window.localStorage;
-
+var claveAdmin=123;
+var usuarioAdmin='danny15zavalalic@gmail.com';
+//posteriormente inluir los datos por defeto del administrador
 
 //arreglos pra almacenamiento de los registros y compras
 var arrayProductos=[
@@ -29,6 +31,11 @@ var camposNuevoCliente=[
     {campo:'correo-nuevo', valido:false},
     {campo:'ClaveCliente-nueva', valido:false},
 ];
+
+var camposNuevoAdmin=[
+    {campo:'correo-nuevo-admin', valido:false},
+    {campo:'ClaveAdmin-nueva', valido:false},
+]
 
 var camposNuevoEmpresa=[
     {campo:'correo-nuevoEmpresa', valido:false},
@@ -192,7 +199,7 @@ if(tipo=='Empresa'){
                 if(usuario==registro.nombreEmpresa && clave==registro.ClaveEmpresa){
                     //seccionEmpresa(registro);
                     empresaEncontrada=true;
-                    location.href="empresa.html";
+                    location.href="dashboard.html";
                     
                     
                 }
@@ -221,6 +228,16 @@ if(tipo=='Empresa'){
             }
         }
     if(clienteEncontrado==false) alert('Usuario o clave incorrecta');
+    }
+//administrador
+    else {
+        if(clave==claveAdmin && usuario==usuarioAdmin){
+           location.href="admin.html"; 
+        } 
+        else{
+
+        }
+        alert('Usuario o clave incorrecta')
     }
 
 }
@@ -368,7 +385,7 @@ function CompararClaveCliente(clave,confirmar,id){//cliente
 
 }
 
-//atualizar correo cliente y empresa
+//atualizar correo cliente , empresa y admin en actualizar datos
 function correo(id,indice,array){
     let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     let valido= re.test(document.getElementById(id).value);
@@ -427,6 +444,16 @@ correo('correo-nuevo',0,camposNuevoEmpresa);
 ValidarClaveNueva('ClaveEmpresaNueva','ConfirmacionEmpresaNueva',1,camposNuevoEmpresa);
         for(let i=0; i<camposNuevoEmpresa.length; i++)
         if(!camposNuevoEmpresa[i].valido) return;
+
+        alert('Ok');
+}
+//actualizar administrador
+
+function validarAdminNuevo(){
+correo('correo-nuevo-admin',0,camposNuevoAdmin);
+ValidarClaveNueva('ClaveAdmin-nueva','ConfirmacionAdmin-nueva',1,camposNuevoAdmin);
+        for(let i=0; i<camposNuevoAdmin.length; i++)
+        if(!camposNuevoAdmin[i].valido) return;
 
         alert('Ok');
 }
@@ -570,41 +597,10 @@ function initMap() {
 
 //ejecutar para mostrar perfil
 function mostrarPerfil(){
-    mostrarmapa();
+//mostrarmapa();
     agregarAlPerfil();
 }
-//funcion por ahora estatica para mostrar la ubicacion en el mapa
-function mostrarmapa(){
-    // Creamos un objeto mapa y especificamos el elemento DOM donde se va a mostrar.
- var map = new google.maps.Map(document.getElementById('mapaEnPerfil'), {
- center: {lat: 14.1, lng: -87.2167}, 
- scrollwheel: false,
- zoom: 8,
- zoomControl: true,
- rotateControl : false,
- mapTypeControl: true,
- streetViewControl: false,
- });
- // Creamos el marcador
- var marker = new google.maps.Marker({
- position: {lat: 14.1, lng: -87.2167},
- draggable: true
- });
- // Le asignamos el mapa a los marcadores.
- marker.setMap(map);
- // creamos el objeto geodecoder
- var geocoder = new google.maps.Geocoder();
-// le asignamos una funcion al eventos dragend del marcado
- google.maps.event.addListener(marker, 'dragend', function() {
- geocoder.geocode({'latLng': marker.getPosition()}, function(results, status) {
- if (status == google.maps.GeocoderStatus.OK) {
- var address=results[0]['formatted_address'];
- alert(address);
- }
- });
-});
 
-}
 
 
 //funcion de mapa para sucursales
@@ -634,10 +630,42 @@ function initialize() {
             })(marker, i));
           }
         }
+    
+        //mapa para principal
+function initialize2() {
+          var marcadores = [
+            ['Tegucigalpa', 14.1, -87.2167]
+          ];
+          var map = new google.maps.Map(document.getElementById('mapaPrincipal'), {
+            zoom: 7,
+            center: new google.maps.LatLng(14.1, -87.2167),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+          });
+          var infowindow = new google.maps.InfoWindow();
+          var marker, i;
+          for (i = 0; i < marcadores.length; i++) {  
+            marker = new google.maps.Marker({
+              position: new google.maps.LatLng(marcadores[i][1], marcadores[i][2]),
+              map: map
+            });
+            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+              return function() {
+                infowindow.setContent(marcadores[i][0]);
+                infowindow.open(map, marker);
+              }
+            })(marker, i));
+          }
+        }
     google.maps.event.addDomListener(window, 'load', initialize); //creo debo agregarlo a una funcion
-
+   google.maps.event.addDomListener(window, 'load', initialize2);
 
 
 function agregarAlPerfil(){
-document.getElementById('perfil').innerHTML+=``;
+//document.getElementById('perfil').innerHTML+=``;
     }
+
+function MiPerfil(){
+    location.href= "empresa.html";
+}
+
+
