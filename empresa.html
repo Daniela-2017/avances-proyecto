@@ -90,7 +90,7 @@
 
 	</nav>
 
-	  <!-- Modal para agregar empresa-->
+	  <!-- Modal para actualizar empresa-->
   <div class="modal fade" id="formulario-actualizar-Empresa" style="color: aliceblue"; tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content modals">
@@ -153,7 +153,7 @@
 	<div class="input-group">
 		<div class="input-group-prepend" style="height: 40px">
 			<div class="input-group-text">@</div>
-	<input type="text" id="correo-nuevo" class="form-control ActualizarEmpresa" placeholder="Escriba el correo electrónico" style="width:-moz-available">
+	<input type="text" id="correo-nuevoEmpresa" class="form-control ActualizarEmpresa" placeholder="Escriba el correo electrónico" style="width:-moz-available">
 		<div class="valid-feedback" style="text-align:right">Ok</div>
 		<div class="invalid-feedback" style="text-align:right; margin-bottom:9px">
 		Correo no válido
@@ -164,13 +164,19 @@
 
 </div>
 <br> 
-<input type="password" id="ClaveEmpresa" class="form-control ActualizarEmpresa" placeholder="Escriba una contraseña segura" style="width:-moz-available" value="">	
+<div>
+<input type="password" id="ClaveEmpresaNueva" class="form-control ActualizarEmpresa" placeholder="Escriba una contraseña segura" style="width:-moz-available" value="">	
+		<div class="valid-feedback" style="text-align:right">Ok</div>
+		<div class="invalid-feedback" style="text-align:right; margin-bottom:9px">
+		Las contraseñas no coinciden
+		</div>
+</div>
 <br> 
-<input type="password" value="" id="ConfirmacionEmpresa" class="form-control ActualizarEmpresa" placeholder="Confirme su Contraseña" style="width:-moz-available; margin-left:auto">		
+<input type="password" value="" id="ConfirmacionEmpresaNueva" class="form-control ActualizarEmpresa" placeholder="Confirme su Contraseña" style="width:-moz-available; margin-left:auto">		
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-          <button id="btn-guardar" type="button" class="btn btn-primary">Guardar Cambios</button>
+          <button id="btn-guardar" type="button" class="btn btn-primary" onclick="validarEmpresaNuevo()">Guardar Cambios</button>
         </div>
       </div>
     </div>

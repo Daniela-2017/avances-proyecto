@@ -1,6 +1,8 @@
 var registros=[];
 var localStorage=window.localStorage;
 
+
+//arreglos pra almacenamiento de los registros y compras
 var arrayProductos=[
 
 ];
@@ -12,12 +14,26 @@ var arraySucursales=[
 
 ];
 
-var CamposLogin =[
+var compraProductos=[
+
+];
+
+var CamposLogin = [
    {campo:'clave', valido:false},
    {campo:'usuario', valido:false}, 
 ];
 
 var tiposAcceso=["Empresa", "Usuario", "Super Administrador"];
+
+var camposNuevoCliente=[
+    {campo:'correo-nuevo', valido:false},
+    {campo:'ClaveCliente-nueva', valido:false},
+];
+
+var camposNuevoEmpresa=[
+    {campo:'correo-nuevoEmpresa', valido:false},
+    {campo:'ClaveEmpresaNueva', valido:false}, 
+]
 
 var CamposEmpresaRegistro=[
     {campo:'nombreEmpresa', valido:false},
@@ -66,6 +82,10 @@ var camposSucursal=[
     {campo:'longitudSucursal', valido: false},
 ]
 
+var campoCompra=[
+    {campo:'nTarjeta', valido:false}
+]
+
 //rellenar select de tipos de acceso en la seccion login
 for(let i=0; i<tiposAcceso.length; i++){
      if($("#tipo").length)
@@ -84,16 +104,14 @@ function validarRegistroCliente(){
     ValidarClaveCliente();
     validarCorreoCliente('correoCliente')
 }
+
 //para el formulario de registro del cliente
 function RegistrarCliente(){
-    
-    
     for(let i=0; i<camposClienteRegistro.length; i++)
          camposClienteRegistro[i].valido=validarCampos(camposClienteRegistro[i].campo);
     
-
-    
 }
+
 function validarCorreoCliente(id){//cliente
     let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     let valido= re.test(document.getElementById(id).value);
@@ -217,8 +235,35 @@ function RegistrarEmpresa(){
        
 
 }
+//comprar producto
+function comprarProducto(){
+     for(let i=0; i<campoCompra.length; i++)
+         campoCompra[i].valido=validarCampos(campoCompra[i].campo);
 
+ for(let i=0; i<campoCompra.length; i++)
+        if(!campoCompra[i].valido) return;
+     let compra=
+        {   
+            nTarjeta:document.getElementById('nTarjeta').value,
+            }
+    
+    compraProductos.push(compra);
+        alert('Gracias por su compra, se enviará un mensaje de confirmación a su correo electrónico');
+console.log(compraProductos);
+    }
+//calificar producto
 
+function calificarPoducto(){
+    document.getElementById('estrellas').innerHTML = '';
+        let calificacion= document.getElementById('calificar').value;
+    for (let i=0; i<calificacion; i++){
+        document.getElementById('estrellas').innerHTML += `<i class="fas fa-star" style="color:yellow"></i>`
+    }
+    for(let i=0; i<(5-calificacion); i++){
+        document.getElementById('estrellas').innerHTML += `<i class="far fa-star" style="color: yellow;"></i>`
+    }
+        document.getElementById('calificar').value='';
+}
 
 //para agregar productos
 function RegistrarProducto(){
@@ -323,6 +368,69 @@ function CompararClaveCliente(clave,confirmar,id){//cliente
 
 }
 
+//atualizar correo cliente y empresa
+function correo(id,indice,array){
+    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let valido= re.test(document.getElementById(id).value);
+
+        if (valido==true){
+        document.getElementById(id).classList.remove('is-invalid');
+        document.getElementById(id).classList.add('is-valid');
+        array[indice].valido=true;
+        }
+
+        else{
+        document.getElementById(id).classList.remove('is-valid');
+        document.getElementById(id).classList.add('is-invalid');
+        array[indice].valido=false;
+        return false; 
+        }
+
+}
+    
+function ValidarClaveNueva(id1,id2,indice,array){
+    var ClaveNueva=document.getElementById(id1).value;
+    var ConfirmacionNueva=document.getElementById(id2).value;
+
+    CompararClaveNueva(ClaveNueva,ConfirmacionNueva,id1,indice,array);
+
+}
+
+function CompararClaveNueva(clave,confirmar,id,indice,array){
+
+    if(clave!= confirmar || clave==''){
+        document.getElementById(id).classList.remove('is-valid');
+        document.getElementById(id).classList.add('is-invalid');
+            array[indice].valido=false;
+        }
+
+    else if (clave==confirmar){
+        document.getElementById(id).classList.remove('is-invalid');
+        document.getElementById(id).classList.add('is-valid');
+            array[indice].valido=true;
+        }
+
+}
+
+//acualizar cliente
+function validarClienteNuevo(){
+correo('correo-nuevo-cliente',0,camposNuevoCliente);
+ValidarClaveNueva('ClaveCliente-nueva','ConfirmacionCliente-nueva',1,camposNuevoCliente);
+        for(let i=0; i<camposNuevoCliente.length; i++)
+        if(!camposNuevoCliente[i].valido) return;
+
+        alert('Ok');
+}
+    //actualizar empresa
+function validarEmpresaNuevo(){
+correo('correo-nuevo',0,camposNuevoEmpresa);
+ValidarClaveNueva('ClaveEmpresaNueva','ConfirmacionEmpresaNueva',1,camposNuevoEmpresa);
+        for(let i=0; i<camposNuevoEmpresa.length; i++)
+        if(!camposNuevoEmpresa[i].valido) return;
+
+        alert('Ok');
+}
+
 function validarCorreo(id){//empresa
     let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     let valido= re.test(document.getElementById(id).value);
@@ -422,6 +530,10 @@ function CompararClave(clave,confirmar,id){//empresa
         }
 
 }
+    //funciones de ver mas
+     function VerEmpresaAsociada(){
+         alert('Nombre de Empresa')
+     }
 
 
 //funcion utilizadas en registrar empresa

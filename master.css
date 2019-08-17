@@ -373,7 +373,7 @@ Formulario de registro de cliente
 }
 
 /*Modal actualizar empresa*/
-.ActualizarEmpresa, .inputProducto, .inputPromocion{
+.ActualizarEmpresa, .inputProducto, .inputPromocion, .ActualizarCliente{
 	border: none!important;
 	color:white!important;
 	background: transparent!important;
@@ -443,6 +443,14 @@ padding-top: 5rem;
 	background-color: red;
 
 font-size: 1.5rem;
+}
+/*comprar producto*/
+.inputProducto{
+	margin: 10px;
+}
+/*ver mas en productos*/
+.btnVerMas{
+	margin: 3px
 }
 @media (max-width: 600px) {
   #banner {
