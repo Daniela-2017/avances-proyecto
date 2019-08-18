@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8">
 	<title>Registrar Ciente</title>
@@ -8,79 +9,82 @@
 	<link href="BootstrapCSS/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="master.css">
 </head>
+
 <body>
 	<div class="cliente">
 		<h1 align="center">Ingresar Cliente</h1>
 		<form>
-		<div>
-			<label for="Nombre">Escriba su Nombre</label>
-			<input value="" class="form-control" type="text" id="nombreCliente" placeholder="Primer nombre"><br>
-		<div class="valid-feedback" style="text-align:right">Ok</div>
-		<div class="invalid-feedback" style="text-align:right; margin-bottom:9px">
-		Campo Obligatorio
-		</div>
-		</div>
-		<div>	
-			<label for="Apellido">Escriba su Apellido</label>
-			<input value="" class="form-control" type="text" id="apellidoCliente" placeholder="Primer apellido"><br>
-		<div class="valid-feedback" style="text-align:right">Ok</div>
-		<div class="invalid-feedback" style="text-align:right; margin-bottom:9px">
-		Campo Obligatorio
-		</div>	
-		</div>
-		<div>
-			<label for="pais">País de Origen</label>
-			<input value="" class="form-control" type="text" id="paisCliente" placeholder="Escriba su País de Origen"><br>
-		<div class="valid-feedback" style="text-align:right">Ok</div>
-		<div class="invalid-feedback" style="text-align:right; margin-bottom:9px">
-		Campo Obligatorio
-		</div>
-		</div>
-		<div>
-			<label for="Dirección">Dirección</label>
-			<textarea value="" class="form-control" name="Dirección" id="direccionCliente" placeholder="Escriba aquí su Dirección" rows="3" cols="20"></textarea><br><br>
-		<div class="valid-feedback" style="text-align:right">Ok</div>
-		<div class="invalid-feedback" style="text-align:right; margin-bottom:9px">
-		Campo Obligatorio
-		</div>
-		</div>
-			
-<div class="form-row align-items-center"> 
-	<label for="correo">Correo</label>
-	<div class="input-group">
-		<div class="input-group-prepend" style="height: 40px;">
-			<div class="input-group-text">@</div>
-	<input type="text" id="correoCliente" class="form-control" placeholder="Escriba el correo electrónico">
-		<div class="valid-feedback" style="text-align:right">Ok</div>
-		<div class="invalid-feedback" style="text-align:right; margin-bottom:9px">
-		Correo no válido
-		</div>
-				
-		</div>			
-	</div>	
+			<div>
+				<label for="Nombre">Escriba su Nombre</label>
+				<input value="" class="form-control" type="text" id="nombreCliente" placeholder="Primer nombre"><br>
+				<div class="valid-feedback" style="text-align:right">Ok</div>
+				<div class="invalid-feedback" style="text-align:right; margin-bottom:9px">
+					Campo Obligatorio
+				</div>
+			</div>
+			<div>
+				<label for="Apellido">Escriba su Apellido</label>
+				<input value="" class="form-control" type="text" id="apellidoCliente" placeholder="Primer apellido"><br>
+				<div class="valid-feedback" style="text-align:right">Ok</div>
+				<div class="invalid-feedback" style="text-align:right; margin-bottom:9px">
+					Campo Obligatorio
+				</div>
+			</div>
+			<div>
+				<label for="pais">País de Origen</label>
+				<input value="" class="form-control" type="text" id="paisCliente" placeholder="Escriba su País de Origen"><br>
+				<div class="valid-feedback" style="text-align:right">Ok</div>
+				<div class="invalid-feedback" style="text-align:right; margin-bottom:9px">
+					Campo Obligatorio
+				</div>
+			</div>
+			<div>
+				<label for="Dirección">Dirección</label>
+				<textarea value="" class="form-control" name="Dirección" id="direccionCliente" placeholder="Escriba aquí su Dirección" rows="3"
+				 cols="20"></textarea><br><br>
+				<div class="valid-feedback" style="text-align:right">Ok</div>
+				<div class="invalid-feedback" style="text-align:right; margin-bottom:9px">
+					Campo Obligatorio
+				</div>
+			</div>
 
-</div>
-<br>
+			<div class="form-row align-items-center">
+				<label for="correo">Correo</label>
+				<div class="input-group">
+					<div class="input-group-prepend" style="height: 40px;">
+						<div class="input-group-text">@</div>
+						<input type="text" id="correoCliente" class="form-control" placeholder="Escriba el correo electrónico">
+						<div class="valid-feedback" style="text-align:right">Ok</div>
+						<div class="invalid-feedback" style="text-align:right; margin-bottom:9px">
+							Correo no válido
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+			<br>
 			<div style="float:left">
-				
+
 				<label for="clave">Contraseña</label>
-				<input value="" type="password"  class="form-control" id="claveCliente" placeholder="Escriba una contraseña segura"  style="width:130%">	
-			<div class="valid-feedback" style="text-align:right">Ok</div>
-		<div class="invalid-feedback" style="text-align:right; margin-bottom:9px">
-		Las contraseñas no coinciden
-		</div>
+				<input value="" type="password" class="form-control" id="claveCliente" placeholder="Escriba una contraseña segura" style="width:130%">
+				<div class="valid-feedback" style="text-align:right">Ok</div>
+				<div class="invalid-feedback" style="text-align:right; margin-bottom:9px">
+					Las contraseñas no coinciden
+				</div>
 			</div>
 			<div style="text-align:right" id="confirmacion-clave">
 				<br>
-			<input value="" type="password" id="clave2Cliente" placeholder="Confirme su Contraseña" style="width:40%">		
-		</div>
+				<input value="" type="password" id="clave2Cliente" placeholder="Confirme su Contraseña" style="width:40%">
+			</div>
 
 		</form>
-					
-			<button onclick="validarRegistroCliente()">Registrarme</button>
-</div>
+
+		<button onclick="validarRegistroCliente()">Registrarme</button>
+	</div>
 	<script src="jquery/jquery-3.4.1.min.js"></script>
 	<script src="popper/popper.min.js"></script>
 	<script src="controlador.js"></script>
 </body>
+
 </html>
