@@ -79,7 +79,7 @@ Formulario de login
 	font-size: 16px;
 }
 
-.login input[type="button"], .empresa button, .cliente button, .mostrarPerfil button, .perfil{
+.login input[type="submit"], .empresa input[type="submit"], .cliente input[type="submit"], .mostrarPerfil button, .perfil{
 	border: none;
 	outline: none;
 	font-size: 18px;

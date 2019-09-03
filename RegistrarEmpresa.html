@@ -17,9 +17,9 @@
 	<div class="empresa">
 		<button style="width: 200px;"><a href="login.html" style="color: white;background-color: transparent;text-decoration-style: -moz-none;"> Acceder a mi empresa</a></button>
 		<h1 align="center" style="font-family: nyala; font-weight: bolder">Ingresar Empresa</h1>
-		<form>
+		<form action="procesarCliente.php" method="POST">
 			<label for="Nombre de la empresa">Nombre de la empresa</label>
-			<input class="form-control" type="text" id="nombreEmpresa" value="" placeholder="Escriba el Nombre de la Empresa"><br>
+			<input class="form-control" type="text" id="nombreEmpresa" name="nombre" value="" placeholder="Escriba el Nombre de la Empresa"><br>
 			<div class="valid-feedback" style="text-align:right">Ok
 			</div>
 			<div class="invalid-feedback" style="text-align:right">
@@ -27,7 +27,7 @@
 			</div>
 			<div>
 				<label for="pais">País de Origen</label>
-				<input class="form-control" type="text" id="pais" placeholder="Escriba el País de Origen" value=""><br>
+				<input class="form-control" name="pais" type="text" id="pais" placeholder="Escriba el País de Origen" value=""><br>
 				<div class="valid-feedback" style="text-align:right">Ok
 				</div>
 				<div class="invalid-feedback" style="text-align:right">
@@ -49,7 +49,7 @@
 					</div>
 					<label for="latitud-altitud">Altitud/Latitud</label>
 					<div>
-						<input class="form-control" type="text" id="latitud" placeholder="Escriba su latitud" value="" style="width:80%" />
+						<input class="form-control" type="text" id="latitud" name="latitud" placeholder="Escriba su latitud" value="" style="width:80%" />
 						<div class="valid-feedback" style="text-align:right">Ok
 						</div>
 
@@ -59,7 +59,7 @@
 					</div>
 					<div>
 
-						<input class="form-control" id="longitud" type="text" placeholder="Escriba aqui su longitud" value="" style="width:80%">
+						<input class="form-control" name="longitud" id="longitud" type="text" placeholder="Escriba aqui su longitud" value="" style="width:80%">
 						<div class="valid-feedback" style="text-align:right">Ok
 						</div>
 						<div class="invalid-feedback" style="text-align:right">
@@ -79,13 +79,13 @@
 
 			<!-- Campo ficticio para simular el path del archivo -->
 			<div>
-				<input type="text" value="" id="url-archivo" class="input-url form-control" />
+				<input type="text" value="" id="url-archivo" name="urlBanner" class="input-url form-control" />
 				<!-- label para simular el boton "seleccionar archivo" -->
 				<label class="cargar" style="cursor:pointer">
 	Subir Banner
 	<span>
 	
-		    <input type="file" id="archivo" value="" name="archivo" style="display:none"/>
+		    <input type="file" id="archivo" value="" style="display:none"/>
 	</span></label>
 				<!-- Campo original file -->
 				<div class="valid-feedback" style="text-align:right">Ok
@@ -101,7 +101,7 @@
 
 			<!-- label para simular el boton "seleccionar archivo" -->
 			<div>
-				<input type="text" value="" id="url-archivo2" class="input-url form-control" />
+				<input type="text" value="" id="url-archivo2" name="urlLogotipo" class="input-url form-control" />
 				<label class="cargar" style="cursor:pointer">
     Subir Logotipo<span>
     <!-- Campo original file -->
@@ -121,9 +121,9 @@
 				<label for="redes">Redes Sociales</label>
 				<br>
 				<div class="row">
-					<img src="img/facebook.png" style="height: 40px;"><input id="facebook" type="text" value="" class="col-xl-2">
-					<img src="img/whatsapp.jpg" style="height: 40px; margin-left: 20px;"><input id="whatsapp" type="text" value="" class="col-xl-2">
-					<img src="img/twitter.jpg" style="height: 40px; margin-left: 20px;"><input id="twitter" type="text" value="" class="col-xl-2">
+					<img src="img/facebook.png" style="height: 40px;"><input id="facebook" type="text" value="" name="facebook" class="col-xl-2">
+					<img src="img/whatsapp.jpg" style="height: 40px; margin-left: 20px;"><input id="whatsapp" name="whatsapp" type="text" value="" class="col-xl-2">
+					<img src="img/twitter.jpg" style="height: 40px; margin-left: 20px;"><input id="twitter" type="text" name="twitter" value="" class="col-xl-2">
 					<img src="img/instagram.png" style="height: 40px; margin-left: 20px;"><input id="instagram" type="text" value="" class="col-xl-2">
 				</div>
 				<textarea class="form-control" id="RedesSociales" name="redes" placeholder="Otras..." style="width: -moz-available"></textarea>
@@ -135,7 +135,7 @@
 				<div class="input-group">
 					<div class="input-group-prepend" style="height: 40px;">
 						<div class="input-group-text">@</div>
-						<input type="text" id="correo" class="form-control" placeholder="Escriba el correo electrónico">
+						<input type="text" id="correo" name="correo" class="form-control" placeholder="Escriba el correo electrónico">
 						<div class="valid-feedback" style="text-align:right">Ok</div>
 						<div class="invalid-feedback" style="text-align:right; margin-bottom:9px">
 							Correo no válido
@@ -150,7 +150,7 @@
 				<div style="float:left">
 
 					<label for="clave">Contraseña</label>
-					<input type="password" id="ClaveEmpresa" class="form-control" placeholder="Escriba una contraseña segura" style="width:130%"
+					<input type="password" id="ClaveEmpresa" name="clave" class="form-control" placeholder="Escriba una contraseña segura" style="width:130%"
 					 value="">
 					<div class="valid-feedback" style="text-align:right">Ok</div>
 					<div class="invalid-feedback" style="text-align:right; margin-bottom:9px">
@@ -159,14 +159,14 @@
 				</div>
 				<div style="text-align:right" id="confirmacion-clave">
 					<br>
-					<input type="password" value="" id="ConfirmacionEmpresa" class="form-control" placeholder="Confirme su Contraseña" style="width:40%; margin-left:auto">
+					<input type="password" value="" id="ConfirmacionEmpresa" name="claveConfirmacion" class="form-control" placeholder="Confirme su Contraseña" style="width:40%; margin-left:auto">
 
 				</div>
 
 			</div>
 
 		</form>
-		<button onclick="validar()">Añadir Empresa</button>
+		<input type="submit" name="" onclick="validar()" value="Añadir Empresa">
 	</div>
 
 
