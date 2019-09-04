@@ -9,14 +9,25 @@
 
 			foreach ($usuarios as $key => $value) {
 				if ($value['correo']==$_POST['Usuario'] && $value['clave']==$_POST['Clave']) {
-					header("Location: promociones.html");
+					$id=$value['correo'];
+					$nombre=$value['nombre'];
+					$apellido=$value['apellido'];
+					$pais=$value['pais'];
+					$direccion=$value['direccion'];
+					$clave=$value['clave'];
+					$claveConf=$value['confirmacionClave'];
+
+					$encontrado=true;
+					header("Location: promociones.php?id=$id&nombre=$nombre&apellido=$apellido&pais=$pais&direccion=$direccion&clave=$clave&claveconf=$claveConf");
+
 				}
-				else{
+				if ($encontrado!=true) {
 					header("Location: login.html");
 				}
 				
 		}
 			
+
 		}
 
 		elseif ($_POST['tipoIngreso']=='Empresa') {
@@ -27,13 +38,15 @@
 			foreach ($empresas as $key => $value) {
 				if ($value['id']==$_POST['Usuario'] && $value['clave']==$_POST['Clave']) {
 					$id = $value['id'];
+
+					$encontrado=true;
 					header("Location: empresa.html");
-				}
-				else{
-					header("Location: login.html");
 				}
 				
 		}
+						if ($encontrado!=true) {
+					header("Location: login.html");
+				}
 		}
     }
 ?>
