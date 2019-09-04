@@ -17,9 +17,9 @@
 	<div class="empresa">
 		<button style="width: 200px;"><a href="login.html" style="color: white;background-color: transparent;text-decoration-style: -moz-none;"> Acceder a mi empresa</a></button>
 		<h1 align="center" style="font-family: nyala; font-weight: bolder">Ingresar Empresa</h1>
-		<form action="procesarCliente.php" method="POST">
+		<form action="procesarEmpresa.php" method="POST">
 			<label for="Nombre de la empresa">Nombre de la empresa</label>
-			<input class="form-control" type="text" id="nombreEmpresa" name="nombre" value="" placeholder="Escriba el Nombre de la Empresa"><br>
+			<input class="form-control" type="text" id="nombreEmpresa" name="id" value="" placeholder="Escriba el Nombre de la Empresa"><br>
 			<div class="valid-feedback" style="text-align:right">Ok
 			</div>
 			<div class="invalid-feedback" style="text-align:right">
@@ -39,7 +39,7 @@
 				<div class="col-md-6 d-none d-sm-block" style="height: max-content">
 
 					<label for="Dirección">Dirección</label>
-					<textarea class="form-control" style="width:80%" id="direccion" name="Dirección" placeholder="Escriba aquí la Dirección"
+					<textarea class="form-control" style="width:80%" id="direccion" name="direccion" placeholder="Escriba aquí la Dirección"
 					 rows="3" cols="20" value=""></textarea><br><br>
 					<div class="valid-feedback" style="text-align:right">Ok
 					</div>
@@ -164,9 +164,9 @@
 				</div>
 
 			</div>
-
+<input type="submit" name="agregar" onclick="validar()" value="Agregar Empresa">
 		</form>
-		<input type="submit" name="" onclick="validar()" value="Añadir Empresa">
+		
 	</div>
 
 
