@@ -10,16 +10,15 @@
 		fwrite($archivo, json_encode($empresas));
 		fclose($archivo);
     }
-
-
-?>
-<!DOCTYPE html>
+        echo "<!DOCTYPE html>
 <html>
 <head>
-	<title></title>
-	<meta http-equiv="REFRESH" content="0.2;URL=RegistrarEmpresa.html">
+    <title></title>
+    <meta http-equiv='REFRESH' content='0.2' ;URL=RegistrarEmpresa'>
 </head>
 <body>
 
 </body>
-</html>
+</html>";
+
+?>

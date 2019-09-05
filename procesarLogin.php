@@ -38,9 +38,23 @@
 			foreach ($empresas as $key => $value) {
 				if ($value['id']==$_POST['Usuario'] && $value['clave']==$_POST['Clave']) {
 					$id = $value['id'];
+					$pais = $value['pais'];
+					$direccion = $value['direccion'];
+					$latitud=$value['latitud'];
+					$longitud= $value['longitud'];
+					$urlBanner= $value['urlBanner'];
+					$urlLogotipo= $value['urlLogotipo'];
+					$facebook= $value['facebook'];
+					$whatsapp= $value['whatsapp'];
+					$twitter= $value['twitter'];
+					$redes= $value['redes'];
+					$correo= $value['correo'];
+					$clave= $value['clave'];
+					$claveConfirmacion= $value['claveConfirmacion'];
 
 					$encontrado=true;
-					header("Location: empresa.html");
+				
+					header("Location: empresa.php?id=$id&pais=$pais&direccion=$direccion&latitud=$latitud&longitud=$longitud&urlBanner=$urlBanner&urlLogotipo=$urlLogotipo&facebook=$facebook&whatsapp=$whatsapp&twitter=$twitter&redes=$redes&correo=$correo&clave=$clave&claveConfirmacion=$claveConfirmacion");
 				}
 				
 		}
