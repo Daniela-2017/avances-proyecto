@@ -79,7 +79,7 @@ Formulario de login
 	font-size: 16px;
 }
 
-.login input[type="submit"], .empresa input[type="submit"], .cliente input[type="submit"], .mostrarPerfil button, .perfil{
+.login input[type="submit"],.empresa button, .empresa input[type="submit"], .cliente input[type="submit"], .mostrarPerfil button, .perfil{
 	border: none;
 	outline: none;
 	font-size: 18px;
@@ -294,7 +294,7 @@ Formulario de registro de empresa
 	display: block;
 }
 
-.empresa input, .cliente input, .admin input{
+.empresa input,.cliente input, .admin input{
 	width: 100%;
 	margin-bottom: 20px;
 }
@@ -302,7 +302,8 @@ Formulario de registro de empresa
 .empresa input[type="text"],
 .empresa input[type="number"],
 .empresa input[type="password"],
-.cliente input, .admin input{
+.cliente input, .admin input,
+{
 	border: none;
 	border-bottom: 1px solid #fff;
 	color:white;

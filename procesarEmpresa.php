@@ -9,16 +9,10 @@
 		$archivo= fopen('empresas.json', 'w');
 		fwrite($archivo, json_encode($empresas));
 		fclose($archivo);
-    }
-        echo "<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-    <meta http-equiv='REFRESH' content='0.2' ;URL=RegistrarEmpresa'>
-</head>
-<body>
+  
+                header("Location: RegistrarEmpresa.html");
+}
 
-</body>
-</html>";
+
 
 ?>

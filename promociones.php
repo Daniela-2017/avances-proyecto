@@ -162,10 +162,10 @@
           <!--agregar metodo-->
           <?php
           $contenidoArchivo=file_get_contents('usuarios.json');
-    $usuarios=json_decode($contenidoArchivo,true);
-      for ($i=0; $i <  sizeof($usuarios); $i++) { //buscar el indice del arreglo en el archivo donde esta ubicado el registro
-        if ($usuarios[$i]['correo']==$_GET['id']) {
-          $indice=$i;
+          $usuarios=json_decode($contenidoArchivo,true);
+          for ($i=0; $i <  sizeof($usuarios); $i++) { //buscar el indice del arreglo en el archivo donde esta ubicado el registro
+            if ($usuarios[$i]['correo']==$_GET['id']) {
+              $indice=$i;
         }
     }
 
@@ -177,7 +177,7 @@
           $clave=$_GET['clave'];
           $claveConf=$_GET['claveconf'];
 
-          echo "<form action='procesarCliente.php' method='PUT'>
+          echo "<form action='editarCliente.php' method='PUT'>
           <input value=$indice name='indice' style='display:none'>
           <input class='form-control ActualizarCliente' type='text' id='primerNombre-nuevo' name='nombre' value='$nombre' placeholder='Primer Nombre'><br>
 

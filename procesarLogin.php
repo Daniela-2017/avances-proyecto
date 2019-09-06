@@ -47,6 +47,7 @@
 					$facebook= $value['facebook'];
 					$whatsapp= $value['whatsapp'];
 					$twitter= $value['twitter'];
+					$instagram= $value['instagram'];
 					$redes= $value['redes'];
 					$correo= $value['correo'];
 					$clave= $value['clave'];
@@ -54,7 +55,7 @@
 
 					$encontrado=true;
 				
-					header("Location: empresa.php?id=$id&pais=$pais&direccion=$direccion&latitud=$latitud&longitud=$longitud&urlBanner=$urlBanner&urlLogotipo=$urlLogotipo&facebook=$facebook&whatsapp=$whatsapp&twitter=$twitter&redes=$redes&correo=$correo&clave=$clave&claveConfirmacion=$claveConfirmacion");
+					header("Location: empresa.php?id=$id&pais=$pais&direccion=$direccion&latitud=$latitud&longitud=$longitud&urlBanner=$urlBanner&urlLogotipo=$urlLogotipo&facebook=$facebook&whatsapp=$whatsapp&twitter=$twitter&instagram=$instagram&redes=$redes&correo=$correo&clave=$clave&claveConfirmacion=$claveConfirmacion");
 				}
 				
 		}
