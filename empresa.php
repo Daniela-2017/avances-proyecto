@@ -295,13 +295,47 @@
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 					<button type="submit" class="btn btn-primary" onclick="agregarProducto()">Guardar Producto</button>
 					
-					<br>	
-					 <button type="button" class="btn btn-primary">Ver Registro de Productos</button>			
+					<br>
+					<a type="button" data-toggle="modal" data-target="#formulario-ver-productos">
+
+					 <button type="button" class="btn btn-primary">Ver Registro de Productos</button></a>		
 	      </div>
 	    </div>
 	  </div>
 	</div>
 	</form>
+
+			<!--__________Ver productos-->
+	<div id="formulario-ver-productos" class="modal" style="color:aliceblue" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document" style="background-color: black">
+	    <div class="modal-content modals" style="width:958px">
+	      <div class="modal-header">
+	        <h5 class="modal-title">Ver Productos Existentes</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+			<?php
+
+				$contenidoArchivo=file_get_contents('productos.json');
+				$productos=json_decode($contenidoArchivo,true);
+				for ($i=0; $i < sizeof($productos); $i++) { 
+							echo json_encode($productos[$i]);
+					
+				}
+			?>
+
+			</div>
+			      <div class="modal-footer">
+
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+			
+	      </div>
+	    </div>
+	  </div>
+	</div>
+		<!--_______________________________-->
 
 		<!--____________Modal para agregar Promociones___________-->
 
@@ -457,13 +491,43 @@
 							<button type="submit" class="btn btn-primary" onclick="agregarSucursal()">Guardar Producto</button>
 							
 							<br>	
-							 <button class="btn btn-primary">Ver Registro de Sucursales</button>			
+							 <a data-toggle="modal" data-target="#formulario-ver-sucursales"><button class="btn btn-primary">Ver Registro de Sucursales</button></a>			
 	      </div>
 	    </div>
 	  </div>
 	</div>
 	</form>
 	<!--_______________________________-->
+		<!--__________Ver Sucursales_______-->
+	<div id="formulario-ver-sucursales" class="modal" style="color:aliceblue" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document" style="background-color: black">
+	    <div class="modal-content modals">
+	      <div class="modal-header">
+	        <h5 class="modal-title">Ver Sucursales Existentes</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+			<?php
+
+				$contenidoArchivo=file_get_contents('sucursales.json');
+				$sucursales=json_decode($contenidoArchivo,true);
+				for ($i=0; $i < sizeof($sucursales); $i++) { 
+							echo json_encode($sucursales[$i]);
+					
+				}
+			?>
+
+			</div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+			
+	      </div>
+	    </div>
+	  </div>
+	</div>
+		<!--_______________________________-->
 
 	<!--__________modal para agregar ver ficha de promocion______-->
 	<div id="formulario-ficha-promocional" class="modal" style="color:aliceblue" tabindex="-1" role="dialog">

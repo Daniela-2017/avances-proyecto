@@ -1,6 +1,6 @@
   <?php
 
- // echo "Producto agregado correctamente";
+  echo "Sucursal agregada correctamente";
     if ($_POST!=null){
 
     	//obtengo los datos del archivo empresas.php
