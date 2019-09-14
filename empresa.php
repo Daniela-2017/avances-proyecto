@@ -8,7 +8,7 @@
 		<link rel="shortcut icon" type="image/png" href="img/empresa.png">
 		<link rel="stylesheet" href="BootstrapCSS/bootstrap.min.css">
 	<!--llamado para cargar el mapa-->
-	<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script><!--llamado parael mapa de sucursales-->
+	<!--<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>--><!--llamado parael mapa de sucursales-->
 	</head>
 
 	<body>

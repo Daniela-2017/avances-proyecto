@@ -13,7 +13,7 @@
 <body>
 	<div class="cliente">
 		<h1 align="center">Ingresar Cliente</h1>
-		<form action="procesarCliente.php" method="POST">
+		<form onsubmit="return validarRegistroCliente();" action="procesarCliente.php" method="POST">
 			<div>
 				<label for="Nombre">Escriba su Nombre</label>
 				<input value="" class="form-control" type="text" name="nombre" id="nombreCliente" placeholder="Primer nombre"><br>
@@ -79,9 +79,10 @@
 			</div>
 
 
-		<input type="submit" value="Registrarme" name="accion" onclick="validarRegistroCliente()"><!---->
+		<input type="submit" value="Registrarme"><!---->
+		</div>
 		</form>
-	</div>
+
 	<script src="jquery/jquery-3.4.1.min.js"></script>
 	<script src="popper/popper.min.js"></script>
 	<script src="controlador.js"></script>

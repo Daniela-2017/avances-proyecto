@@ -65,8 +65,37 @@
           <hr>
           <span class="fecha">Del 15 febrero al 4 marzo, Aprovecha!</span>
           <div class="row">
-            <input type="text" id="comentar" class="form-control inputProducto" placeholder="Comentar" style="margin:3px;width:-moz-available"
-              value="">
+
+<script type="text/javascript">//funcion llamada desde el boton comentar
+              function agregarComentario(){
+
+   <?php
+    $contenidoArchivo=file_get_contents('comentarios.json');
+    $comentarios=json_decode($contenidoArchivo,true);
+    $comentarios[] = $_POST;
+    $archivo= fopen('comentarios.json', 'w');
+    fwrite($archivo, json_encode($comentarios));
+    fclose($archivo);
+   ?>
+}
+</script>
+<?php
+              $usuario = $_GET['nombre'];
+              echo "
+
+            <form onsubmit='agregarComentario()' method='POST'><!--este form es solo para enviar el comentario al archivo-->
+              
+              
+              <input type='text' style='display: none' id='usuario' name='usuario' value='$usuario'>
+              <input type='text' id='comentar' name='comentario' class='form-control inputProducto' placeholder='Comenta la promoción' style='margin:3px;width:-moz-available'
+              value=''>
+            <button class='col-xl-6' type='submit' style='margin-left: 5rem;'>Comentar</button>
+            </form>";
+
+
+
+            ?>
+            
             <br>
             <select id="calificar" class="custom-select">
         <option value="">Califica el producto</option>
@@ -146,7 +175,31 @@
       </div>
     </div>
   </div>
+<!--Modal para ver comentarios-->
+  <div id="ver-comentarios" class="modal" style="color:aliceblue" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content modals">
+        <div class="modal-header">
+          <h5 class="modal-title">Comentarios</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
 
+          <div>
+<!--mostrar aqui los comentarios-->
+          </div>
+
+          <br>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <!--Modal para actualizar cliente-->
   <div class="modal fade" id="formulario-actualizar-cliente" style="color: aliceblue" ; tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">

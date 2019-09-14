@@ -2,6 +2,7 @@ var registros=[];
 var localStorage=window.localStorage;
 var claveAdmin=123;
 var usuarioAdmin='danny15zavalalic@gmail.com';
+var clienteValido=false;
 //posteriormente inluir los datos por defeto del administrador
 
 //arreglos pra almacenamiento de los registros y compras
@@ -109,7 +110,13 @@ function validar(){//llamada desde el boton de registro de empresa
 function validarRegistroCliente(){
     RegistrarCliente();
     ValidarClaveCliente();
-    validarCorreoCliente('correoCliente')
+    validarCorreoCliente('correoCliente');
+   
+
+   if (clienteValido==true) {
+    return true}
+   else 
+    return false
 }
 
 //para el formulario de registro del cliente
@@ -129,29 +136,9 @@ let correo=document.getElementById('correoCliente').value;
          camposClienteRegistro[4].valido=true;
         for(let i=0; i<camposClienteRegistro.length; i++)
         if(!camposClienteRegistro[i].valido) return;
-/*seccion para agregar al localstorage la empresa, se ubica en esta funcion
-    porque es la ultima que ejecuta el boton ingresar empresa*/
-     let cliente=
-        {   nombreCliente:document.getElementById('nombreCliente').value,
-            apellidoCliente:document.getElementById('apellidoCliente').value,
-            paisCliente:document.getElementById('paisCliente').value,
-            direccionCliente:document.getElementById('direccionCliente').value,
-            correoCliente:document.getElementById('correoCliente').value,
-            claveCliente:document.getElementById('claveCliente').value,
-            }
-        if(localStorage.length==0){
-             localStorage.setItem(document.getElementById('nombreEmpresa').value,JSON.stringify(empresa));
-             alert('Su empresa ha sido agregada satisfactoriamente');
-        }
-        else{
-        for(let i=0; i<localStorage.length;i++){
-          if(localStorage.key(i)==correo){
-            alert('Ya existe una cuenta cliente con el mismo correo'); return//no la agrega
-          }
-        }
-    localStorage.setItem(correo,JSON.stringify(cliente));
-    alert('Su cuenta cliente ha sido agregada satisfactoriamente');
-  }
+//seccion para agregar al localstorage la empresa, se ubica en esta funcion
+    //porque es la ultima que ejecuta el boton ingresar empresa
+        clienteValido=true;
     return true;
     }
 
@@ -174,17 +161,18 @@ function ValidarClaveCliente(){
 }
 
 //para el formuario de login
+//Seccion de login
 function registrarLogin(){ 
-/*Seccion de login*/
+
     for(let i=0; i<CamposLogin.length; i++)
          CamposLogin[i].valido=validarCampos(CamposLogin[i].campo);
     
     for(let i=0; i<CamposLogin.length; i++)
-       if(!CamposLogin[i].valido==true) return;
+       if(!CamposLogin[i].valido==true) return false;
+   return true
 
-        let clave=document.getElementById('clave').value;
-        let usuario= document.getElementById('usuario').value;
-        let  tipo =document.getElementById('tipo').value;
+
+
 
   //  registros.push(login);
     //    console.log(registros);
@@ -241,6 +229,7 @@ if(tipo=='Empresa'){
     }
 
 }
+
 
 /*Seccion de registro de empresa*/
 function RegistrarEmpresa(){
@@ -663,9 +652,5 @@ function initialize2() {
 function agregarAlPerfil(){
 //document.getElementById('perfil').innerHTML+=``;
     }
-
-function MiPerfil(){
-    location.href= "empresa.html";
-}
 
 

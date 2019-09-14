@@ -13,7 +13,7 @@
 	<div class="login">
 		<img class="imagen" src="img/icono2.png" alt="logo">
 		<h1>Iniciar Sesión</h1>
-		<form action="procesarLogin.php" method="POST">
+		<form onsubmit="return registrarLogin();" action="procesarLogin.php" method="POST">
 			<div>
 				<label for="Nombre de Usuario">Usuario</label>
 
@@ -43,10 +43,11 @@
 
 			</div>
 
-			<input type="submit" name="accion" value="Entrar"><!--onclick="registrarLogin()"-->
+			<input type="submit" name="accion" value="Entrar" ><!---->
 
 		</form>
 	</div>
+
 
 	<script src="jquery/jquery-3.4.1.min.js"></script>
 	<script src="popper/popper.min.js"></script>

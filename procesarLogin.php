@@ -1,5 +1,8 @@
+
+
+
 <?php 
-    //cambiar por get
+
     if ($_POST!=null){
     	//obtengo los datos del archivo empresas.php
     	if($_POST['tipoIngreso']=='Usuario'){
@@ -63,5 +66,32 @@
 					header("Location: login.html");
 				}
 		}
+
+	elseif ($_POST['tipoIngreso']=='Super Administrador') {
+			$contenidoArchivo=file_get_contents('administrador.json');
+			$admin=json_decode($contenidoArchivo,true);
+			//$admin[] = $POST;
+
+			foreach ($admin as $key => $value) {
+				if ($value['correo']==$_POST['Usuario'] && $value['clave']==$_POST['Clave']) {
+					$nombre=$value['primerNombre'];
+					$apellido=$value['primerApellido'];
+					$pais=$value['pais'];
+					$direccion=$value['direccion'];
+					$id=$value['correo'];
+					$clave=$value['clave'];
+					$claveConf=$value['claveConfirmacion'];
+
+					$encontrado=true;
+					header("Location: admin.php?id=$id&nombre=$nombre&apellido=$apellido&pais=$pais&direccion=$direccion&clave=$clave&claveconf=$claveConf");
+
+				}
+				if ($encontrado!=true) {
+					header("Location: login.html");
+				}
+				
+		}
+
+	}
     }
 ?>

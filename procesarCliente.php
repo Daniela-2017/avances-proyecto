@@ -1,20 +1,32 @@
 
+
  <?php
+ //corregir
+ 	//echo '<script>alert("jkvfk")</script>';
+
+
+    //header('Content-Type: application/json'); //Tipod MIME
+    include_once('clases/class-cliente.php');
+    $rutaArchivo = 'usuarios.json';
 
     if ($_POST!=null){
     	//obtengo los datos del archivo usuarios.php
 
 
-		$contenidoArchivo=file_get_contents('usuarios.json');
-		$usuarios=json_decode($contenidoArchivo,true);
-		$usuarios[] = $_POST;
+		    $cliente = new Usuario(
+                
+            $_POST['nombre'],
+            $_POST['apellido'],
+            $_POST['pais'],
+            $_POST['direccion'],
+            $_POST['correo'],
+            $_POST['clave'],
+            $_POST['confirmacionClave']);
 
-		$archivo= fopen('usuarios.json', 'w');
-		fwrite($archivo, json_encode($usuarios));
-		fclose($archivo);
+        $cliente->createUser($rutaArchivo,$_POST['correo']);
 
-        header("Location: Registrar-cliente.html");
-
+        //header("Location: Registrar-cliente.html");
 }
 
 ?>
+
