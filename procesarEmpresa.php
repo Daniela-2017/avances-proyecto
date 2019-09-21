@@ -6,24 +6,24 @@
     	//obtengo los datos del archivo usuarios.php
 
 
-		    $cliente = new Empresa(
+		    $empresa = new Empresa(
             $_POST['id'],
             $_POST['direccion'],
             $_POST['latitud'],
             $_POST['longitud'],
             $_POST['urlBanner'],
             $_POST['urlLogotipo'],
-            $_POST['facebook']);
+            $_POST['facebook'],
             $_POST['whatsapp'],
             $_POST['twitter'],
             $_POST['instagram'],
             $_POST['redes'],
             $_POST['correo'],
             $_POST['clave'],
-            $_POST['claveConfirmacion'],  ;
+            $_POST['claveConfirmacion']) ;
 
-        $cliente->createUser($rutaArchivo,$_POST['correo']);
+        $empresa->createEmpresa($rutaArchivo,$_POST['id']);
 
 
-
+}
 ?>

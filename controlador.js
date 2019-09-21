@@ -3,6 +3,10 @@ var localStorage=window.localStorage;
 var claveAdmin=123;
 var usuarioAdmin='danny15zavalalic@gmail.com';
 var clienteValido=false;
+var empresaValida=false;
+var productoValido=false;
+var sucursalValida=false;
+var adminValido=false;
 //posteriormente inluir los datos por defeto del administrador
 
 //arreglos pra almacenamiento de los registros y compras
@@ -31,11 +35,17 @@ var tiposAcceso=["Empresa", "Usuario", "Super Administrador"];
 var camposNuevoCliente=[
     {campo:'correo-nuevo', valido:false},
     {campo:'ClaveCliente-nueva', valido:false},
+
 ];
 
 var camposNuevoAdmin=[
+    {campo:'primerNombreAdmin-nuevo', valido:false},
+    {campo:'primeroApellidoAdmin-nuevo', valido:false},
+    {campo:'identidadAdmin', valido:false},
+    {campo:'direccionAdmin-nuevo', valido:false},
     {campo:'correo-nuevo-admin', valido:false},
-    {campo:'ClaveAdmin-nueva', valido:false},
+    {campo:'ClaveCliente-nueva', valido:false},
+    {campo:'correo-nuevo', valido:false},
 ]
 
 var camposNuevoEmpresa=[
@@ -105,6 +115,10 @@ function validar(){//llamada desde el boton de registro de empresa
     RegistrarEmpresa();
     ValidarClave();
     validarCorreo('correo');
+       if (empresaValida==true) {
+    return true}
+   else 
+    return false
 }
 
 function validarRegistroCliente(){
@@ -282,18 +296,14 @@ function agregarProducto(){
 RegistrarProducto();
 
  for(let i=0; i<camposProducto.length; i++)
-        if(!camposProducto[i].valido) return;
-     let produto=
-        {   CodigoProducto:document.getElementById('CodigoProducto').value,
-            NombreProducto:document.getElementById('NombreProducto').value,
-            PrecioProducto:document.getElementById('PrecioProducto').value,
-            descripcionProducto:document.getElementById('descripcionProducto').value,
-            imagenProducto:document.getElementById('imagenProducto').value,
-            }
+        if(!camposProducto[i].valido) return false;
+    productoValido=true;
     
-    arrayProductos.push(produto);
-        alert('Producto agregado con éxito');
-console.log(arrayProductos);
+
+    if (productoValido==true) {
+    return true}
+   else 
+    return false
 }
 
 
@@ -327,16 +337,13 @@ function RegistrarPromocion(){
 function agregarSucursal(){
 RegistrarSucursal();
 for(let i=0; i<camposSucursal.length; i++)
-        if(!camposSucursal[i].valido) return;
-     let sucursal=
-        {   nombreSucursal:document.getElementById('nombreSucursal').value,
-            latitudSucursal:document.getElementById('latitudSucursal').value,
-            longitudSucursal:document.getElementById('longitudSucursal').value,
-        }
+        if(!camposSucursal[i].valido) return false;
+        sucursalValida=true;
     
-    arraySucursales.push(sucursal);
-    alert('Sucursal agregara con éxito');
-console.log(arraySucursales);
+    if (sucursalValida==true) {
+    return true}
+   else 
+    return false
 }
 
 function RegistrarSucursal(){
@@ -436,15 +443,27 @@ ValidarClaveNueva('ClaveEmpresaNueva','ConfirmacionEmpresaNueva',1,camposNuevoEm
 
         alert('Ok');
 }
-//actualizar administrador
+ //actualizar administrador ARREGLAAAAR OJOOOO
 
 function validarAdminNuevo(){
+    for(let i=0; i<camposNuevoAdmin.length; i++)
+         camposNuevoAdmin[i].valido=validarCampos(camposNuevoAdmin[i].campo);
+alert('k');
 correo('correo-nuevo-admin',0,camposNuevoAdmin);
 ValidarClaveNueva('ClaveAdmin-nueva','ConfirmacionAdmin-nueva',1,camposNuevoAdmin);
-        for(let i=0; i<camposNuevoAdmin.length; i++)
-        if(!camposNuevoAdmin[i].valido) return;
+     alert(adminValido);
 
-        alert('Ok');
+
+    
+    for(let i=0; i<camposNuevoAdmin.length; i++)
+       if(!camposNuevoAdmin[i].valido) return false;
+   adminValido=true;
+
+
+    if (adminValido==true) {
+    return true}
+   else 
+    return false
 }
 
 function validarCorreo(id){//empresa
@@ -459,38 +478,8 @@ function validarCorreo(id){//empresa
         if(!CamposEmpresaRegistro[i].valido) return;
 /*seccion para agregar al localstorage la empresa, se ubica en esta funcion
     porque es la ultima que ejecuta el boton ingresar empresa*/
-     let empresa=
-            {nombreEmpresa:document.getElementById('nombreEmpresa').value,
-            pais:document.getElementById('pais').value,
-            direccion:document.getElementById('direccion').value,
-            latitud:document.getElementById('latitud').value,
-            longitud:document.getElementById('longitud').value,
-            banner:document.getElementById('url-archivo').value,
-            logotipo:document.getElementById('url-archivo2').value,
-            RedesSociales:{facebook:document.getElementById('facebook').value,
-            whatsapp:document.getElementById('whatsapp').value,
-            instagram:document.getElementById('instagram').value,
-            twitter:document.getElementById('twitter').value,
-            otras:document.getElementById('RedesSociales').value},
 
-            ClaveEmpresa:document.getElementById('ClaveEmpresa').value,
-            ConfirmacionEmpresa:document.getElementById('ConfirmacionEmpresa').value
-            }
-        if(localStorage.length==0){
-             localStorage.setItem(document.getElementById('nombreEmpresa').value,JSON.stringify(empresa));
-             alert('Su empresa ha sido agregada satisfactoriamente');
-              alert('primer if')
-        }
-        else{
-        for(let i=0; i<localStorage.length;i++){
-          if(localStorage.key(i)==document.getElementById('nombreEmpresa').value){
-            alert('Ya existe una empresa con el mismo nombre'); return//no la agrega
-          }
-        }
-    localStorage.setItem(document.getElementById('nombreEmpresa').value,JSON.stringify(empresa));
-    alert('Su empresa ha sido agregada satisfactoriamente');
-    
-  }
+        empresaValida=true;
     return true;
     }
 

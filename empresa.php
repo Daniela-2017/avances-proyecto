@@ -38,6 +38,36 @@
 			
 		</div>	
 		 <h1 style='color:wheat;text-align: center;' id='tituloEmpresa'>$id</h1>";
+
+		 function cargarProductos(){
+		 	$contenido = file_get_contents($rutaArchivo);
+            $producto = json_decode($contenido,true);
+		 	for ($i=0; $i < sizeof($producto); $i++) { 
+                echo "<div class='col-xl-3 col-md-2 col-sm-12'>
+          <div class='producto'>
+        <h3>jj</h3>
+        <p class='descripcion'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, dolorem.</p>
+        <div class='precio'>100.00 lps</div>
+        <!--imagenes-->
+        <div id='carouselExampleSlidesOnly' class='carousel slide carousel' data-ride='carousel'>
+      <div class='carousel-inner'>
+        <div class='carousel-item active'>
+            <img src='img/index/descuentos.jpg' class='d-block w-100 imgCarousel'  alt='...'>
+        </div>
+        <div class='carousel-item'>
+          <img src='img/index/ofertas.jpeg' class='d-block w-100 imgCarousel' alt='...'>
+        </div>
+        <div class='carousel-item'>
+          <img src='img/index/rebajas.png' class='d-block w-100 imgCarousel'  alt='...'>
+        </div>
+        </div>
+            <button type='button' data-toggle='modal' style='margin: 8px;' data-target='#formulario-agregar-promocion'>Agregar a Promociones</button>
+    </div>
+        <hr>
+        </div>
+      </div>";
+}
+		 }
 		
 		?>
 		
@@ -223,7 +253,7 @@
 	?>
 
 		<!--__________Modal para agregar productos_________-->
-	<form action="procesarProducto.php" method="POST">
+	<form onsubmit="return agregarProducto();" action="procesarProducto.php" method="POST">
 	<div id="formulario-agregar-producto" class="modal" style="color:aliceblue" tabindex="-1" role="dialog">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content modals">
@@ -236,7 +266,9 @@
 	      <div class="modal-body">
 
 	<div>
-		<input type="text" name="Empresa" style="display: none">
+	<?php echo "
+		<input type='text' name='Empresa' style='display: none' value='$id'>
+		"?>
 					<input type="text" name="codigoProducto" id="CodigoProducto" class="form-control inputProducto" placeholder="Codigo" style="width:-moz-available" value="">	
 				<div class="valid-feedback" style="text-align:right">Ok
 				</div>
@@ -293,7 +325,7 @@
 	</div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-					<button type="submit" class="btn btn-primary" onclick="agregarProducto()">Guardar Producto</button>
+					<button type="submit" class="btn btn-primary" >Guardar Producto</button>
 					
 					<br>
 					<a type="button" data-toggle="modal" data-target="#formulario-ver-productos">
@@ -446,7 +478,7 @@
 
 
 	<!--__________modal para agregar sucursales______-->
-	<form action="procesarSucursal.php" method="POST">
+	<form onsubmit="return agregarSucursal()" action="procesarSucursal.php" method="POST">
 	<div id="formulario-agregar-sucursal" class="modal" style="color:aliceblue" tabindex="-1" role="dialog">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content modals">
@@ -488,7 +520,7 @@
 			</div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-							<button type="submit" class="btn btn-primary" onclick="agregarSucursal()">Guardar Producto</button>
+							<button type="submit" class="btn btn-primary">Guardar Producto</button>
 							
 							<br>	
 							 <a data-toggle="modal" data-target="#formulario-ver-sucursales"><button class="btn btn-primary">Ver Registro de Sucursales</button></a>			
@@ -576,54 +608,38 @@
 
 
 		<h5 class="categoria col-xl-12 col-md-12 col-sm-12">Productos</h5>
-	  <div class="col-xl-3 col-md-2 col-sm-12">
-		  <div class="producto">
-		<h3>Nombre</h3>
-		<p class="descripcion">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, dolorem.</p>
-		<div class="precio">100.00 lps</div>
-		<!--imagenes-->
-		<div id="carouselExampleSlidesOnly" class="carousel slide carousel" data-ride="carousel">
-	  <div class="carousel-inner">
-	    <div class="carousel-item active">
-	        <img src="img/index/descuentos.jpg" class="d-block w-100 imgCarousel"  alt="...">
-	    </div>
-	    <div class="carousel-item">
-	      <img src="img/index/ofertas.jpeg" class="d-block w-100 imgCarousel" alt="...">
-	    </div>
-	    <div class="carousel-item">
-	      <img src="img/index/rebajas.png" class="d-block w-100 imgCarousel"  alt="...">
-	    </div>
-		</div>
-			<button type="button" data-toggle="modal" style="margin: 8px;" data-target="#formulario-ficha-promocional">Ficha Promocional</button>
-	</div>
-		<hr>
-		</div>
-	  </div>
+<?php
+		 	$contenido = file_get_contents('productos.json');
+            $producto = json_decode($contenido,true);
+		 	for ($i=0; $i < sizeof($producto); $i++) { 
+		 		$nombre=$producto[$i]['nombreProducto'];
+		 		$descripcion=$producto[$i]['descripcion'];
+                echo "<div class='col-xl-3 col-md-2 col-sm-12'>
+          <div class='producto'>
+        <h3>$nombre</h3>
+        <p class='descripcion'>$descripcion</p>
+        <div class='precio'>100.00 lps</div>
+        <!--imagenes-->
+        <div id='carouselExampleSlidesOnly' class='carousel slide carousel' data-ride='carousel'>
+      <div class='carousel-inner'>
+        <div class='carousel-item active'>
+            <img src='img/index/descuentos.jpg' class='d-block w-100 imgCarousel'  alt='...'>
+        </div>
+        <div class='carousel-item'>
+          <img src='img/index/ofertas.jpeg' class='d-block w-100 imgCarousel' alt='...'>
+        </div>
+        <div class='carousel-item'>
+          <img src='img/index/rebajas.png' class='d-block w-100 imgCarousel'  alt='...'>
+        </div>
+        </div>
+            <button type='button' data-toggle='modal' style='margin: 8px;' data-target='#formulario-agregar-promocion'>Agregar a Promociones</button>
+    </div>
+        <hr>
+        </div>
+      </div>";
+}
+?>
 
-	 
-	    <div class="col-xl-3 col-md-2 col-sm-12">
-			 <div class="producto">
-		<h3>Nombre</h3>
-		<p class="descripcion">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, dolorem.</p>
-		<div class="precio">500.00 lps</div>
-		<!--imagenes-->
-		<div id="carouselExampleSlidesOnly" class="carousel slide carousel" data-ride="carousel">
-	  <div class="carousel-inner">
-	    <div class="carousel-item active">
-	        <img src="img/index/descuentos.jpg" class="d-block w-100 imgCarousel"  alt="...">
-	    </div>
-	    <div class="carousel-item">
-	      <img src="img/index/ofertas.jpeg" class="d-block w-100 imgCarousel" alt="...">
-	    </div>
-	    <div class="carousel-item">
-	      <img src="img/index/rebajas.png" class="d-block w-100 imgCarousel"  alt="...">
-	    </div>
-		</div>
-		<button type="button" data-toggle="modal" style="margin: 8px;" data-target="#formulario-ficha-promocional">Ficha Promocional</button>
-	</div>
-		<hr>
-	  </div>
-	  </div>
 	</div>
 
 
@@ -714,5 +730,6 @@
 
 		</script>
 		
+
 	</body>
 	</html>

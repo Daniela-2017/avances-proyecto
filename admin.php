@@ -58,25 +58,51 @@
               $indice=$i;
         }
     } 
-          $nombre=$value['primerNombre'];
-          $apellido=$value['primerApellido'];
-          $pais=$value['pais'];
-          $direccion=$value['direccion'];
-          $id=$value['correo'];
-          $clave=$value['clave'];
-          $claveConf=$value['claveConfirmacion'];
-    echo ";
-      <form action='procesarAdmin.php' method='POST'>
+          $nombre=$_GET['nombre'];
+          $apellido=$_GET['apellido'];
+          $pais=$_GET['pais'];
+          $direccion=$_GET['direccion'];
+          $id=$_GET['id'];
+          $clave=$_GET['clave'];
+          $claveConf=$_GET['claveconf'];
+
+    echo "
+      <form onsubmit='return validarAdminNuevo();' action='procesarAdmin.php' method='POST'>
         <div class='modal-body'>
           <input value=$indice name='indice' style='display:none'>
-          <input class='form-control ActualizarAdmin' type='text' id='primerNombreAdmin-nuevo' value='$nombre'' placeholder='Primer Nombre' name='primerNombre'>
+          <div>
+
+              <input class='form-control ActualizarAdmin' type='text' id='primerNombreAdmin-nuevo' value='$nombre' placeholder='Primer Nombre' name='primerNombre'>
+                <div class='valid-feedback' style='text-align:right'>Ok</div>
+                <div class='invalid-feedback' style='text-align:right; margin-bottom:9px'>
+                  campo no válido
+                </div>
+          </div>
           <br>
-          <input class='form-control ActualizarAdmin' type='text' id='primeroApellidoAdmin-nuevo' placeholder='Primer Apellido' value='$apellido'' name='primerApellido'>
+        <div>
+            <input class='form-control ActualizarAdmin' type='text' id='primeroApellidoAdmin-nuevo' placeholder='Primer Apellido' value='$apellido' name='primerApellido'>
+                <div class='valid-feedback' style='text-align:right'>Ok</div>
+                <div class='invalid-feedback' style='text-align:right; margin-bottom:9px'>
+                  campo no válido
+                </div>
+        </div>
           <br>
-          <input class='form-control ActualizarAdmin' type='text' id='identidadAdmin' placeholder='Escriba su País de Origen' name='pais' value='$pais''>
+        <div>
+          <input class='form-control ActualizarAdmin' type='text' id='identidadAdmin' placeholder='Escriba su País de Origen' name='pais' value='$pais'>
+                <div class='valid-feedback' style='text-align:right'>Ok</div>
+                <div class='invalid-feedback' style='text-align:right; margin-bottom:9px'>
+                  campo no válido
+                </div>
+        </div>
           <br>
+        <div>
           <textarea class='form-control ActualizarAdmin' style='width:-moz-available' id='direccionAdmin-nuevo' name='direccion' placeholder='Escriba aquí la Dirección'
-            rows='3' cols='20'>$direccion'</textarea>
+            rows='3' cols='20'>$direccion</textarea>
+                <div class='valid-feedback' style='text-align:right'>Ok</div>
+                <div class='invalid-feedback' style='text-align:right; margin-bottom:9px'>
+                  campo no válido
+                </div>
+        </div>
           <br>
 
           <div class='form-row align-items-center'>
@@ -89,7 +115,6 @@
                 <div class='invalid-feedback' style='text-align:right; margin-bottom:9px'>
                   Correo no válido
                 </div>
-
               </div>
             </div>
 
@@ -105,13 +130,13 @@
           </div>
           <br>
           <div>
-            <input type='password' value='$claveConf'' name='claveConfirmacion' id='ConfirmacionAdmin-nueva' class='form-control ActualizarAdmin' placeholder='Confirme su Contraseña'
+            <input type='password' value='$claveConf' name='claveConfirmacion' id='ConfirmacionAdmin-nueva' class='form-control ActualizarAdmin' placeholder='Confirme su Contraseña'
               style='width:-moz-available; margin-left:auto'>
           </div>
         </div>
         <div class='modal-footer'>
           <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cancelar</button>
-          <button id='btn-guardar' type='submit' class='btn btn-primary' onclick='validarAdminNuevo()'>Guardar Cambios</button>
+          <button id='btn-guardar' type='submit' class='btn btn-primary' >Guardar Cambios</button>
         </div>
       </div>
     </div>

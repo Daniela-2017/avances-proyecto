@@ -1,16 +1,21 @@
   <?php
 
-  echo "Producto agregado correctamente";
+    include_once('clases/class-producto.php');
+    $rutaArchivo = 'productos.json';
+
+
     if ($_POST!=null){
+    
+		    $producto = new Producto(
+		    $_POST['Empresa'],
+            $_POST['codigoProducto'],
+            $_POST['nombreProducto'],
+            $_POST['precio'],
+            $_POST['descripcion'],
+            $_POST['urlImagen']);
 
-    	//obtengo los datos del archivo empresas.php
-		$contenidoArchivo=file_get_contents('productos.json');
-		$productos=json_decode($contenidoArchivo,true);
-		$productos[] = $_POST;
+        $producto->createProducto($rutaArchivo,$_POST['codigoProducto']);
 
-		$archivo= fopen('productos.json', 'w');
-		fwrite($archivo, json_encode($productos));
-		fclose($archivo);
-  
-}
+
+};
 ?>

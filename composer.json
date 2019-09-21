@@ -1,0 +1,16 @@
+{
+    "name": "enano/proyecto1",
+    "description": "Plataforma de compra y venta de productos",
+    "type": "project",
+    "license": "GNU3",
+    "authors": [
+        {
+            "name": "Daniela-Zavala",
+            "email": "danny15zavalalic@gail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "kreait/firebase-php": "^1.2"
+    }
+}

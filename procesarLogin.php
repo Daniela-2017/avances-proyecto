@@ -74,13 +74,13 @@
 
 			foreach ($admin as $key => $value) {
 				if ($value['correo']==$_POST['Usuario'] && $value['clave']==$_POST['Clave']) {
-					$nombre=$value['primerNombre'];
-					$apellido=$value['primerApellido'];
+					$nombre=$value['nombre'];
+					$apellido=$value['apellido'];
 					$pais=$value['pais'];
 					$direccion=$value['direccion'];
 					$id=$value['correo'];
 					$clave=$value['clave'];
-					$claveConf=$value['claveConfirmacion'];
+					$claveConf=$value['confirmacionClave'];
 
 					$encontrado=true;
 					header("Location: admin.php?id=$id&nombre=$nombre&apellido=$apellido&pais=$pais&direccion=$direccion&clave=$clave&claveconf=$claveConf");
