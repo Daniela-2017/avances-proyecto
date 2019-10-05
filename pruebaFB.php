@@ -1,20 +1,22 @@
+
+
 <?php
+require_once __DIR__.'/vendor/autoload.php';
 
-require __DIR__.'/vendor/autoload.php';
 
-use Kreait\Firebase\Factory;
+echo "hola"
+/*use Kreait\Firebase\Factory;
 
 $firebase = (new Factory)
     ->withServiceAccount('./secret/fir-proyect-8f565-653f2a333a0c.json')
     ->withDatabaseUri('https://fir-proyect-8f565.firebaseio.com/')
     ->create();
-
-$database = $firebase->getDatabase();//gestiona la conexion de database y firebase
-
+$database = $firebase->getDatabase();
 $newPost = $database
     ->getReference('users')
-    ->push(['firtName'==>'Daniela',
-    	'lastName'==>'Perez',
-    	'birthday'==>'19/10/1998'
-    ]);
+    ->push([
+        'firstName'=>'Juan',
+        'lastName'=>'Perez',
+        'birthDate'=>'12/12/2012'
+    ]);*/
 ?>

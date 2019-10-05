@@ -13,7 +13,7 @@
 	<div class="login">
 		<img class="imagen" src="img/icono2.png" alt="logo">
 		<h1>Iniciar Sesión</h1>
-		<form onsubmit="return registrarLogin();" action="procesarLogin.php" method="POST">
+		<form id="formularioRegistro"> 
 			<div>
 				<label for="Nombre de Usuario">Usuario</label>
 
@@ -42,8 +42,8 @@
 			</select>
 
 			</div>
-
-			<input type="submit" name="accion" value="Entrar" ><!---->
+			<!--<button onclick="registrarLogin()">Entrar</button>-->
+			<input type="button" id="login"  value="Entrar" onclick="registrarlogin()"><!---->
 
 		</form>
 	</div>

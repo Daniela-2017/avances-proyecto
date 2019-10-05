@@ -1,16 +1,42 @@
-
-
-
 <?php 
+//header("Location:pruebaphp");
+//header('Location:/proyecto1/promociones.php');
 
-    if ($_POST!=null){
+    include_once('clases/class-cliente.php');
+    include_once('clases/class-empresa.php');
+    include_once('clases/class-database.php');
+    //$rutaArchivo = 'empresas.json';
+
+  $database = new Database();
+
+if ($_POST!=null){
+	//header('Location:promociones.php');
+	//echo "<script>window.location.href='promociones.php';</script>";
+    if($_SERVER['REQUEST_METHOD']=='POST' && $_POST['tipoIngreso']=='Usuario' && isset($_GET['accion']) && $_GET['accion']=='login'){
+     Usuario::login($_POST['Usuario'],$_POST['Clave'],$database->getDB());
+           
+		//  $hola='hola';
+		exit();
+    }
+
+	else if($_SERVER['REQUEST_METHOD']=='POST' && $_POST['tipoIngreso']=='Empresa' && isset($_GET['accion']) && $_GET['accion']=='login'){
+      Empresa::login($_POST['Usuario'],$_POST['Clave'],$database->getDB());
+      exit();
+    }
+}
+   /*if ($_POST!=null){
     	//obtengo los datos del archivo empresas.php
-    	if($_POST['tipoIngreso']=='Usuario'){
-			$contenidoArchivo=file_get_contents('usuarios.json');
-			$usuarios=json_decode($contenidoArchivo,true);
+    	//if($_POST['tipoIngreso']=='Usuario'){
+			//$contenidoArchivo=file_get_contents('usuarios.json');
+			//$usuarios=json_decode($contenidoArchivo,true);
+
+			//echo $usuarios = Usuario::getUsers($database->getDB());
+			
 			//$usuarios[] = $POST;
 
-			foreach ($usuarios as $key => $value) {
+			
+
+			/*foreach ($usuarios as $key => $value) {
 				if ($value['correo']==$_POST['Usuario'] && $value['clave']==$_POST['Clave']) {
 					$id=$value['correo'];
 					$nombre=$value['nombre'];
@@ -28,9 +54,9 @@
 					header("Location: login.html");
 				}
 				
-		}
+		}*/
 			
-
+/*
 		}
 
 		elseif ($_POST['tipoIngreso']=='Empresa') {
@@ -94,4 +120,5 @@
 
 	}
     }
+	*/
 ?>

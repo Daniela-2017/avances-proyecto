@@ -11,16 +11,28 @@
 </head>
 
 <body>
+	<form name="frmNotification" id="frmNotification">
+   <div class="form-group">
+       <label for="mensaje">Mensaje </label>
+      
+   </div>
+   <div class="form-group">
+   
+   </div>
+</form>
 	<div class="cliente">
 		<h1 align="center">Ingresar Cliente</h1>
-		<form onsubmit="return validarRegistroCliente();" action="procesarCliente.php" method="POST">
+		<form id="formularioAgregarCliente" enctype="multipart/form-data" role="form" method="POST">
 			<div>
+				
 				<label for="Nombre">Escriba su Nombre</label>
-				<input value="" class="form-control" type="text" name="nombre" id="nombreCliente" placeholder="Primer nombre"><br>
+				<input value="" class="form-control" type="text"  name="nombre" id="nombreCliente" placeholder="Primer nombre"><br>
 				<div class="valid-feedback" style="text-align:right">Ok</div>
 				<div class="invalid-feedback" style="text-align:right; margin-bottom:9px">
 					Campo Obligatorio
 				</div>
+
+				<input id="foto" type="file" name="foto">
 			</div>
 			<div>
 				<label for="Apellido">Escriba su Apellido</label>
@@ -79,13 +91,19 @@
 			</div>
 
 
-		<input type="submit" value="Registrarme"><!---->
+
+		<button type="button" id="registrarCliente" value="">Registrarme</button><!---->
 		</div>
 		</form>
 
 	<script src="jquery/jquery-3.4.1.min.js"></script>
 	<script src="popper/popper.min.js"></script>
 	<script src="controlador.js"></script>
+	<script type="text/javascript">
+   $('#registrarCliente').click(function(event) {
+     validarRegistroCliente('#formularioAgregarCliente')
+   });
+</script>
 </body>
 
 </html>

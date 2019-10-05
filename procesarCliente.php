@@ -1,32 +1,52 @@
 
-
- <?php
- //corregir
- 	//echo '<script>alert("jkvfk")</script>';
-
-
-    //header('Content-Type: application/json'); //Tipod MIME
+<?php
     include_once('clases/class-cliente.php');
-    $rutaArchivo = 'usuarios.json';
+    include_once('clases/class-database.php');
+    //$rutaArchivo = 'empresas.json';
 
-    if ($_POST!=null){
+  $database = new Database();
+
+
+
+    if ($_POST!=null ){
     	//obtengo los datos del archivo usuarios.php
-
-
+    
+ if($_FILES){
+        $pathDestino="./fotosClientes";
+        mkdir($pathDestino,0700);
+        foreach($_FILES as $file){
+          if($file["error"]==UPLOAD_ERR_OK){
+            $pathsFoto[]='/'.'fotos'."/".$file["name"];
+            move_uploaded_file($file["tmp_name"],
+            $pathDestino.'/'.'fotos'.'/'.$file["name"]);//aquiiii vooooy
+          }
+          else{
+            $message.="No se ha recibido ningun archivo";
+          }
+        }
+      }
+     
+//probar
 		    $cliente = new Usuario(
-                
-            $_POST['nombre'],
-            $_POST['apellido'],
-            $_POST['pais'],
-            $_POST['direccion'],
-            $_POST['correo'],
-            $_POST['clave'],
-            $_POST['confirmacionClave']);
+            $pathsFoto,
+            $_POST['nombreCliente'],
+            $_POST['apellidoCliente'],
+            $_POST['paisCliente'],
+            $_POST['direccionCliente'],
+            $_POST['correoCliente'],
+            $_POST['claveCliente']);
 
-        $cliente->createUser($rutaArchivo,$_POST['correo']);
+            
+           // $_POST['foto'],
+            //$_POST['confirmacionClave
 
+        $cliente->createUser($database->getDB(),$_POST['correo']);
+        exit();
         //header("Location: Registrar-cliente.html");
 }
+
+
+
 
 ?>
 

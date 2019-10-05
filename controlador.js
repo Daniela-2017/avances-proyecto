@@ -111,20 +111,22 @@ for(let i=0; i<tiposAcceso.length; i++){
 
 }
 
-function validar(){//llamada desde el boton de registro de empresa
+function validar(formularioEmpresa){//llamada desde el boton de registro de empresa
     RegistrarEmpresa();
     ValidarClave();
-    validarCorreo('correo');
-       if (empresaValida==true) {
-    return true}
-   else 
-    return false
+    validarCorreo('correo',formularioEmpresa);
+    //if (empresaValida==true) {
+               //Peticion AJAX para enviar la información al servidor
+
+    //return true}
+   //else 
+    //return false
 }
 
-function validarRegistroCliente(){
+function validarRegistroCliente(formulario){
     RegistrarCliente();
     ValidarClaveCliente();
-    validarCorreoCliente('correoCliente');
+    validarCorreoCliente('correoCliente',formulario);
    
 
    if (clienteValido==true) {
@@ -140,10 +142,39 @@ function RegistrarCliente(){
     
 }
 
-function validarCorreoCliente(id){//cliente
+//agregar al formData clientes
+function dataForm_Archivos(formulario){
+    var nuevoFormulario = new FormData();   
+    $(formulario).find(':input').each(function() {
+        var elemento= this;
+        //Si recibe tipo archivo 'file'
+        if(elemento.type === 'file'){
+           if(elemento.value !== ''){
+              for(var i=0; i< $('#'+elemento.id).prop("files").length; i++){
+                  nuevoFormulario.append(elemento.name, $('#'+elemento.id).prop("files")[i]);
+               }
+            }              
+         }
+        else{
+            nuevoFormulario.append('nombreCliente',$('#nombreCliente').val());
+            nuevoFormulario.append('apellidoCliente',$('#apellidoCliente').val());
+            nuevoFormulario.append('paisCliente',$('#paisCliente').val());
+            nuevoFormulario.append('direccionCliente',$('#direccionCliente').val());
+            nuevoFormulario.append('correoCliente',$('#correoCliente').val());
+            nuevoFormulario.append('claveCliente',$('#claveCliente').val());
+        }
+
+     })
+
+  return nuevoFormulario;
+}
+
+
+
+function validarCorreoCliente(id,formulario){//cliente
     let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     let valido= re.test(document.getElementById(id).value);
-let correo=document.getElementById('correoCliente').value;
+    let correo=document.getElementById('correoCliente').value;
     if (valido==true){
         document.getElementById(id).classList.remove('is-invalid');
         document.getElementById(id).classList.add('is-valid');
@@ -152,7 +183,46 @@ let correo=document.getElementById('correoCliente').value;
         if(!camposClienteRegistro[i].valido) return;
 //seccion para agregar al localstorage la empresa, se ubica en esta funcion
     //porque es la ultima que ejecuta el boton ingresar empresa
-        clienteValido=true;
+            clienteValido=true;
+var datosForm = dataForm_Archivos(formulario);
+      // console.log(datosForm.get("clave"));
+        //console.log(datosForm.get("foto"));
+$.ajax({
+    cache:false,
+    contentType: false,
+    processData: false,
+    data: datosForm,    
+    dataType:'json',                     
+    type: 'POST',
+    url: 'procesarCliente.php',
+
+    });
+            //let parametros = $('#formularioAgregarCliente').serialize();
+                //console.log('Información a enviar al servidor: ' + parametros );
+    
+    
+/*$.ajax({
+    
+        url:'procesarCliente.php',
+        method:'POST',
+        data:parametros,//La informacion que se envia al servidor, URLEncoded
+        dataType:'json',
+        success:function(res){
+            console.log(res);
+           // anexarRegistroTabla(persona,res.key);
+        },
+        error:function(error){
+            console.error(error);
+           // $("#frmNotification").show();
+        }
+    
+    });
+    */
+  
+    
+    //console.log('yes')
+    //return true;
+
     return true;
     }
 
@@ -176,23 +246,52 @@ function ValidarClaveCliente(){
 
 //para el formuario de login
 //Seccion de login
-function registrarLogin(){ 
+function registrarlogin(){ 
 
     for(let i=0; i<CamposLogin.length; i++)
          CamposLogin[i].valido=validarCampos(CamposLogin[i].campo);
     
     for(let i=0; i<CamposLogin.length; i++)
-       if(!CamposLogin[i].valido==true) return false;
-   return true
+       if(!CamposLogin[i].valido==true) return;
+  // return true
 
 
-
+    let parametros = $('#formularioRegistro').serialize();
+    console.log('Información a enviar al servidor: ' + parametros);
+  //  console.log(parametros['Usuario']);
+    
+    $.ajax({
+        url:'procesarLogin.php?accion=login',
+        method:'POST',
+        data:parametros,//La informacion que se envia al servidor, URLEncoded
+        dataType:'json',
+        success:function(res){
+            console.log(res);
+            if(res.valido){//
+                if(res.correo){
+                id=res.clave;
+                window.location.href="promociones.php?id="+id+"";
+                }
+            else if (res.id){
+                id=res.clave;
+                window.location.href="empresa.php?id="+id+""
+            }
+                
+                //llevar a promociones pero con sus datos
+            }
+           // anexarRegistroTabla(persona,res.key);
+        },
+        error:function(error){
+           console.error(error);
+        }
+    
+    });
 
   //  registros.push(login);
     //    console.log(registros);
         //`${}`
 
-if(tipo=='Empresa'){
+/*if(tipo=='Empresa'){
     for(let i=0; i<localStorage.length;i++){
         let registro = JSON.parse(localStorage.getItem(localStorage.key(i)));
         var empresaEncontrada= false;
@@ -240,10 +339,32 @@ if(tipo=='Empresa'){
 
         }
         alert('Usuario o clave incorrecta')
-    }
+    }*/
 
 }
 
+function promociones(parametros){
+    let json = parametros.serialize();
+    console.log('Información a enviar al servidor: ' + parametros)
+     $.ajax({
+        url:'promociones',
+        method:'POST',
+        data:parametros,//La informacion que se envia al servidor, URLEncoded
+        dataType:'json',
+        success:function(res){
+            console.log(res);
+            if(res.valido){
+                //llevar a promociones pero con sus datos
+            }
+           // anexarRegistroTabla(persona,res.key);
+        },
+        error:function(error){
+            console.error(error);
+        }
+    
+    });
+
+}
 
 /*Seccion de registro de empresa*/
 function RegistrarEmpresa(){
@@ -299,11 +420,28 @@ RegistrarProducto();
         if(!camposProducto[i].valido) return false;
     productoValido=true;
     
-
-    if (productoValido==true) {
-    return true}
-   else 
-    return false
+ let parametros = $('#formularioAgregarProductos').serialize();
+    console.log('Información a enviar al servidor: ' + parametros);
+    
+    $.ajax({
+    
+        url:'procesarProducto.php',
+        method:'POST',
+        data:parametros,//La informacion que se envia al servidor, URLEncoded
+        dataType:'json',
+        success:function(res){
+            console.log(res);
+           // anexarRegistroTabla(persona,res.key);
+        },
+        error:function(error){
+            console.error(error);
+        }
+    
+    });
+   // if (productoValido==true) {
+    //return true}
+   //else 
+   // return false
 }
 
 
@@ -466,7 +604,39 @@ ValidarClaveNueva('ClaveAdmin-nueva','ConfirmacionAdmin-nueva',1,camposNuevoAdmi
     return false
 }
 
-function validarCorreo(id){//empresa
+function dataForm_ArchivosEmpresa(formulario){
+    var nuevoFormulario = new FormData();   
+    $(formulario).find(':input').each(function() {
+        var elemento= this;
+        //Si recibe tipo archivo 'file'
+        if(elemento.type === 'file'){
+           if(elemento.value !== ''){
+              for(var i=0; i< $('#'+elemento.id).prop("files").length; i++){
+                  nuevoFormulario.append(elemento.name, $('#'+elemento.id).prop("files")[i]);
+               }
+            }              
+         }
+        else{
+            nuevoFormulario.append('nombreEmpresa',$('#nombreEmpresa').val());
+            nuevoFormulario.append('pais',$('#pais').val());
+            nuevoFormulario.append('direccion',$('#direccion').val());
+            nuevoFormulario.append('latitud',$('#latitud').val());
+            nuevoFormulario.append('longitud',$('#longitud').val());
+            nuevoFormulario.append('facebook',$('#facebook').val());
+            nuevoFormulario.append('whatsapp',$('#whatsapp').val());
+            nuevoFormulario.append('twitter',$('#twitter').val());
+            nuevoFormulario.append('instagram',$('#instagram').val());
+            nuevoFormulario.append('RedesSociales',$('#RedesSociales').val());
+            nuevoFormulario.append('correo',$('#correo').val());
+            nuevoFormulario.append('ClaveEmpresa',$('#ClaveEmpresa').val());
+        }
+
+     })
+
+  return nuevoFormulario;
+}
+
+function validarCorreo(id,formularioEmpresa){//empresa
     let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     let valido= re.test(document.getElementById(id).value);
 
@@ -480,6 +650,20 @@ function validarCorreo(id){//empresa
     porque es la ultima que ejecuta el boton ingresar empresa*/
 
         empresaValida=true;
+var datosForm = dataForm_ArchivosEmpresa(formularioEmpresa);
+      // console.log(datosForm.get("clave"));
+        //console.log(datosForm.get("foto"));
+$.ajax({
+    cache:false,
+    contentType: false,
+    processData: false,
+    data: datosForm,    
+    dataType:'json',                     
+    type: 'POST',
+    url: 'procesarEmpresa.php',
+
+    });
+    console.log('yes')
     return true;
     }
 

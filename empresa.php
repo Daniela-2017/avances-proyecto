@@ -15,8 +15,38 @@
 		<div style="color: white; padding: 12px; background: linear-gradient(white,blue);" align="center">
 		</div>
 		<?php
-		$id=$_GET['id'];
-		$pais=$_GET['pais'];
+
+		include_once('clases/class-empresa.php');
+include_once('clases/class-database.php');
+    //$rutaArchivo = 'empresas.json';
+
+  $database = new Database();
+
+  $key = $_GET['id'];
+  $infor = Empresa::getEmpresa($database->getDB(),$key);
+	$json=json_decode($infor);
+
+foreach($json as $k=>$v){
+  if($k=='id'){
+    $nombre= $v;
+  }
+  if($k=='urlBanner'){
+    $banner=$v[0];
+  }
+	  if($k=='urlLogotipo'){
+    $logo=$v[0];
+  }
+
+	if($k=='latitud'){
+	$latitud=$v;
+	}
+		if($k=='longitud'){
+	$longitud=$v;
+	}
+	}
+	
+
+		/*$pais=$_GET['pais'];
 		$direccion=$_GET['direccion'];
 		$latitud=$_GET['latitud'];
 		$longitud=$_GET['longitud'];
@@ -29,15 +59,15 @@
 		$redes=$_GET['redes'];
 		$correo=$_GET['correo'];
 		$clave=$_GET['clave'];
-		$claveConfirmacion=$_GET['claveConfirmacion'];
+		$claveConfirmacion=$_GET['claveConfirmacion'];*/
 
 		echo
 	 "	<div id='bannerEmpresa' style='width: auto;'>
-		<div class='banner'><img class='bannerImagen' src='$urlBanner' alt='banner'>
-		<div class='logotipo' style='background-image:url($urlLogotipo)'>
+		<div class='banner'><img class='bannerImagen' src='fotosEmpresa$banner' alt='banner'>
+		<div class='logotipo' style='background-image:url(fotosEmpresa$logo)'>
 			
 		</div>	
-		 <h1 style='color:wheat;text-align: center;' id='tituloEmpresa'>$id</h1>";
+		 <h1 style='color:wheat;text-align: center;' id='tituloEmpresa'>$nombre</h1>";
 
 		 function cargarProductos(){
 		 	$contenido = file_get_contents($rutaArchivo);
@@ -127,6 +157,11 @@
 
 		  <!-- Modal para actualizar empresa-->
 	<?php
+	    include_once('clases/class-empresa.php');
+    	include_once('clases/class-database.php');
+    //$rutaArchivo = 'empresas.json';
+
+  $database = new Database();
 
 	          $contenidoArchivo=file_get_contents('empresas.json');
 	          $empresa=json_decode($contenidoArchivo,true);
@@ -253,7 +288,7 @@
 	?>
 
 		<!--__________Modal para agregar productos_________-->
-	<form onsubmit="return agregarProducto();" action="procesarProducto.php" method="POST">
+	<form id="formularioAgregarProductos" enctype="multipart/form-data" role="form" method="POST">
 	<div id="formulario-agregar-producto" class="modal" style="color:aliceblue" tabindex="-1" role="dialog">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content modals">
@@ -267,7 +302,7 @@
 
 	<div>
 	<?php echo "
-		<input type='text' name='Empresa' style='display: none' value='$id'>
+		<input type='text' name='Empresa' id='empresa style='display: none' value='$key'>
 		"?>
 					<input type="text" name="codigoProducto" id="CodigoProducto" class="form-control inputProducto" placeholder="Codigo" style="width:-moz-available" value="">	
 				<div class="valid-feedback" style="text-align:right">Ok
@@ -325,12 +360,12 @@
 	</div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-					<button type="submit" class="btn btn-primary" >Guardar Producto</button>
+					<button type="button" class="btn btn-primary" id="registrarProducto" >Guardar Producto</button>
 					
 					<br>
 					<a type="button" data-toggle="modal" data-target="#formulario-ver-productos">
 
-					 <button type="button" class="btn btn-primary">Ver Registro de Productos</button></a>		
+					 <button type="button" class="btn btn-primary" id="verProductos">Ver Registro de Productos</button></a>		
 	      </div>
 	    </div>
 	  </div>
@@ -728,6 +763,12 @@
 				$('#url-logotipo').val($(this).val());
 			});
 
+
+
+//onclick="agregarProducto()"
+   $('#registrarProducto').click(function(event) {
+     agregarProducto('#formularioAgregarProductos')
+   });
 		</script>
 		
 

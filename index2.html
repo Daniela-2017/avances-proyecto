@@ -1,11 +1,11 @@
 <html>
-    <form role="form" action='#?' id="registroDocumentacion" method="post" enctype="multipart/form-data">
+    <form role="form" action='procesar2.php' id="registroDocumentacion" method="POST" enctype="multipart/form-data">
 <div class="row">
   <div class="col-md-12">
     <div class="form-group">
-        <input type="text" id="otro" name="texto">
+        <input type="text" id="otro" name="otro">
         <label class="control-label">Adjuntar Archivo</label>
-        <input type="file" id="arcAdjunto"  name="arcAdjunto" class="filestyle" placeholder="Asunto" onchange="validarArchivo('#arcAdjunto');">
+        <input type="file" id="arcAdjunto"  name="arcAdjunto" class="filestyle" placeholder="Asunto" >
         <h5><small>Recuerde, los tipos de archivos permitidos son: png, gif, jpg, jpeg, docx, xls, xlsx, docs, pdf</small></h5>
     </div>
   </div>
@@ -16,11 +16,13 @@
           </div>
     </div>
 </form>
-
-<script src="controlador.js"></script>
+	<script src="jquery/jquery-3.4.1.min.js"></script>
+	<script src="popper/popper.min.js"></script>
+<script src="controlador2.js"></script>
 <script type="text/javascript">
    $('#enviarDoc').click(function(event) {
      registrarDocumentacion('#registroDocumentacion')
    });
 </script>
+
 </html>

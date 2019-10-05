@@ -1,16 +1,13 @@
 {
-    "name": "enano/proyecto1",
-    "description": "Plataforma de compra y venta de productos",
-    "type": "project",
-    "license": "GNU3",
+    "name": "ronald_licona/proyecto1",
+    "description": "conexion con firebase",
     "authors": [
         {
-            "name": "Daniela-Zavala",
-            "email": "danny15zavalalic@gail.com"
+            "name": "Daniela Zavala",
+            "email": "danny15zavalalic@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
-        "kreait/firebase-php": "^1.2"
+        "kreait/firebase-php": "^4.32"
     }
 }

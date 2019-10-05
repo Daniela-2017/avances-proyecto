@@ -1,15 +1,17 @@
+	<!DOCTYPE html>
 <html>
 
-<head>
+<head >
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Promociones</title>
-</head>
+
 <link rel="stylesheet" type="text/css" href="style.css">
 <link rel="stylesheet" type="text/css" href="master.css">
 <link rel="shortcut icon" type="image/png" href="img/empresa.png">
 <link rel="stylesheet" href="BootstrapCSS/bootstrap.min.css">
+</head>
 
 <body>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" style="background-color:#255eb3 !important;">
@@ -21,24 +23,61 @@
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
       <form class="form-inline my-2 my-lg-0 ml-auto">
+      
         <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+ 
         <button class="btn btn-primary" style="margin-right: 3px;" type="submit">Buscar Promoción</button>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formulario-actualizar-cliente">
           Editar Perfil
         </button>
+
       </form>
     </div>
   </nav>
+  
+  
   <section class="mostrarPerfil" id="promocion">
+<?php 
 
-    <div class="row divProductos">
-      <h5 class="categoria col-xl-12 col-md-12 col-sm-12" style="margin-top: 4rem;">Promociones</h5>
-      <div class="col-xl-3 col-md-2 col-sm-12">
-        <div class="producto">
+include_once('clases/class-cliente.php');
+include_once('clases/class-database.php');
+    //$rutaArchivo = 'empresas.json';
 
-          <span class="descuento col-xl-12">15%</span>
+  $database = new Database();
 
-          <img src="img/oferta.png" style="height: 5.3rem">
+  $key = $_GET['id'];
+  $infor = Usuario::getUser($database->getDB(),$key);
+
+  
+$json=json_decode($infor);
+foreach($json as $k=>$v){
+  if($k=='nombre'){
+    $nombre= $v;
+  }
+  if($k=='foto'){
+    $foto=$v[0];
+  }
+
+}
+//$nombre=$infor['nombre'];
+ // $foto=$infor['foto'[0]];//verificar e investigar como se hace
+echo "<div id='bannerEmpresa' class='' style='width: auto;'>
+    <div class='logotipo' style='background-image:url(fotosClientes$foto);margin-top: 4rem;'>
+
+    </div> 
+</div> 
+
+     <h1 style='color:wheat;text-align: center;' id='tituloEmpresa' class='producto'>Hola! $nombre Bienvenido</h1>
+
+    <div class='row divProductos'>
+      <h5 class='categoria col-xl-12 col-md-12 col-sm-12' style='margin-top: 4rem;'>Promociones</h5>
+      <div class='col-xl-3 col-md-2 col-sm-12'>
+        <div class='producto'>
+
+          <span class='descuento col-xl-12'>15%</span>
+
+          <img src=fotosClientes$foto style='height: 5.3rem'>"
+?>
           <h3>Nombre</h3>
           <div class="precioRebaja">
             <div class="precioNormal">100</div>
@@ -214,6 +253,7 @@
         <div class="modal-body">
           <!--agregar metodo-->
           <?php
+          header("Content-Type: application/json; charset=UTF-8"); 
           $contenidoArchivo=file_get_contents('usuarios.json');
           $usuarios=json_decode($contenidoArchivo,true);
           for ($i=0; $i <  sizeof($usuarios); $i++) { //buscar el indice del arreglo en el archivo donde esta ubicado el registro
