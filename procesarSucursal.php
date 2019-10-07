@@ -1,18 +1,16 @@
   <?php
     include_once('clases/class-sucursal.php');
-    $rutaArchivo = 'sucursales.json';
+    require_once('clases/class-database.php');
 
-
+  $database = new Database();
     if ($_POST!=null){
-
-
-
 		    $sucursal = new Sucursal(
-		    $_POST['nombreSucursal'],
-            $_POST['latitudSuc'],
-            $_POST['longitudSuc']);
+            $_POST['empresa'],
+		        $_POST['nombreSucursal'],
+            $_POST['latitudSucursal'],
+            $_POST['longitudSucursal']);
 
-        $sucursal->createSucursal($rutaArchivo,$_POST['nombreSucursal']);
+        $sucursal->createSucursal($database->getDB(),$_POST['nombreSucursal']);
   
 }
 ?>

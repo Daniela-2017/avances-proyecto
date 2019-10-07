@@ -89,7 +89,7 @@ var camposPromocion=[
     {campo:'descuento', valido: false},
     {campo:'precioProductoPromocion', valido: false},
     {campo:'precioOferta', valido: false},
-    {campo:'sucursal',valido:false},
+    {campo:'sucursales',valido:false},
     {campo:'fechaInicio', valido: false},
     {campo:'fechaFinal',valido:false}  
 ];
@@ -187,6 +187,7 @@ function validarCorreoCliente(id,formulario){//cliente
 var datosForm = dataForm_Archivos(formulario);
       // console.log(datosForm.get("clave"));
         //console.log(datosForm.get("foto"));
+        console.log(datosForm);
 $.ajax({
     cache:false,
     contentType: false,
@@ -407,37 +408,60 @@ function calificarPoducto(){
 }
 
 //para agregar productos
+//form data para productos
+function dataForm_ArchivosProductos(formulario){
+    var nuevoFormulario = new FormData();   
+    $(formulario).find(':input').each(function() {
+        var elemento= this;
+        //Si recibe tipo archivo 'file'
+        if(elemento.type === 'file'){
+           if(elemento.value !== ''){
+              for(var i=0; i< $('#'+elemento.id).prop("files").length; i++){
+                  nuevoFormulario.append(elemento.name, $('#'+elemento.id).prop("files")[i]);
+               }
+            }              
+         }
+        else{
+            nuevoFormulario.append('empresa',$('#empresa').val());
+            nuevoFormulario.append('CodigoProducto',$('#CodigoProducto').val());
+            nuevoFormulario.append('NombreProducto',$('#NombreProducto').val());
+            nuevoFormulario.append('PrecioProducto',$('#PrecioProducto').val());
+            nuevoFormulario.append('descripcionProducto',$('#descripcionProducto').val());
+        }
+
+     })
+
+  return nuevoFormulario;
+}
 function RegistrarProducto(){
      for(let i=0; i<camposProducto.length; i++)
          camposProducto[i].valido=validarCampos(camposProducto[i].campo);
 
     }
 
-function agregarProducto(){
+function agregarProducto(formulario){
 RegistrarProducto();
 
  for(let i=0; i<camposProducto.length; i++)
         if(!camposProducto[i].valido) return false;
     productoValido=true;
     
- let parametros = $('#formularioAgregarProductos').serialize();
-    console.log('Información a enviar al servidor: ' + parametros);
-    
-    $.ajax({
-    
-        url:'procesarProducto.php',
-        method:'POST',
-        data:parametros,//La informacion que se envia al servidor, URLEncoded
-        dataType:'json',
-        success:function(res){
-            console.log(res);
-           // anexarRegistroTabla(persona,res.key);
-        },
-        error:function(error){
-            console.error(error);
-        }
-    
+ //let parametros = $('#formularioAgregarProductos').serialize();
+   // console.log('Información a enviar al servidor: ' + parametros);
+    var datosForm = dataForm_ArchivosProductos(formulario);
+      // console.log(datosForm.get("clave"));
+        console.log(datosForm.get('urlImagen'));
+$.ajax({
+    cache:false,
+    contentType: false,
+    processData: false,
+    data: datosForm,    
+    dataType:'json',                     
+    type: 'POST',
+    url: 'procesarProducto.php',
+
     });
+
    // if (productoValido==true) {
     //return true}
    //else 
@@ -446,24 +470,49 @@ RegistrarProducto();
 
 
 //para agregar promociones 
-function agregarPromocion(){
+function dataForm_ArchivosPromocion(formulario){
+    var nuevoFormulario = new FormData();  
+        var suc=[];
+    $(":checkbox[name=sucursales]").each(function(){
+        if(this.checked){
+            suc.push($(this).val());
+        }
+
+    }); 
+
+            nuevoFormulario.append('empresa',$('#empresa').val());
+            nuevoFormulario.append('producto',$('#producto').val());           
+            nuevoFormulario.append('descuento',$('#descuento').val());
+            nuevoFormulario.append('precioProductoPromocion',$('#precioProductoPromocion').val());
+            nuevoFormulario.append('precioOferta',$('#precioOferta').val());
+            nuevoFormulario.append('fechaInicio',$('#fechaInicio').val());
+            nuevoFormulario.append('fechaFinal',$('#fechaFinal').val());
+            for(let i=0; i<suc.length; i++){
+                nuevoFormulario.append('sucursales[]',suc[i]);   
+            }
+            
+
+
+  return nuevoFormulario;
+}
+
+function agregarPromocion(formulario){
 RegistrarPromocion();
 for(let i=0; i<camposPromocion.length; i++)
         if(!camposPromocion[i].valido) return;
-     let promocion=
-        {   producto:document.getElementById('producto').value,
-            descuento:document.getElementById('descuento').value,
-            precioProductoPromocion:document.getElementById('precioProductoPromocion').value,
-            precioOferta:document.getElementById('precioOferta').value,
-            fechaFinal:document.getElementById('fechaFinal').value,          
-            sucursal:document.getElementById('sucursal').value,
-            fechaInicio:document.getElementById('fechaInicio').value,
-            fechaFinal:document.getElementById('fechaFinal').value,          
-        }
-    
-    arrayPromociones.push(promocion);
-    alert('Promoción agregara con éxito');
-console.log(arrayPromociones);
+
+    var datosForm = dataForm_ArchivosPromocion(formulario);
+    //console.log(datosForm.get('producto'))
+    $.ajax({
+    cache:false,
+    contentType: false,
+    processData: false,
+    data: datosForm,    
+    dataType:'json',                     
+    type: 'POST',
+    url: 'procesarPromocion.php',
+
+    });
 }
 
 function RegistrarPromocion(){
@@ -472,16 +521,34 @@ function RegistrarPromocion(){
 }
 
 //para agregar sucursales 
-function agregarSucursal(){
+function dataForm_ArchivosSucursal(formulario){
+    var nuevoFormulario = new FormData();   
+            nuevoFormulario.append('empresa',$('#empresa').val());
+            nuevoFormulario.append('nombreSucursal',$('#nombreSucursal').val());
+            nuevoFormulario.append('latitudSucursal',$('#latitudSucursal').val());
+            nuevoFormulario.append('longitudSucursal',$('#longitudSucursal').val());
+
+
+  return nuevoFormulario;
+}
+function agregarSucursal(formulario){
 RegistrarSucursal();
 for(let i=0; i<camposSucursal.length; i++)
         if(!camposSucursal[i].valido) return false;
         sucursalValida=true;
     
-    if (sucursalValida==true) {
-    return true}
-   else 
-    return false
+    var datosForm = dataForm_ArchivosSucursal(formulario);
+
+    $.ajax({
+    cache:false,
+    contentType: false,
+    processData: false,
+    data: datosForm,    
+    dataType:'json',                     
+    type: 'POST',
+    url: 'procesarSucursal.php',
+
+    });
 }
 
 function RegistrarSucursal(){

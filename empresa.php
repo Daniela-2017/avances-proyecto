@@ -16,8 +16,13 @@
 		</div>
 		<?php
 
-		include_once('clases/class-empresa.php');
+include_once('clases/class-empresa.php');
 include_once('clases/class-database.php');
+include_once('clases/class-producto.php');
+include_once('clases/class-sucursal.php');
+include_once('clases/class-promocion.php');
+
+
     //$rutaArchivo = 'empresas.json';
 
   $database = new Database();
@@ -302,9 +307,9 @@ foreach($json as $k=>$v){
 
 	<div>
 	<?php echo "
-		<input type='text' name='Empresa' id='empresa style='display: none' value='$key'>
-		"?>
-					<input type="text" name="codigoProducto" id="CodigoProducto" class="form-control inputProducto" placeholder="Codigo" style="width:-moz-available" value="">	
+	<input type='text' name='Empresa' id='empresa' style='display:none' value='$key'>
+"?>
+				<input type="text" name="codigoProducto" id="CodigoProducto" class="form-control inputProducto" placeholder="Codigo" style="width:-moz-available" value="">	
 				<div class="valid-feedback" style="text-align:right">Ok
 				</div>
 	            <div class="invalid-feedback" style="text-align:right">
@@ -372,6 +377,7 @@ foreach($json as $k=>$v){
 	</div>
 	</form>
 
+
 			<!--__________Ver productos-->
 	<div id="formulario-ver-productos" class="modal" style="color:aliceblue" tabindex="-1" role="dialog">
 	  <div class="modal-dialog" role="document" style="background-color: black">
@@ -385,11 +391,25 @@ foreach($json as $k=>$v){
 	      <div class="modal-body">
 			<?php
 
-				$contenidoArchivo=file_get_contents('productos.json');
+				/*$contenidoArchivo=file_get_contents('productos.json');
 				$productos=json_decode($contenidoArchivo,true);
 				for ($i=0; $i < sizeof($productos); $i++) { 
 							echo json_encode($productos[$i]);
 					
+				}*/
+				 $productos = Producto::getProductos($database->getDB());
+				$jsonProductos = json_decode($productos,true);
+				//print_r($productos);
+				foreach($jsonProductos as $indice=>$valor){
+					if($jsonProductos[$indice]['Empresa']==$key){
+					 $nombre = $jsonProductos[$indice]['nombreProducto'];
+					 $descripcion=$jsonProductos[$indice]['descripcion'];
+					 $precio = $jsonProductos[$indice]['precio'];
+				echo "Nombre: $nombre, 
+						  	Descripción: $descripcion, 
+								Precio: $precio<br><br>"
+						 ;
+				}
 				}
 			?>
 
@@ -405,8 +425,8 @@ foreach($json as $k=>$v){
 		<!--_______________________________-->
 
 		<!--____________Modal para agregar Promociones___________-->
-
-	<div id="formulario-agregar-promocion" class="modal" style="color:aliceblue" tabindex="-1" role="dialog">
+<form id="formularioAgregarPromociones" enctype="multipart/form-data" role="form" method="POST">
+	<div id="formulario-agregar-promocion" class="modal" style="color:aliceblue" tabindex="-1" role="dialog" >
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content modals">
 	      <div class="modal-header">
@@ -417,8 +437,25 @@ foreach($json as $k=>$v){
 	      </div>
 	      <div class="modal-body">
 	<div>
-	<select name="" id="producto" class="custom-select form-control">
-		<option value="1">Seleccione el Producto en Promoción</option>
+		<?php echo "
+<input type='text' style='display:none' value='$key' id='empresa' name='empresa'> "
+?>
+	<select name="producto" id="producto" class="custom-select form-control">
+		<option value="">Seleccione el Producto en Promoción</option>
+		<?php 
+				 $productos = Producto::getProductos($database->getDB());
+				$jsonProductos = json_decode($productos,true);
+				//print_r($productos);
+				foreach($jsonProductos as $indice=>$valor){
+					if($jsonProductos[$indice]['Empresa']==$key){
+					 $nombre = $jsonProductos[$indice]['nombreProducto'];
+					 $descripcion=$jsonProductos[$indice]['descripcion'];
+					 $precio = $jsonProductos[$indice]['precio'];
+				echo "<option value=$indice>$nombre $descripcion $precio lps</opcion>"
+						 ;
+				}
+				}
+	?>
 	</select>
 				<div class="valid-feedback" style="text-align:right">Ok
 				</div>
@@ -447,7 +484,7 @@ foreach($json as $k=>$v){
 	</div>
 
 	<div>
-	<input type="text" id="precioOferta" class="form-control inputPromocion" placeholder="Precio" style="width:-moz-available" value="">	<br>
+	<input type="text" id="precioOferta" name="precio" class="form-control inputPromocion" placeholder="Precio" style="width:-moz-available" value="">	<br>
 							<div class="valid-feedback" style="text-align:right">Ok
 				</div>
 	            <div class="invalid-feedback" style="text-align:right">
@@ -472,6 +509,10 @@ foreach($json as $k=>$v){
 				</div>
 	            <div class="invalid-feedback" style="text-align:right">
 	            Campo obligatorio
+				</div><div class="valid-feedback" style="text-align:right">Ok
+				</div>
+	            <div class="invalid-feedback" style="text-align:right">
+	            Campo obligatorio
 				</div>
 	</div>
 
@@ -480,19 +521,26 @@ foreach($json as $k=>$v){
 
 	<div class="input-group mb-3 row">
 
-				<input class="col-xl-4" type="checkbox" aria-label="Checkbox for following text input"><label class="col-xl-6">Sucursal 1</label><br>
-				
-				<input class="col-xl-4" type="checkbox" aria-label="Checkbox for following text input"><label class="col-xl-6">Sucursal 2</label><br>
-				
-				<input class="col-xl-4" type="checkbox" aria-label="Checkbox for following text input"><label class="col-xl-6">Sucursal 3</label><br>
-				
-
+				<label class="col-xl-12">Sucursales donde está disponible la promoción</label><br>
+				<form id="sucursal">
+							<?php 
+				 $sucursales = Sucursal::getSucursales($database->getDB());
+				$jsonSucursales = json_decode($sucursales,true);
+				//print_r($productos);
+				$value=0;
+				foreach($jsonSucursales as $indice=>$valor){
+					if($jsonSucursales[$indice]['empresa']==$key){
+						$value=$value+1;
+					 $nombre = $jsonSucursales[$indice]['nombreSucursal'];
+				echo "<input id='sucursales' class='col-xl-4' value='$indice' name='sucursales' type='checkbox' aria-label='Checkbox for following text input'><label class='col-xl-6'>$nombre</label><br>";
+					 ;
+				}
+				}
+?>	
+</form>
 	</div>
 
 	<div>
-	<select name="" id="sucursal" class="custom-select form-control">
-		<option value="1">Seleccione la sucursal en la que existe la Promoción</option>
-	</select>
 				<div class="valid-feedback" style="text-align:right">Ok
 				</div>
 	            <div class="invalid-feedback" style="text-align:right">
@@ -502,18 +550,22 @@ foreach($json as $k=>$v){
 	</div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-					<button type="button" class="btn btn-primary" onclick="agregarPromocion()">Guardar Producto</button>
+					<button type="button" class="btn btn-primary" id="registrarPromocion">Guardar Promocion</button>
 					
 					<br>	
-					 <button type="button" class="btn btn-primary">Ver Registro de Promociones</button>			
+	<a type="button" data-toggle="modal" data-target="#formulario-ver-promociones">
+				
+					 <button type="button" class="btn btn-primary" id="verProductos">Ver Registro de Promociones</button>	</a>
+				</div>
+												
 	      </div>
 	    </div>
 	  </div>
 	</div>
-
+</form>
 
 	<!--__________modal para agregar sucursales______-->
-	<form onsubmit="return agregarSucursal()" action="procesarSucursal.php" method="POST">
+	<form id="formularioAgregarSucursales" enctype="multipart/form-data" role="form" method="POST">
 	<div id="formulario-agregar-sucursal" class="modal" style="color:aliceblue" tabindex="-1" role="dialog">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content modals">
@@ -525,6 +577,9 @@ foreach($json as $k=>$v){
 	      </div>
 	      <div class="modal-body">
 	<div>
+		<?php echo "
+					<input type='text' name='empresa' id='empresa' style='display:none' value=$key>
+				"?>
 					<input type="text" name="nombreSucursal" id="nombreSucursal" class="form-control inputProducto" placeholder="Nombre del lugar donde está ubicada la sucursal" style="width:-moz-available" value="">	
 				<div class="valid-feedback" style="text-align:right">Ok
 				</div>
@@ -555,7 +610,7 @@ foreach($json as $k=>$v){
 			</div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-							<button type="submit" class="btn btn-primary">Guardar Producto</button>
+							<button type="button" class="btn btn-primary" id="registrarSucursal">Guardar Sucursal</button>
 							
 							<br>	
 							 <a data-toggle="modal" data-target="#formulario-ver-sucursales"><button class="btn btn-primary">Ver Registro de Sucursales</button></a>			
@@ -578,11 +633,62 @@ foreach($json as $k=>$v){
 	      <div class="modal-body">
 			<?php
 
-				$contenidoArchivo=file_get_contents('sucursales.json');
-				$sucursales=json_decode($contenidoArchivo,true);
-				for ($i=0; $i < sizeof($sucursales); $i++) { 
-							echo json_encode($sucursales[$i]);
+				$sucursales = Sucursal::getSucursales($database->getDB());
+				$jsonSucursales = json_decode($sucursales,true);
+				//print_r($productos);
+				foreach($jsonSucursales as $indice=>$valor){
+					if($jsonSucursales[$indice]['empresa']==$key){
+					 $nombre = $jsonSucursales[$indice]['nombreSucursal'];
+					 $latitudSucursal=$jsonSucursales[$indice]['latitudSucursal'];
+					 $longitudSucursal = $jsonSucursales[$indice]['longitudSucursal'];
+				echo "Nombre: $nombre, 
+						  	Latitud: $latitudSucursal, 
+								Longitud: $longitudSucursal<br><br>"
+						 ;
+				}
+				}
+			?>
+
+			</div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+			
+	      </div>
+	    </div>
+	  </div>
+	</div>
+		<!--_______________________________-->
+		<!--__________Ver Promociones_______-->
+	<div id="formulario-ver-promociones" class="modal" style="color:aliceblue" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document" style="background-color: black">
+	    <div class="modal-content modals">
+	      <div class="modal-header">
+	        <h5 class="modal-title">Ver Promociones Existentes</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+			<?php
+
+			$promocion = Promocion::getPromociones($database->getDB());
+
+
+				$jsonPromociones = json_decode($promocion,true);
+				//print_r($productos);
+				foreach($jsonPromociones as $indice=>$valor){
+					if($jsonPromociones[$indice]['empresa']==$key){
+						$idProducto = $jsonPromociones[$indice]['producto'];
+						
+						$productoJson = Producto::getProducto($database->getDB(),$idProducto);
+					$producto = json_decode($productoJson,true);
+					 $nombre = $producto['nombreProducto'];
+					 $descripcion=$producto['descripcion'];
+					 $precio = $producto['precio'];
+				echo "Nombre: $nombre, Descripción: $descripcion, Precio: $precio
+						  	<br><br>";
 					
+				}
 				}
 			?>
 
@@ -596,40 +702,7 @@ foreach($json as $k=>$v){
 	</div>
 		<!--_______________________________-->
 
-	<!--__________modal para agregar ver ficha de promocion______-->
-	<div id="formulario-ficha-promocional" class="modal" style="color:aliceblue" tabindex="-1" role="dialog">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content modals">
-	      <div class="modal-header">
-	        <h5 class="modal-title">Ficha Promocional</h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	      </div>
-	      <div class="modal-body">
-	  
-		  <div class="promocion">
-				<span class="descuento" style="padding-left: 2rem;color: red;">15% de Descuento</span>
-		<h3 style="text-align: center;">Nombre</h3>
-		<h3>Precio Normal: lps. 200</h3>
-		<h3>Precio De Oferta: lps. 120</h3>	
 
-	    <img src="img/index/descuentos.jpg" class="d-block w-100 imgCarousel"  alt="...">
-
-	  </div>
-
-		<hr>
-
-	</div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-
-					 <button type="button" class="btn btn-primary">Imprimir</button>			
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	<!--_______________________________-->
 	<!--Visualizacion de Perfil-->
 
 
@@ -644,27 +717,36 @@ foreach($json as $k=>$v){
 
 		<h5 class="categoria col-xl-12 col-md-12 col-sm-12">Productos</h5>
 <?php
-		 	$contenido = file_get_contents('productos.json');
+  $productos = Producto::getProductos($database->getDB());
+$jsonProductos = json_decode($productos,true);
+		 /*	$contenido = file_get_contents('productos.json');
             $producto = json_decode($contenido,true);
 		 	for ($i=0; $i < sizeof($producto); $i++) { 
 		 		$nombre=$producto[$i]['nombreProducto'];
-		 		$descripcion=$producto[$i]['descripcion'];
+		 		$descripcion=$producto[$i]['descripcion'];*/
+				
+				 foreach($jsonProductos as $indice=>$valor){
+					 if($jsonProductos[$indice]['Empresa']==$key){
+					 $nombre = $jsonProductos[$indice]['nombreProducto'];
+					 $descripcion=$jsonProductos[$indice]['descripcion'];
+					 $precio = $jsonProductos[$indice]['precio'];
+					 $url=$jsonProductos[$indice]['urlImagen'][0];
                 echo "<div class='col-xl-3 col-md-2 col-sm-12'>
           <div class='producto'>
         <h3>$nombre</h3>
         <p class='descripcion'>$descripcion</p>
-        <div class='precio'>100.00 lps</div>
+        <div class='precio'>$precio lps</div>
         <!--imagenes-->
         <div id='carouselExampleSlidesOnly' class='carousel slide carousel' data-ride='carousel'>
       <div class='carousel-inner'>
         <div class='carousel-item active'>
-            <img src='img/index/descuentos.jpg' class='d-block w-100 imgCarousel'  alt='...'>
+            <img src='fotosProductos$url' class='d-block w-100 imgCarousel'  alt='...'>
         </div>
         <div class='carousel-item'>
-          <img src='img/index/ofertas.jpeg' class='d-block w-100 imgCarousel' alt='...'>
+          <img src='fotosProductos$url' class='d-block w-100 imgCarousel' alt='...'>
         </div>
         <div class='carousel-item'>
-          <img src='img/index/rebajas.png' class='d-block w-100 imgCarousel'  alt='...'>
+          <img src='fotosProductos$url' class='d-block w-100 imgCarousel'  alt='...'>
         </div>
         </div>
             <button type='button' data-toggle='modal' style='margin: 8px;' data-target='#formulario-agregar-promocion'>Agregar a Promociones</button>
@@ -672,71 +754,79 @@ foreach($json as $k=>$v){
         <hr>
         </div>
       </div>";
+					 }
 }
 ?>
 
 	</div>
+	<!--__________modal para ver ficha de promocion______-->
+	<div id="formulario-ficha-promocional" class="modal" style="color:aliceblue" tabindex="-1" role="dialog">
 
+	</div>
+	<!--_______________________________-->
+	
 
 	<!--Promociones-->
 	  <div class="row divPromociones">
 
 		<h5 class="categoria col-xl-12 col-md-12 col-sm-12">Promociones</h5>
-	  <div class="col-xl-3 col-md-2 col-sm-12">
-		  <div class="promocion">
-				<span class="descuento">15%</span>
-				<img src="img/oferta.png">
-		<h3>Nombre</h3>
-		<div class="precioRebaja"><div class="precioNormal">100</div>
-		<div class="precioOferta">200</div></div>
+		<?php 
+		$promocion = Promocion::getPromociones($database->getDB());
+
+				$jsonPromociones = json_decode($promocion,true);
+				//print_r($productos);
+				foreach($jsonPromociones as $indice=>$valor){
+					if($jsonPromociones[$indice]['empresa']==$key){
+						$idProducto = $jsonPromociones[$indice]['producto'];
+						
+						$productoJson = Producto::getProducto($database->getDB(),$idProducto);
+					$producto = json_decode($productoJson,true);
+					 $nombre = $producto['nombreProducto'];
+					 $descripcion=$producto['descripcion'];
+					 $precio = $producto['precio'];
+					 $descuento = $jsonPromociones[$indice]['descuento'];
+					 $precioOferta = $jsonPromociones[$indice]['precioOferta'];
+					 $precioReal = $jsonPromociones[$indice]['precioReal'];
+					 $url=$producto['urlImagen'][0];
+					 $keyProducto=$indice;
+				
+	echo "		
+		<div class='col-xl-3 col-md-2 col-sm-12'>
+		  <div class='promocion'>
+				<span class='descuento'>$descuento%</span>
+				<img src='img/oferta.png'>
+			<h3>$nombre</h3>
+		<div class='precioRebaja'>
+			<div class='precioNormal'>$precioReal</div>
+			<div class='precioOferta'>$precioOferta</div>
+		</div>
+
 		<!--imagenes-->
-		<div id="carouselExampleSlidesOnly" class="carousel slide carousel" data-ride="carousel">
-	  <div class="carousel-inner">
-	    <div class="carousel-item active">
-	        <img src="img/index/descuentos.jpg" class="d-block w-100 imgCarousel"  alt="...">
+		<div id='carouselExampleSlidesOnly' class='carousel slide carousel' data-ride='carousel'>
+	  	<div class='carousel-inner'>
+	    <div class='carousel-item active'>
+	        <img src='fotosProductos$url' class='d-block w-100 imgCarousel'  alt='...'>
 	    </div>
-	    <div class="carousel-item">
-	      <img src="img/index/ofertas.jpeg" class="d-block w-100 imgCarousel" alt="...">
+	    <div class='carousel-item'>
+	      <img src='fotosProductos$url' class='d-block w-100 imgCarousel' alt='...'>
 	    </div>
-	    <div class="carousel-item">
-	      <img src="img/index/rebajas.png" class="d-block w-100 imgCarousel"  alt="...">
+	    <div class='carousel-item'>
+	      <img src='fotosProductos$url' class='d-block w-100 imgCarousel'  alt='...'>
 	    </div>
 		</div>
-			<button type="button" data-toggle="modal" style="margin: 8px;" data-target="#formulario-ficha-promocional">Ficha Promocional</button>
+			<button type='button'>Ficha Promocional</button>
 	</div>
 		<hr>
+			</div>
 		</div>
-		</div>
+		";
+					 }
+				 }
+?>	 
+</div>
+<!---->
+
 	 
-
-	  <div class="col-xl-3 col-md-2 col-sm-12">
-		  <div class="promocion">
-				<span class="descuento">15%</span>
-				<img src="img/oferta.png">
-		<h3>Nombre</h3>
-		<div class="precioRebaja"><div class="precioNormal">100</div>
-		<div class="precioOferta">200</div></div>
-		<!--imagenes-->
-		<div id="carouselExampleSlidesOnly" class="carousel slide carousel" data-ride="carousel">
-	  <div class="carousel-inner">
-	    <div class="carousel-item active">
-	        <img src="img/index/descuentos.jpg" class="d-block w-100 imgCarousel"  alt="...">
-	    </div>
-	    <div class="carousel-item">
-	      <img src="img/index/ofertas.jpeg" class="d-block w-100 imgCarousel" alt="...">
-	    </div>
-	    <div class="carousel-item">
-	      <img src="img/index/rebajas.png" class="d-block w-100 imgCarousel"  alt="...">
-	    </div>
-		</div>
-		<button type="button" data-toggle="modal" style="margin: 8px;" data-target="#formulario-ficha-promocional">Ficha Promocional</button>
-		
-	</div>
-		<hr>
-		</div>
-		</div>
-
-	 </div>
 
 		<!--sucursales-->
 	  <div class="row divPromociones">
@@ -765,12 +855,54 @@ foreach($json as $k=>$v){
 
 
 
-//onclick="agregarProducto()"
+//llamado a agregar productos
    $('#registrarProducto').click(function(event) {
      agregarProducto('#formularioAgregarProductos')
-   });
+	 });
+	 
+//llamado a agregar sucursales
+$('#registrarSucursal').click(function(event){
+	agregarSucursal('#formularioAgregarSucursales');
+})
+
+//llamado para agregar promociones
+$('#registrarPromocion').click(function(event){
+	agregarPromocion('#formularioAgregarPromociones');
+})
+/*
+function mostrarFicha(precioOferta,precioReal,descuento){
+	var modal = document.getElementById('formulario-ficha-promocional');
+	$('#formulario-ficha-promocional').append('<div class="modal-dialog" role="document"><div class="modal-content modals">\
+	<div class="modal-header"><h5 class="modal-title">Ficha Promocional</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close">\
+	<span aria-hidden="true">&times;</span>\
+	        </button>\
+	      </div>\
+	      <div class="modal-body">\
+		  <div class="promocion">\
+				<span class="descuento" style="padding-left: 2rem;color: red;">15% de Descuento</span>\
+		<h3 style="text-align: center;">Nombre</h3>\
+		<h3>Precio Normal: lps. 200</h3>\
+		<h3>Precio De Oferta: lps. 120</h3>	\
+
+	   <img src="img/index/descuentos.jpg" class="d-block w-100 imgCarousel"  alt="...">\
+
+	  </div>\
+
+		<hr>\
+
+	</div>\
+	      <div class="modal-footer">\
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>\
+<button type="button" class="btn btn-primary">Imprimir</button>\
+	      </div>\
+	   </div>\
+		</div> \
+		</div>';
+		)
+		
+		$('#formulario-ficha-promocional').modal('show');
+	}*/
 		</script>
 		
-
 	</body>
 	</html>

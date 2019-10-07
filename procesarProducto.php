@@ -5,7 +5,6 @@
     //$rutaArchivo = 'productos.json';
 
   $database = new Database();
-
     if ($_POST!=null){
      if($_FILES){
         $pathDestino="./fotosProductos";
@@ -17,7 +16,7 @@
            // print_r ($imagen);
             $pathsProductos[]='/'.'productos'."/".$_FILES["urlImagen"]["name"];
             move_uploaded_file($_FILES["urlImagen"]["tmp_name"],
-            $pathDestino.'/'.'productos'.'/'.$_FILES["urlImagen"]["name"]);//aquiiii vooooy
+            $pathDestino.'/'.'productos'.'/'.$_FILES["urlImagen"]["name"]);
 
           }
           else{
@@ -26,11 +25,12 @@
         //}
       }
 		    $producto = new Producto(
-		        $_POST['Empresa'],
-            $_POST['codigoProducto'],
-            $_POST['nombreProducto'],
-            $_POST['precio'],
-            $_POST['descripcion']);
+            $pathsProductos,
+		        $_POST['empresa'],
+            $_POST['CodigoProducto'],
+            $_POST['NombreProducto'],
+            $_POST['PrecioProducto'],
+            $_POST['descripcionProducto']);
 
         $producto->createProducto($database->getDB(),$_POST['codigoProducto']);
 
