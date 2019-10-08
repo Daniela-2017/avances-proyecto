@@ -1,4 +1,4 @@
-	 <!DOCTYPE html>
+<!DOCTYPE html>
 	<html>
 	<head>
 		<title>Mi Empresa</title>
@@ -49,60 +49,14 @@ foreach($json as $k=>$v){
 	$longitud=$v;
 	}
 	}
-	
-
-		/*$pais=$_GET['pais'];
-		$direccion=$_GET['direccion'];
-		$latitud=$_GET['latitud'];
-		$longitud=$_GET['longitud'];
-		$urlBanner=$_GET['urlBanner'];
-		$urlLogotipo=$_GET['urlLogotipo'];
-		$facebook=$_GET['facebook'];
-		$whatsapp=$_GET['whatsapp'];
-		$twitter=$_GET['twitter'];
-		$instagram=$_GET['instagram'];
-		$redes=$_GET['redes'];
-		$correo=$_GET['correo'];
-		$clave=$_GET['clave'];
-		$claveConfirmacion=$_GET['claveConfirmacion'];*/
 
 		echo
-	 "	<div id='bannerEmpresa' style='width: auto;'>
+	 "<div id='bannerEmpresa' style='width: auto;'>
 		<div class='banner'><img class='bannerImagen' src='fotosEmpresa$banner' alt='banner'>
 		<div class='logotipo' style='background-image:url(fotosEmpresa$logo)'>
 			
 		</div>	
 		 <h1 style='color:wheat;text-align: center;' id='tituloEmpresa'>$nombre</h1>";
-
-		 function cargarProductos(){
-		 	$contenido = file_get_contents($rutaArchivo);
-            $producto = json_decode($contenido,true);
-		 	for ($i=0; $i < sizeof($producto); $i++) { 
-                echo "<div class='col-xl-3 col-md-2 col-sm-12'>
-          <div class='producto'>
-        <h3>jj</h3>
-        <p class='descripcion'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, dolorem.</p>
-        <div class='precio'>100.00 lps</div>
-        <!--imagenes-->
-        <div id='carouselExampleSlidesOnly' class='carousel slide carousel' data-ride='carousel'>
-      <div class='carousel-inner'>
-        <div class='carousel-item active'>
-            <img src='img/index/descuentos.jpg' class='d-block w-100 imgCarousel'  alt='...'>
-        </div>
-        <div class='carousel-item'>
-          <img src='img/index/ofertas.jpeg' class='d-block w-100 imgCarousel' alt='...'>
-        </div>
-        <div class='carousel-item'>
-          <img src='img/index/rebajas.png' class='d-block w-100 imgCarousel'  alt='...'>
-        </div>
-        </div>
-            <button type='button' data-toggle='modal' style='margin: 8px;' data-target='#formulario-agregar-promocion'>Agregar a Promociones</button>
-    </div>
-        <hr>
-        </div>
-      </div>";
-}
-		 }
 		
 		?>
 		
@@ -168,17 +122,27 @@ foreach($json as $k=>$v){
 
   $database = new Database();
 
-	          $contenidoArchivo=file_get_contents('empresas.json');
-	          $empresa=json_decode($contenidoArchivo,true);
-	          for ($i=0; $i <  sizeof($empresa); $i++) { //buscar el indice del arreglo en el archivo donde esta ubicado el registro
-	            if ($empresa[$i]['id']==$_GET['id']) {
-	              $indice=$i;
-	        }
-	    }
+				 $empresa = Empresa::getEmpresa($database->getDB(),$key);
+				$jsonEmpresa = json_decode($empresa,true);
+					 $nombre = $jsonEmpresa['id'];
+					 $pais=$jsonEmpresa['pais'];
+					 $direccion = $jsonEmpresa['direccion'];
+					 $latitud = $jsonEmpresa['latitud'];
+					 $longitud = $jsonEmpresa['longitud'];
+					 $urlBanner = $jsonEmpresa['urlBanner'][0];
+					 $urlLogotipo = $jsonEmpresa['urlLogotipo'][0];
+					 $facebook= $jsonEmpresa['facebook'];
+					 $whatsapp=$jsonEmpresa['whatsapp'];
+					 $twitter=$jsonEmpresa['twitter'];
+					 $instagram=$jsonEmpresa['instagram'];
+					 $correo=$jsonEmpresa['correo'];
+					 //$clave=$jsonEmpresa['clave'];
+					 $RedesSociales = $jsonEmpresa['RedesSociales'];
+					 
+					 
 
 	echo "
-		<form action='editarEmpresa.php' method='PUT'>
-		<input value=$indice name='indice' style='display:none'>
+		<form id='formularioEditarEmpresa' enctype='multipart/form-data' role='form' method='POST'>
 		
 		<div class='modal fade' id='formulario-actualizar-Empresa' style='color: aliceblue'; tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
 	    <div class='modal-dialog' role='document'>
@@ -190,11 +154,12 @@ foreach($json as $k=>$v){
 	          </button>
 	        </div>
 	        <div class='modal-body'>
-	          <input class='form-control ActualizarEmpresa' type='text' id='nombreEmpresa-nuevo' value='$id' name='id' placeholder='Escriba el Nombre de la Empresa'>
+					<input type='text' id='empresaKey' style='display:none' value='$key'>
+	          <input class='form-control ActualizarEmpresa' type='text' id='nombreEmpresa-nuevo' value='$nombre' name='id' placeholder='Escriba el Nombre de la Empresa'>
 			 <br> 
-			  <input class='form-control ActualizarEmpresa' sname='pais' type='text' id='pais-nuevo' placeholder='Escriba el País de Origen' value='$pais'>
+			  <input class='form-control ActualizarEmpresa' name='pais' type='text' id='pais-nuevo' placeholder='Escriba el País de Origen' value='$pais'>
 			 <br> 
-			  <textarea class='form-control ActualizarEmpresa' style='width:-moz-available' id='direccion-nuevo' name='direccion'  placeholder='Escriba aquí la Dirección' rows='3' cols='20'>$direccion</textarea><br> 
+			  <textarea class='form-control ActualizarEmpresa' style='width:-moz-available' value='$direccion' id='direccion-nuevo' name='direccion'  placeholder='Escriba aquí la Dirección' rows='3' cols='20'>$direccion</textarea><br> 
 			<input class='form-control ActualizarEmpresa' name='latitud' type='text' id='latitud-nuevo' placeholder='Escriba su latitud' value='$latitud' style='width:-moz-available'/>
 						<br> 
 			<input class='form-control ActualizarEmpresa' name='longitud' id='longitud-nuevo' type='text' placeholder='Escriba aqui su longitud'  value='$longitud' style='width:-moz-available'>
@@ -254,7 +219,7 @@ foreach($json as $k=>$v){
 			<input id='instagram-nuevo' name='instagram' type='text' value='$instagram' placeholder='Instagram' class='col-xl-6 ActualizarEmpresa' style='width:-moz-available;padding:5px'>
 			</div>
 			<br> 
-			<textarea  class='form-control ActualizarEmpresa' id='RedesSociales-nuevo'  name='redes' placeholder='Otras Redes Sociales...'>$redes</textarea> 
+			<textarea  class='form-control ActualizarEmpresa' id='RedesSociales-nuevo'  name='redes' placeholder='Otras Redes Sociales...'>$RedesSociales</textarea> 
 			<br>
 			<div class='form-row align-items-center'> 
 				<div class='input-group'>
@@ -272,18 +237,18 @@ foreach($json as $k=>$v){
 			</div>
 			<br> 
 			<div>
-			<input type='password' id='ClaveEmpresaNueva' name='clave' class='form-control ActualizarEmpresa' placeholder='Escriba una contraseña segura' style='width:-moz-available' value='$clave'>	
+			<input type='password' id='ClaveEmpresaNueva' name='clave' class='form-control ActualizarEmpresa' placeholder='Escriba una contraseña segura' style='width:-moz-available'>	
 					<div class='valid-feedback' style='text-align:right'>Ok</div>
 					<div class='invalid-feedback' style='text-align:right; margin-bottom:9px'>
 					Las contraseñas no coinciden
 					</div>
 			</div>
 			<br> 
-			<input type='password' value='$claveConfirmacion' id='ConfirmacionEmpresaNueva' name='claveConfirmacion' class='form-control ActualizarEmpresa' placeholder='Confirme su Contraseña' style='width:-moz-available; margin-left:auto'>		
+			<input type='password' id='ConfirmacionEmpresaNueva' name='claveConfirmacion' class='form-control ActualizarEmpresa' placeholder='Confirme su Contraseña' style='width:-moz-available; margin-left:auto'>		
 			        </div>
 			        <div class='modal-footer'>
 			          <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cancelar</button>
-			          <button id='btn-guardar' type='submit' class='btn btn-primary' onclick='validarEmpresaNuevo()'>Guardar Cambios</button>
+			          <button id='actualizarEmpresa' type='button' class='btn btn-primary'>Guardar Cambios</button>
 			        </div>
 			      </div>
 			    </div>
@@ -391,12 +356,6 @@ foreach($json as $k=>$v){
 	      <div class="modal-body">
 			<?php
 
-				/*$contenidoArchivo=file_get_contents('productos.json');
-				$productos=json_decode($contenidoArchivo,true);
-				for ($i=0; $i < sizeof($productos); $i++) { 
-							echo json_encode($productos[$i]);
-					
-				}*/
 				 $productos = Producto::getProductos($database->getDB());
 				$jsonProductos = json_decode($productos,true);
 				//print_r($productos);
@@ -712,18 +671,13 @@ foreach($json as $k=>$v){
 			<h5 class="categoria col-xl-12 col-md-12 col-sm-12">Ubicación Principal</h5>
 		<div class="col-md-12 d-none d-sm-block" id="mapaPrincipal" style="width: 450px; height: 350px">
 
-	</div>
+		</div>
 
 
 		<h5 class="categoria col-xl-12 col-md-12 col-sm-12">Productos</h5>
 <?php
   $productos = Producto::getProductos($database->getDB());
 $jsonProductos = json_decode($productos,true);
-		 /*	$contenido = file_get_contents('productos.json');
-            $producto = json_decode($contenido,true);
-		 	for ($i=0; $i < sizeof($producto); $i++) { 
-		 		$nombre=$producto[$i]['nombreProducto'];
-		 		$descripcion=$producto[$i]['descripcion'];*/
 				
 				 foreach($jsonProductos as $indice=>$valor){
 					 if($jsonProductos[$indice]['Empresa']==$key){
@@ -759,19 +713,45 @@ $jsonProductos = json_decode($productos,true);
 ?>
 
 	</div>
+	
 	<!--__________modal para ver ficha de promocion______-->
 	<div id="formulario-ficha-promocional" class="modal" style="color:aliceblue" tabindex="-1" role="dialog">
+<div class="modal-dialog" role="document"><div class="modal-content modals">
+	<div class="modal-header"><h5 class="modal-title">Ficha Promocional</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	<span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+		  <div class="promocion">
+				<span class="descuento" style="padding-left: 2rem;color: red;">15% de Descuento</span>
+		<h3 style="text-align: center;">Nombre</h3>
+		<h3>Precio Normal: lps. 200</h3>
+		<h3>Precio De Oferta: lps. 120</h3>
 
+	   <img src="img/index/descuentos.jpg" class="d-block w-100 imgCarousel"  alt="...">
+
+	  </div>
+
+		<hr>
+
+	</div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+<button type="button" class="btn btn-primary">Imprimir</button>
+	      </div>
+	   </div>
+		</div>
+		</div>
 	</div>
 	<!--_______________________________-->
 	
 
 	<!--Promociones-->
-	  <div class="row divPromociones">
+<div class="row divPromociones">
 
-		<h5 class="categoria col-xl-12 col-md-12 col-sm-12">Promociones</h5>
+			<h5 class="categoria col-xl-12 col-md-12 col-sm-12">Promociones</h5>
 		<?php 
-		$promocion = Promocion::getPromociones($database->getDB());
+				$promocion = Promocion::getPromociones($database->getDB());
 
 				$jsonPromociones = json_decode($promocion,true);
 				//print_r($productos);
@@ -789,39 +769,39 @@ $jsonProductos = json_decode($productos,true);
 					 $precioReal = $jsonPromociones[$indice]['precioReal'];
 					 $url=$producto['urlImagen'][0];
 					 $keyProducto=$indice;
-				
-	echo "		
-		<div class='col-xl-3 col-md-2 col-sm-12'>
+	echo "
+	<div class='col-xl-3 col-md-2 col-sm-12'>
 		  <div class='promocion'>
-				<span class='descuento'>$descuento%</span>
-				<img src='img/oferta.png'>
-			<h3>$nombre</h3>
-		<div class='precioRebaja'>
-			<div class='precioNormal'>$precioReal</div>
-			<div class='precioOferta'>$precioOferta</div>
-		</div>
+					<span class='descuento'>$descuento%</span>
+					<img src='img/oferta.png'>
+				<h3>$nombre</h3>
+				<div class='precioRebaja'>
+				<div class='precioNormal'>$precioReal</div>
+				<div class='precioOferta'>$precioOferta</div>
+				</div>
 
-		<!--imagenes-->
-		<div id='carouselExampleSlidesOnly' class='carousel slide carousel' data-ride='carousel'>
-	  	<div class='carousel-inner'>
-	    <div class='carousel-item active'>
-	        <img src='fotosProductos$url' class='d-block w-100 imgCarousel'  alt='...'>
-	    </div>
-	    <div class='carousel-item'>
-	      <img src='fotosProductos$url' class='d-block w-100 imgCarousel' alt='...'>
-	    </div>
-	    <div class='carousel-item'>
-	      <img src='fotosProductos$url' class='d-block w-100 imgCarousel'  alt='...'>
-	    </div>
-		</div>
-			<button type='button'>Ficha Promocional</button>
-	</div>
-		<hr>
+			<!--imagenes-->
+			<div id='carouselExampleSlidesOnly' class='carousel slide carousel' data-ride='carousel'>
+				<div class='carousel-inner'>
+						<div class='carousel-item active'>
+								<img src='fotosProductos$url' class='d-block w-100 imgCarousel'  alt='...'>
+						</div>
+						<div class='carousel-item'>
+							<img src='fotosProductos$url' class='d-block w-100 imgCarousel' alt='...'>
+						</div>
+						<div class='carousel-item'>
+							<img src='fotosProductos$url' class='d-block w-100 imgCarousel'  alt='...'>
+						</div>
+				</div>
+					<button type='button' data-toggle='modal' onclick='verFicha('".$nombre."')'>Ficha Promocional</button>
+			</div>
+			<hr>
 			</div>
 		</div>
-		";
-					 }
+		";		 
 				 }
+				}
+				// data-target='#formulario-ficha-promocional'
 ?>	 
 </div>
 <!---->
@@ -830,10 +810,10 @@ $jsonProductos = json_decode($productos,true);
 
 		<!--sucursales-->
 	  <div class="row divPromociones">
-		<h5 class="categoria col-xl-12 col-md-12 col-sm-12">Sucursales</h5>
-	  <div class="col-xl-12 col-md-12 col-sm-12" id="mapaSuc">
+				<h5 class="categoria col-xl-12 col-md-12 col-sm-12">Sucursales</h5>
+	  	<div class="col-xl-12 col-md-12 col-sm-12" id="mapaSuc">
 
-		</div>
+			</div>
 		</div>
 	</section>
 
@@ -857,20 +837,27 @@ $jsonProductos = json_decode($productos,true);
 
 //llamado a agregar productos
    $('#registrarProducto').click(function(event) {
-     agregarProducto('#formularioAgregarProductos')
+     agregarProducto('#formularioAgregarProductos');
 	 });
 	 
 //llamado a agregar sucursales
 $('#registrarSucursal').click(function(event){
 	agregarSucursal('#formularioAgregarSucursales');
-})
+});
 
 //llamado para agregar promociones
 $('#registrarPromocion').click(function(event){
 	agregarPromocion('#formularioAgregarPromociones');
-})
-/*
-function mostrarFicha(precioOferta,precioReal,descuento){
+});
+
+//llamado para actualizar empresa
+$('#actualizarEmpresa').click(function(event){
+	validarEmpresaNuevo('#formularioEditarEmpresa');
+});
+
+//precioOferta,precioReal,descuento
+function verFicha(nombre){
+	/*
 	var modal = document.getElementById('formulario-ficha-promocional');
 	$('#formulario-ficha-promocional').append('<div class="modal-dialog" role="document"><div class="modal-content modals">\
 	<div class="modal-header"><h5 class="modal-title">Ficha Promocional</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close">\
@@ -882,7 +869,7 @@ function mostrarFicha(precioOferta,precioReal,descuento){
 				<span class="descuento" style="padding-left: 2rem;color: red;">15% de Descuento</span>\
 		<h3 style="text-align: center;">Nombre</h3>\
 		<h3>Precio Normal: lps. 200</h3>\
-		<h3>Precio De Oferta: lps. 120</h3>	\
+		<h3>Precio De Oferta: lps. 120</h3>\
 
 	   <img src="img/index/descuentos.jpg" class="d-block w-100 imgCarousel"  alt="...">\
 
@@ -896,13 +883,14 @@ function mostrarFicha(precioOferta,precioReal,descuento){
 <button type="button" class="btn btn-primary">Imprimir</button>\
 	      </div>\
 	   </div>\
-		</div> \
+		</div>\
 		</div>';
 		)
-		
+		*/
 		$('#formulario-ficha-promocional').modal('show');
-	}*/
-		</script>
-		
+	}
+
+
+	</script>
 	</body>
-	</html>
+</html>

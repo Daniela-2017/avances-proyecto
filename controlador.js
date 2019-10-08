@@ -170,7 +170,6 @@ function dataForm_Archivos(formulario){
 }
 
 
-
 function validarCorreoCliente(id,formulario){//cliente
     let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     let valido= re.test(document.getElementById(id).value);
@@ -378,6 +377,7 @@ function RegistrarEmpresa(){
 
 }
 //comprar producto
+
 function comprarProducto(){
      for(let i=0; i<campoCompra.length; i++)
          campoCompra[i].valido=validarCampos(campoCompra[i].campo);
@@ -639,14 +639,68 @@ ValidarClaveNueva('ClaveCliente-nueva','ConfirmacionCliente-nueva',1,camposNuevo
 
         alert('Ok');
 }
+
     //actualizar empresa
-function validarEmpresaNuevo(){
-correo('correo-nuevo',0,camposNuevoEmpresa);
+function dataForm_ActualizarEmpresa(formulario){
+    var nuevoFormulario = new FormData();   
+    $(formulario).find(':input').each(function() {
+        var elemento= this;
+        //Si recibe tipo archivo 'file'
+        if(elemento.type === 'file'){
+           if(elemento.value !== ''){
+              for(var i=0; i< $('#'+elemento.id).prop("files").length; i++){
+                  nuevoFormulario.append(elemento.name, $('#'+elemento.id).prop("files")[i]);
+               }
+            }              
+         }
+        else{
+            nuevoFormulario.append('empresaKey',$('#empresaKey').val());            
+            nuevoFormulario.append('nombreEmpresa',$('#nombreEmpresa-nuevo').val());
+            nuevoFormulario.append('pais',$('#pais-nuevo').val());
+            nuevoFormulario.append('direccion',$('#direccion-nuevo').val());
+            nuevoFormulario.append('latitud',$('#latitud-nuevo').val());
+            nuevoFormulario.append('longitud',$('#longitud-nuevo').val());
+            nuevoFormulario.append('facebook',$('#facebook-nuevo').val());
+            nuevoFormulario.append('whatsapp',$('#whatsapp-nuevo').val());
+            nuevoFormulario.append('twitter',$('#twitter-nuevo').val());
+            nuevoFormulario.append('instagram',$('#instagram-nuevo').val());
+            nuevoFormulario.append('RedesSociales',$('#RedesSociales-nuevo').val());
+            nuevoFormulario.append('correo',$('#correo-nuevoEmpresa').val());
+            nuevoFormulario.append('ClaveEmpresa',$('#ClaveEmpresaNueva').val());
+        }
+
+     })
+
+  return nuevoFormulario;
+}
+
+function validarEmpresaNuevo(formularioEmpresa){
+correo('correo-nuevoEmpresa',0,camposNuevoEmpresa);
 ValidarClaveNueva('ClaveEmpresaNueva','ConfirmacionEmpresaNueva',1,camposNuevoEmpresa);
         for(let i=0; i<camposNuevoEmpresa.length; i++)
         if(!camposNuevoEmpresa[i].valido) return;
 
-        alert('Ok');
+     var datosForm = dataForm_ActualizarEmpresa(formularioEmpresa);
+      // console.log(datosForm.get("correo"));
+        //console.log(datosForm.get("foto"));
+$.ajax({
+    cache:false,
+    contentType: false,
+    processData: false,
+    data: datosForm,    
+    dataType:'json',                     
+    method: 'POST',
+    url: 'procesarEmpresa.php',
+    success: function(){
+        console.log('bien');
+    },
+    error: function(){
+        console.log('error');
+    }
+
+    });
+    return true;
+
 }
  //actualizar administrador ARREGLAAAAR OJOOOO
 
