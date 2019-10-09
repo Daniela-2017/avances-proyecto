@@ -1,22 +1,22 @@
 
 
 <?php
-require_once __DIR__.'/vendor/autoload.php';
+//borrar este archivo
+    include_once('clases/class-cliente.php');
+    include_once('clases/class-database.php');
+    //$rutaArchivo = 'empresas.json';
 
+  $database = new Database();
 
-echo "hola"
-/*use Kreait\Firebase\Factory;
-
-$firebase = (new Factory)
-    ->withServiceAccount('./secret/fir-proyect-8f565-653f2a333a0c.json')
-    ->withDatabaseUri('https://fir-proyect-8f565.firebaseio.com/')
-    ->create();
-$database = $firebase->getDatabase();
-$newPost = $database
-    ->getReference('users')
-    ->push([
-        'firstName'=>'Juan',
-        'lastName'=>'Perez',
-        'birthDate'=>'12/12/2012'
-    ]);*/
+$clave=password_hash('asd.456',PASSWORD_DEFAULT);
+$db=$database->getDB();
+          $result=$db->getReference('Administrador')
+        ->push([
+        'nombre'=>'Daniela',
+        'apellido'=>'Zavala',
+        'pais'=>'Honduras',
+        'direccion'=>'Colonia Flor del campo zona2',
+        'correoAdmin'=>'danny15zavalalic@gmail.com',
+        'clave'=>$clave
+    ]);
 ?>

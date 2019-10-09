@@ -5,25 +5,25 @@
 
     //header('Content-Type: application/json'); //Tipod MIME
     include_once('clases/class-admin.php');
-    $rutaArchivo = 'administrador.json';
+    include_once('clases/class-database.php');
 
+  $database = new Database();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-            $_PUT=array();
-            parse_str(file_get_contents("php://input"), $_PUT);
-            //var_dump($_PUT);
-        
-		    $admin = new Administrador(
-                
-            $_POST['primerNombre'],
-            $_POST['primerApellido'],
+      $nuevoAdmin= new Administrador(
+            $_POST['primerNombreAdmin'],
+            $_POST['primeroApellidoAdmin'],
             $_POST['pais'],
             $_POST['direccion'],
+            $_POST['direccionAdmin'],
             $_POST['correo'],
-            $_POST['clave'],
-            $_POST['claveConfirmacion']);
+            $_POST['clave']);
 
-        $admin->updateAdmin($rutaArchivo,$_POST['correo']);
+      $nuevoAdmin->updateAdmin($database->getDB(),$_POST['keyAdmin']);
+
+
+    
+  exit();
 
         //header("Location: Registrar-cliente.html");
 }

@@ -5,7 +5,6 @@
 
   $database = new Database();
 
-echo $_SERVER['REQUEST_METHOD'];
   if($_SERVER['REQUEST_METHOD']=='POST' && isset($_POST['empresaKey'])){
  if($_FILES){
         $pathDestino="./fotosEmpresa";
@@ -15,12 +14,12 @@ echo $_SERVER['REQUEST_METHOD'];
         //  $imagen=$_FILES['banner'][0]['tmp_name'];
           if($_FILES["error"]==UPLOAD_ERR_OK){
            // print_r ($imagen);
-            $pathsBanners[]='/'.'banners'."/".$_FILES["urlBanner"]["name"];
+            $pathsBanners[]='/'.'banners'."/".$_FILES["banner"]["name"];
             move_uploaded_file($_FILES["banner"]["tmp_name"],
             $pathDestino.'/'.'banners'.'/'.$_FILES["banner"]["name"]);//aquiiii vooooy
 
 
-          $pathsLogotipos[]='/'.'logotipos'."/".$_FILES["urlLogotipo"]["name"];
+          $pathsLogotipos[]='/'.'logotipos'."/".$_FILES["logotipo"]["name"];
             move_uploaded_file($_FILES["logotipo"]["tmp_name"],
             $pathDestino.'/'.'logotipos'.'/'.$_FILES["logotipo"]["name"]);
           }

@@ -11,16 +11,8 @@
 </head>
 
 <body>
-	<form name="frmNotification" id="frmNotification">
-   <div class="form-group">
-       <label for="mensaje">Mensaje </label>
-      
-   </div>
-   <div class="form-group">
-   
-   </div>
-</form>
 	<div class="cliente">
+		<button style="width: 200px;"><a href="login.html" style="color: white;background-color: transparent;text-decoration-style: -moz-none;"> Acceder a mi perfil</a></button>
 		<h1 align="center">Ingresar Cliente</h1>
 		<form id="formularioAgregarCliente" enctype="multipart/form-data" role="form" method="POST">
 			<div>
@@ -31,9 +23,21 @@
 				<div class="invalid-feedback" style="text-align:right; margin-bottom:9px">
 					Campo Obligatorio
 				</div>
-
-				<input id="foto" type="file" name="foto">
 			</div>
+			<!-- Campo ficticio para simular el path del archivo -->
+			<div>
+				<input type="text" value="" id="url-foto" name="urlFoto" class="input-url form-control" />
+				<!-- label para simular el boton "seleccionar archivo" -->
+				<label class="cargar" style="cursor:pointer">
+	Subir Foto para Perfil
+	<span>
+	
+		    <input type="file" id="foto" name="foto" style="display:none"/>
+	</span></label>
+				<!-- Campo original file -->
+
+			</div>
+<br><br><br>
 			<div>
 				<label for="Apellido">Escriba su Apellido</label>
 				<input value="" class="form-control" type="text" name="apellido" id="apellidoCliente" placeholder="Primer apellido"><br>
@@ -93,9 +97,9 @@
 
 
 		<button type="button" id="registrarCliente" value="">Registrarme</button><!---->
-		</div>
+	
 		</form>
-
+	</div>
 	<script src="jquery/jquery-3.4.1.min.js"></script>
 	<script src="popper/popper.min.js"></script>
 	<script src="controlador.js"></script>
@@ -103,6 +107,12 @@
    $('#registrarCliente').click(function(event) {
      validarRegistroCliente('#formularioAgregarCliente')
    });
+
+   		/* Seccion para obtener y simular la url del input file
+ En el change del campo file, cambiamos el val del campo ficticio por el del verdadero */
+		$('#foto').change(function () {
+			$('#url-foto').val($(this).val());
+		});
 </script>
 </body>
 

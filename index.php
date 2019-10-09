@@ -48,7 +48,7 @@
 						<button class="opciones btn btn-outline-danger">Registrarme</button>
 					</form>
 
-					<form method="get" action="clienteSinRegistrar.html">
+					<form method="get" action="clienteSinRegistrar.php">
 						<button class="opciones btn btn-outline-danger">Ver promociones sin registrar</button>
 					</form>
 

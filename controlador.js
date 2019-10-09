@@ -41,11 +41,11 @@ var camposNuevoCliente=[
 var camposNuevoAdmin=[
     {campo:'primerNombreAdmin-nuevo', valido:false},
     {campo:'primeroApellidoAdmin-nuevo', valido:false},
-    {campo:'identidadAdmin', valido:false},
+    {campo:'pais', valido:false},
     {campo:'direccionAdmin-nuevo', valido:false},
     {campo:'correo-nuevo-admin', valido:false},
-    {campo:'ClaveCliente-nueva', valido:false},
-    {campo:'correo-nuevo', valido:false},
+    {campo:'ClaveAdmin-nueva', valido:false},
+    {campo:'ConfirmacionAdmin-nueva', valido:false},
 ]
 
 var camposNuevoEmpresa=[
@@ -276,6 +276,10 @@ function registrarlogin(){
                 id=res.clave;
                 window.location.href="empresa.php?id="+id+""
             }
+            else if (res.correoAdmin){
+                id=res.clave;
+                window.location.href="admin.php?id="+id+""
+            }
                 
                 //llevar a promociones pero con sus datos
             }
@@ -377,7 +381,7 @@ function RegistrarEmpresa(){
 
 }
 //comprar producto
-
+validarAdminNuevo
 function comprarProducto(){
      for(let i=0; i<campoCompra.length; i++)
          campoCompra[i].valido=validarCampos(campoCompra[i].campo);
@@ -395,16 +399,16 @@ console.log(compraProductos);
     }
 //calificar producto
 
-function calificarPoducto(){
-    document.getElementById('estrellas').innerHTML = '';
-        let calificacion= document.getElementById('calificar').value;
+function calificarPoducto(id,id2){
+    document.getElementById(id).innerHTML = '';
+        let calificacion= document.getElementById(id2).value;
     for (let i=0; i<calificacion; i++){
-        document.getElementById('estrellas').innerHTML += `<i class="fas fa-star" style="color:yellow"></i>`
+        document.getElementById(id).innerHTML += `<i class="fas fa-star" style="color:yellow"></i>`
     }
     for(let i=0; i<(5-calificacion); i++){
-        document.getElementById('estrellas').innerHTML += `<i class="far fa-star" style="color: yellow;"></i>`
+        document.getElementById(id).innerHTML += `<i class="far fa-star" style="color: yellow;"></i>`
     }
-        document.getElementById('calificar').value='';
+        document.getElementById(id2).value='';
 }
 
 //para agregar productos
@@ -631,13 +635,59 @@ function CompararClaveNueva(clave,confirmar,id,indice,array){
 }
 
 //acualizar cliente
-function validarClienteNuevo(){
+function dataForm_ActualizarCliente(formulario){
+    var nuevoFormulario = new FormData();   
+    $(formulario).find(':input').each(function() {
+        var elemento= this;
+        //Si recibe tipo archivo 'file'
+        if(elemento.type === 'file'){
+           if(elemento.value !== ''){
+              for(var i=0; i< $('#'+elemento.id).prop("files").length; i++){
+                  nuevoFormulario.append(elemento.name, $('#'+elemento.id).prop("files")[i]);
+               }
+            }              
+         }
+        else{
+            nuevoFormulario.append('keyCliente',$('#keyCliente').val());            
+            nuevoFormulario.append('nombreCliente',$('#primerNombre-nuevo').val());
+            nuevoFormulario.append('apellidoCliente',$('#primeroApellido-nuevo').val());
+            nuevoFormulario.append('paisCliente',$('#pais-nuevo').val());
+            nuevoFormulario.append('direccionCliente',$('#direccion-nuevo').val());
+            nuevoFormulario.append('correoCliente',$('#correo-nuevo-cliente').val());
+            nuevoFormulario.append('claveCliente',$('#ClaveCliente-nueva').val());
+        }
+
+     })
+
+  return nuevoFormulario;
+}
+function validarClienteNuevo(formularioCliente){
 correo('correo-nuevo-cliente',0,camposNuevoCliente);
 ValidarClaveNueva('ClaveCliente-nueva','ConfirmacionCliente-nueva',1,camposNuevoCliente);
         for(let i=0; i<camposNuevoCliente.length; i++)
         if(!camposNuevoCliente[i].valido) return;
+     var datosForm = dataForm_ActualizarCliente(formularioCliente);
+      // console.log(datosForm.get("correo"));
+        //console.log(datosForm.get("keyCliente"));
+        
+$.ajax({
+    cache:false,
+    contentType: false,
+    processData: false,
+    data: datosForm,    
+    dataType:'json',                     
+    method: 'POST',
+    url: 'procesarCliente.php',
+    success: function(){
+        console.log('bien');
+    },
+    error: function(){
+        console.log('error');
+    }
 
-        alert('Ok');
+    });
+    return true;
+        
 }
 
     //actualizar empresa
@@ -702,27 +752,53 @@ $.ajax({
     return true;
 
 }
- //actualizar administrador ARREGLAAAAR OJOOOO
+ //actualizar administrador
+function dataForm_ActualizarAdmin(formulario){
+    var nuevoFormulario = new FormData();   
 
-function validarAdminNuevo(){
+            nuevoFormulario.append('keyAdmin',$('#keyAdmin').val());            
+            nuevoFormulario.append('primerNombreAdmin',$('#primerNombreAdmin-nuevo').val());
+            nuevoFormulario.append('primeroApellidoAdmin',$('#primeroApellidoAdmin-nuevo').val());
+            nuevoFormulario.append('pais',$('#pais').val());
+            nuevoFormulario.append('direccionAdmin',$('#direccionAdmin-nuevo').val());
+            nuevoFormulario.append('correo',$('#correo-nuevo-admin').val());
+            nuevoFormulario.append('clave',$('#ClaveAdmin-nueva').val());
+
+  
+
+  return nuevoFormulario;
+}
+function validarAdminNuevo(formularioAdmin){
     for(let i=0; i<camposNuevoAdmin.length; i++)
          camposNuevoAdmin[i].valido=validarCampos(camposNuevoAdmin[i].campo);
-alert('k');
 correo('correo-nuevo-admin',0,camposNuevoAdmin);
 ValidarClaveNueva('ClaveAdmin-nueva','ConfirmacionAdmin-nueva',1,camposNuevoAdmin);
-     alert(adminValido);
-
 
     
     for(let i=0; i<camposNuevoAdmin.length; i++)
        if(!camposNuevoAdmin[i].valido) return false;
    adminValido=true;
 
+var datosForm = dataForm_ActualizarAdmin(formularioAdmin);
+      //console.log(datosForm.get("correo"));
+        //console.log(datosForm.get("foto"));
+$.ajax({
+    cache:false,
+    contentType: false,
+    processData: false,
+    data: datosForm,    
+    dataType:'json',                     
+    method: 'POST',
+    url: 'procesarAdmin.php',
+    success: function(){
+        console.log('bien');
+    },
+    error: function(){
+        console.log('error');
+    }
 
-    if (adminValido==true) {
-    return true}
-   else 
-    return false
+    });
+    return true
 }
 
 function dataForm_ArchivosEmpresa(formulario){

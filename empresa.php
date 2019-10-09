@@ -14,6 +14,7 @@
 	<body>
 		<div style="color: white; padding: 12px; background: linear-gradient(white,blue);" align="center">
 		</div>
+		<a class='btn btn-primary' href='index.php' style='margin-right: 3px;' type='button' >Volver al menu principal</a>
 		<?php
 
 include_once('clases/class-empresa.php');
@@ -106,12 +107,13 @@ foreach($json as $k=>$v){
 				</li>
 
 				<li  class="seccion" id="dashboard">
-					<a href="dashboard.html">
-						<img src="img/empresa/dashboard.png" alt="contacto" class="imagen">
-						<span class="text-item menuEmp">Dashboard Administrativo</span>
-						<span class="down-item"></span>
+					<?php echo "
+					<a href='dashboard.php?id=$key'>
+						<img src='img/empresa/dashboard.png' alt='contacto' class='imagen'>
+						<span class='text-item menuEmp'>Dashboard Administrativo</span>
+						<span class='down-item'></span>
 					</a>
-	            </li>
+	            </li>"?>
 		</nav>
 
 		  <!-- Modal para actualizar empresa-->
@@ -136,7 +138,6 @@ foreach($json as $k=>$v){
 					 $twitter=$jsonEmpresa['twitter'];
 					 $instagram=$jsonEmpresa['instagram'];
 					 $correo=$jsonEmpresa['correo'];
-					 //$clave=$jsonEmpresa['clave'];
 					 $RedesSociales = $jsonEmpresa['RedesSociales'];
 					 
 					 
@@ -172,7 +173,7 @@ foreach($json as $k=>$v){
 		Subir Banner
 		<span>
 		
-			    <input type='file' id='archivo' value='' style='display:none'/>
+			    <input type='file' id='archivo' name='banner' value='' style='display:none'/>
 		</span></label>
 					<!-- Campo original file -->
 					<div class='valid-feedback' style='text-align:right'>Ok
@@ -192,7 +193,7 @@ foreach($json as $k=>$v){
 					<label class='cargar' style='cursor:pointer'>
 			    Subir Logotipo<span>
 			    <!-- Campo original file -->
-			<input type='file' id='archivo2' name='archivo' style='display:none'/>
+			<input type='file' id='archivo2' name='logotipo' style='display:none'/>
 				</span>
 			</label>
 
@@ -687,6 +688,7 @@ $jsonProductos = json_decode($productos,true);
 					 $url=$jsonProductos[$indice]['urlImagen'][0];
                 echo "<div class='col-xl-3 col-md-2 col-sm-12'>
           <div class='producto'>
+				<button type='button' class='btn btn-outline-danger' onclick='eliminar('".$indice."')'>Eliminar Producto</button>
         <h3>$nombre</h3>
         <p class='descripcion'>$descripcion</p>
         <div class='precio'>$precio lps</div>
@@ -793,7 +795,7 @@ $jsonProductos = json_decode($productos,true);
 							<img src='fotosProductos$url' class='d-block w-100 imgCarousel'  alt='...'>
 						</div>
 				</div>
-					<button type='button' data-toggle='modal' onclick='verFicha('".$nombre."')'>Ficha Promocional</button>
+					<button type='button' data-toggle='modal' onclick='verFicha()'>Ficha Promocional</button>
 			</div>
 			<hr>
 			</div>
@@ -855,8 +857,8 @@ $('#actualizarEmpresa').click(function(event){
 	validarEmpresaNuevo('#formularioEditarEmpresa');
 });
 
-//precioOferta,precioReal,descuento
-function verFicha(nombre){
+function verFicha(){
+	//de ninguna manera pude enviar variables de tiipo string a esa funcion para usar sus datos :(
 	/*
 	var modal = document.getElementById('formulario-ficha-promocional');
 	$('#formulario-ficha-promocional').append('<div class="modal-dialog" role="document"><div class="modal-content modals">\

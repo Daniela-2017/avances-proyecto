@@ -51,25 +51,27 @@
           </button>
         </div>
         <?php
-          $contenidoArchivo=file_get_contents('administrador.json');
-          $administrador=json_decode($contenidoArchivo,true);
-          for ($i=0; $i <  sizeof($administrador); $i++) { //buscar el indice del arreglo en el archivo donde esta ubicado el registro
-            if ($administrador[$i]['correo']==$_GET['id']) {
-              $indice=$i;
-        }
-    } 
-          $nombre=$_GET['nombre'];
-          $apellido=$_GET['apellido'];
-          $pais=$_GET['pais'];
-          $direccion=$_GET['direccion'];
-          $id=$_GET['id'];
-          $clave=$_GET['clave'];
-          $claveConf=$_GET['claveconf'];
+      include_once('clases/class-admin.php');
+    	include_once('clases/class-database.php');
+    //$rutaArchivo = 'empresas.json';
+
+  $database = new Database();
+  $key = $_GET['id'];
+    $infor = Administrador::getAdmin($database->getDB(),$key);
+	$json=json_decode($infor,true);
+
+					 $nombre = $json['nombre'];
+					 $apellido=$json['apellido'];
+					 $direccion = $json['direccion'];
+					 $correoAdmin = $json['correoAdmin'];
+					 $pais = $json['pais'];
+           $clave = $json['clave'];
 
     echo "
-      <form onsubmit='return validarAdminNuevo();' action='procesarAdmin.php' method='POST'>
+    
+      <form id='formularioEditarAdmin' enctype='multipart/form-data' role='form' method='POST'>
         <div class='modal-body'>
-          <input value=$indice name='indice' style='display:none'>
+          <input name='indice' id='keyAdmin' value='$key'  style='display:none'>
           <div>
 
               <input class='form-control ActualizarAdmin' type='text' id='primerNombreAdmin-nuevo' value='$nombre' placeholder='Primer Nombre' name='primerNombre'>
@@ -88,7 +90,7 @@
         </div>
           <br>
         <div>
-          <input class='form-control ActualizarAdmin' type='text' id='identidadAdmin' placeholder='Escriba su País de Origen' name='pais' value='$pais'>
+          <input class='form-control ActualizarAdmin' type='text' id='pais' placeholder='Escriba su País de Origen' name='pais' value='$pais'>
                 <div class='valid-feedback' style='text-align:right'>Ok</div>
                 <div class='invalid-feedback' style='text-align:right; margin-bottom:9px'>
                   campo no válido
@@ -109,7 +111,7 @@
             <div class='input-group'>
               <div class='input-group-prepend' style='height: 40px'>
                 <div class='input-group-text'>@</div>
-                <input type='text' id='correo-nuevo-admin' class='form-control ActualizarAdmin' name='correo' placeholder='Escriba el correo electrónico' value='$id'
+                <input type='text' id='correo-nuevo-admin' class='form-control ActualizarAdmin' name='correo' placeholder='Escriba el correo electrónico' value='$correoAdmin'
                   style='width:-moz-available'>
                 <div class='valid-feedback' style='text-align:right'>Ok</div>
                 <div class='invalid-feedback' style='text-align:right; margin-bottom:9px'>
@@ -122,7 +124,7 @@
           <br>
           <div>
             <input type='password' id='ClaveAdmin-nueva' class='form-control ActualizarAdmin' placeholder='Escriba una contraseña segura'
-              style='width:-moz-available' value='$clave' name='clave'>
+              style='width:-moz-available' value='' name='clave'>
             <div class='valid-feedback' style='text-align:right'>Ok</div>
             <div class='invalid-feedback' style='text-align:right; margin-bottom:9px'>
               Las contraseñas no coinciden
@@ -130,24 +132,31 @@
           </div>
           <br>
           <div>
-            <input type='password' value='$claveConf' name='claveConfirmacion' id='ConfirmacionAdmin-nueva' class='form-control ActualizarAdmin' placeholder='Confirme su Contraseña'
+            <input type='password' value='' name='claveConfirmacion' id='ConfirmacionAdmin-nueva' class='form-control ActualizarAdmin' placeholder='Confirme su Contraseña'
               style='width:-moz-available; margin-left:auto'>
           </div>
         </div>
         <div class='modal-footer'>
           <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cancelar</button>
-          <button id='btn-guardar' type='submit' class='btn btn-primary' >Guardar Cambios</button>
+          <button type='button' id='actualizarAdmin' class='btn btn-primary' >Guardar Cambios</button>
         </div>
       </div>
     </div>
   </div>
 </form>"
 ?>
-</body>
+
 <script src="jquery/jquery-3.4.1.min.js"></script>
 <script src="popper/popper.min.js"></script>
 <script src="BootstrapJS/bootstrap.min.js"></script>
 <script src="BootstrapJS/all.js"></script>
 <script src="controlador.js"></script>
+<script>
+//llamado para actualizar empresa
+$('#actualizarAdmin').click(function(event){
+	validarAdminNuevo('#formularioEditarAdmin');
+});
 
+</script>
+</body>
 </html>
