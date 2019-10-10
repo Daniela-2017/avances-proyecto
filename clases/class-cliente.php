@@ -1,30 +1,40 @@
 <?php 
 
     class Usuario{
+        private $foto;
         private $nombre;
         private $apellido;
         private $pais;
         private $direccion;
         private $correo;
         private $clave;
-        private $confirmacionClave;
+       
+      //  private $confirmacionClave;
+        
 
         public function __construct(
+            $foto,
             $nombre,
             $apellido,
             $pais,
             $direccion,
             $correo,
-            $clave,
-            $confirmacionClave
+            $clave
+        
+           // $confirmacionClave
+        
         ){
+            $this->foto = $foto;
             $this->nombre = $nombre;
             $this->apellido = $apellido;
             $this->pais = $pais;
             $this->direccion = $direccion;
             $this->correo = $correo;
             $this->clave = $clave;
-            $this->confirmacionClave=$confirmacionClave;
+           
+
+           // $this->confirmacionClave=$confirmacionClave;
+            
         }
 
         public function getnombre(){
@@ -77,20 +87,20 @@
                 $this->clave = $clave;
         }
 
-        public function getconfirmacionClave(){
+        /*public function getconfirmacionClave(){
             return $this->$confirmacionClave;
         }
         public function setconfirmacionClave($confirmacionClave){
             $this->$confirmacionClave;
         }
-
+*/
         public function __toString(){
            return json_encode($this->getData());
         }
 
-        public function createUser($rutaArchivo,$id){
+        public function createUser($db,$id){
 
-            $encontrado = false;
+            /*$encontrado = false;
             $contenido = file_get_contents($rutaArchivo);
             $usuarios = json_decode($contenido,true);
             for ($i=0; $i < sizeof($usuarios); $i++) { 
@@ -116,23 +126,37 @@
             echo json_encode($this->getData());
             }
             
-            header("Location: Registrar-cliente.html");
+            header("Location: Registrar-cliente.html");*/
+        $cliente = $this->getData();
+        
+        $result=$db->getReference('clientes')
+        ->push($cliente);
+//agregar alert de agregado satisfactoriamente
+
+
+
+       // if($result->getKey() != null)
+        //echo '<script>alert("Cliente agregado satisfactoriamente");</script>';
         }
+
+        
 
 
         //Sirve Para Llamar un atributo o metodo de una clase sin instanciar
-        public static function getUsers($rutaArchivo){
-            $contenido = file_get_contents($rutaArchivo);
-            echo $contenido;
+        public static function getUsers($db){
+                $result = $db->getReference('clientes')
+                ->getSnapshot()
+                ->getValue();
+
+            return json_encode($result);
         }
 
-        public static function getUser($rutaArchivo,$id){
-            $contenido = file_get_contents($rutaArchivo);
-            $usuarios = json_decode($contenido, true);
-            if($id>(sizeof($usuarios)-1))
-                echo '{"mensaje":"El Codigo no Existe"}';
-            else
-                echo json_encode($usuarios[$id]);
+        public static function getUser($db,$id){
+            $result = $db->getReference('clientes')
+                ->getChild($id)
+                ->getValue();
+   
+            return json_encode($result);
         }
 
         public static function deleteUser($rutaArchivo,$id){
@@ -145,28 +169,83 @@
              echo '{"Mensaje":"Se Elimino el Elemento"'.$id.'}';
         }
 
-        public function updateUser($rutaArchivo,$id){
-             $contenido = file_get_contents($rutaArchivo);
-             $usuarios = json_decode($contenido,true);
-             $usuarios[$id] = $this->getData();
-     
-             $archivo = fopen($rutaArchivo, 'w');
-             fwrite($archivo,json_encode($usuarios));
-             fclose($archivo);
-             echo json_encode($this->getData());
+        public function updateUser($db,$id){
+             $result=$db->getReference('clientes')
+             ->getChild($id)
+             ->set($this->getData());
+
         }
 
         //Retorna un arreglo asociativo del a clase
         public function getData(){
+            $result['foto']=$this->foto;
              $result['nombre'] = $this->nombre;
              $result['apellido'] = $this->apellido;
              $result['pais'] = $this->pais;
              $result['direccion'] = $this->direccion;
              $result['correo'] = $this->correo;
-             $result['clave'] = $this->clave;
-             $result['confirmacionClave'] = $this->confirmacionClave;
+             $result['clave'] = password_hash($this->clave,PASSWORD_DEFAULT);
+
+            // $result['confirmacionClave'] = $this->confirmacionClave;
              return $result;
         }
+
+        public static function login($user,$password,$db){
+            
+           // echo '{"mensaje":"Informacion:'.$user.','.$password.'"}';
+                $result = $db->getReference('clientes')
+                ->orderByChild('correo')
+                ->equalTo($user)
+                ->getSnapshot()
+                ->getValue();
+
+                $key = array_key_first($result);
+                $valido = password_verify($password, $result[$key]['clave']);
+                // echo '{"valido":"'.$valido.'"}';
+                
+//cuando tenga señal ir al minuto 36:34 del login parte 1
+            $respuesta["valido"]=$valido==1?true:false;
+            if ($respuesta["valido"]){
+            //header('Location:/proyecto1/promociones.php');
+            $respuesta["clave"]=$key;
+            $respuesta["correo"]=$result[$key]["correo"];
+            $respuesta["token"]=bin2hex(openssl_random_pseudo_bytes(16));
+            setcookie('clave',$respuesta["clave"],time()+(86400*30),"/");
+            setcookie('correo',$respuesta["correo"],time()+(86400*30),"/");
+            setcookie('token',$respuesta["token"],time()+(86400*30),"/");
+        
+            $db->getReference('clientes/'.$key.'/token')
+            ->set($respuesta["token"]);
+            
+            //header('Location:/proyecto1/promociones.php');
+            //PROBAR-----------------------------------------------
+            //enviar $result[key]
+            ///proyecto1/promociones.php
+            //header('Location:class-sucursal.php');
+            echo json_encode($respuesta);
+           // ?infor=$key
+//return $key;
+            }
+            else 
+            echo json_encode($respuesta);
+        }
+
+        public static function verificarAutenticacion($db){
+            if(!isset($_COOKIE['key']))
+            return false;
+            $result=$db->getReference('clientes')
+            ->getChild($_COOKIE['key'])
+            ->getValue();
+
+            if($result["token"]==$_COOKIE["token"])
+                return true;
+
+            else 
+                return false;
+        }
+
+
+         
     }
 
 

@@ -1,52 +1,52 @@
 <?php 
 
     class Empresa{
+        private $urlBanner;
+        private $urlLogotipo;
         private $id;
+        private $pais;
         private $direccion;
         private $latitud;
         private $longitud;
-        private $urlBanner;
-        private $urlLogotipo;
         private $facebook;
         private $whatsapp;
         private $twitter;
         private $instagram;
         private $redes;
         private $correo;
-        private $clave;
-        private $claveConfirmacion;        
+        private $clave;      
  
 
         public function __construct(
+            $urlBanner,
+            $urlLogotipo,
             $id,
+            $pais,
             $direccion,
             $latitud,
             $longitud,
-            $urlBanner,
-            $urlLogotipo,
             $facebook,
             $whatsapp,
             $twitter,
             $instagram,
             $redes,
             $correo,
-            $clave,
-            $claveConfirmacion,            
+            $clave        
         ){
+            $this->urlBanner = $urlBanner;
+            $this->urlLogotipo = $urlLogotipo;
             $this->id = $id;
+            $this->pais=$pais;
             $this->direccion = $direccion;
             $this->latitud = $latitud;
             $this->longitud = $longitud;
-            $this->urlBanner = $urlBanner;
-            $this->urlLogotipo = $urlLogotipo;
             $this->facebook=$facebook;
             $this->whatsapp=$whatsapp;
             $this->twitter=$twitter;
             $this->instagram=$instagram;
             $this->redes=$redes;
             $this->correo=$correo;
-            $this->clave=$clave;
-            $this->claveConfirmacion=$claveConfirmacion;            
+            $this->clave=$clave;          
         }
 
         public function getid(){
@@ -151,20 +151,13 @@
                 $this->clave = $clave;
         }
 
-        public function getclaveConfirmacion(){
-            return $this->$claveConfirmacion;
-        }
-        public function setclaveConfirmacion($claveConfirmacion){
-            $this->$claveConfirmacion;
-        }
-
         public function __toString(){
            return json_encode($this->getData());
         }
 
-        public function createEmpresa($rutaArchivo,$id){
+        public function createEmpresa($db,$id){
 
-            $encontrado = false;
+           /* $encontrado = false;
             $contenido = file_get_contents($rutaArchivo);
             $empresa = json_decode($contenido,true);
             for ($i=0; $i < sizeof($empresa); $i++) { 
@@ -172,7 +165,7 @@
                 echo '<script>alert("ya existe)</script>';
                 sleep(2);
                 $encontrado=true;
-            header("Location: Registrar-Empresa.html");
+            header("Location: RegistrarEmpresa.html");
                 return;
             }
 
@@ -182,7 +175,7 @@
             if ($encontrado==false) {
 
                $empresa[] = $this->getData();
-                echo '<script>alert("Cliente agregado satisfactoriamente");</script>';
+                echo '<script>alert("Empresa agregada satisfactoriamente");</script>';
             $archivo = fopen($rutaArchivo,'w');
             fwrite($archivo, json_encode($empresa));
 
@@ -190,25 +183,38 @@
             echo json_encode($this->getData());
             }
             
-            header("Location: Registrar-cliente.html");
+            header("Location: RegistrarEmpresa.html");
+        }*/
+        $empresa = $this->getData();
+        
+        $result = $db->getReference('Empresas')
+        ->push($empresa);
+
+        if ($result->getKey() != null)
+               // echo "<script>alert('hgh')</script>";
+                return '{"mensaje":"Registro almacenado","key":"'.$result->getKey().'"}';
+            else 
+                return '{"mensaje":"Error al guardar el registro"}';
         }
+
 
 
         //Sirve Para Llamar un atributo o metodo de una clase sin instanciar
-        public static function getUsers($rutaArchivo){
-            $contenido = file_get_contents($rutaArchivo);
-            echo $contenido;
+        public static function getEmpresas($db){
+                $result = $db->getReference('Empresas')
+                ->getSnapshot()
+                ->getValue();
+
+            return json_encode($result);
         }
 
-        public static function getUser($rutaArchivo,$id){
-            $contenido = file_get_contents($rutaArchivo);
-            $empresa = json_decode($contenido, true);
-            if($id>(sizeof($empresa)-1))
-                echo '{"mensaje":"El Codigo no Existe"}';
-            else
-                echo json_encode($empresa[$id]);
+        public static function getEmpresa($db,$id){
+            $result = $db->getReference('Empresas')
+                ->getChild($id)
+                ->getValue();
+   
+            return json_encode($result);
         }
-
         public static function deleteEmpresa($rutaArchivo,$id){
              $contenido = file_get_contents($rutaArchivo);
              $empresa = json_decode($contenido, true);
@@ -219,34 +225,59 @@
              echo '{"Mensaje":"Se Elimino el Elemento"'.$id.'}';
         }
 
-        public function updateEmpresa($rutaArchivo,$id){
-             $contenido = file_get_contents($rutaArchivo);
-             $empresa = json_decode($contenido,true);
-             $empresa[$id] = $this->getData();
-     
-             $archivo = fopen($rutaArchivo, 'w');
-             fwrite($archivo,json_encode($empresa));
-             fclose($archivo);
-             echo json_encode($this->getData());
+        public function updateEmpresa($db,$id){
+               $result= $db->getReference('Empresas')
+             ->getChild($id)
+             ->set($this->getData());
         }
 
         //Retorna un arreglo asociativo del a clase
         public function getData(){
+             $result['urlBanner'] = $this->urlBanner;
+             $result['urlLogotipo'] = $this->urlLogotipo;
              $result['id'] = $this->id;
+             $result['pais'] = $this->pais;
              $result['direccion'] = $this->direccion;
              $result['latitud'] = $this->latitud;
              $result['longitud'] = $this->longitud;
-             $result['urlBanner'] = $this->urlBanner;
-             $result['urlLogotipo'] = $this->urlLogotipo;
              $result['facebook'] = $this->facebook;
              $result['whatsapp'] = $this->whatsapp;
              $result['twitter'] = $this->twitter;
              $result['instagram'] = $this->instagram;
-             $result['redes'] = $this->redes;
+             $result['RedesSociales'] = $this->redes;
              $result['correo'] = $this->correo;
-             $result['clave'] = $this->clave;
-             $result['claveConfirmacion'] = $this->claveConfirmacion;
+             $result['clave'] = password_hash($this->clave,PASSWORD_DEFAULT);
              return $result;
+        }
+
+        public static function login($user,$password,$db){
+            //echo $user.','.$password;
+                $result = $db->getReference('Empresas')
+                ->orderByChild('id')
+                ->equalTo($user)
+                ->getSnapshot()
+                ->getValue();
+
+                $key = array_key_first($result);
+                $valido = password_verify($password, $result[$key]['clave']);
+//cuando tenga señal ir al minuto 36:34 del login parte 1
+            $respuesta["valido"]=$valido==1?true:false;
+            if ($respuesta["valido"]){
+                    
+            $respuesta["clave"]=$key;
+            $respuesta["id"]=$result[$key]["id"];
+            $respuesta["token"]=bin2hex(openssl_random_pseudo_bytes(16));
+            setcookie('clave',$respuesta["clave"],time()+(86400*30),"/");
+            setcookie('id',$respuesta["id"],time()+(86400*30),"/");
+            setcookie('token',$respuesta["token"],time()+(86400*30),"/");
+
+                $db->getReference('clientes/'.$key.'/token')
+            ->set($respuesta["token"]);
+
+            }
+            echo json_encode($respuesta);
+            
+            
         }
     }
 
