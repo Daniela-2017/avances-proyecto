@@ -1,5 +1,4 @@
 <html>
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,6 +20,8 @@
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
       <form class="form-inline my-2 my-lg-0 ml-auto">
+        		<a class='btn btn-primary' href='index.php' style='margin-right: 3px;' type='button' >Volver al menu principal</a>
+
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formulario-actualizar-admin">
           Editar Perfil
         </button>
@@ -32,12 +33,56 @@
     <h1 align="center">Administrador</h1>
     <form>
       <div>
+        <a type="button" data-toggle="modal" data-target="#formulario-ver-empresas">
+        
         <button type="button" style="margin: 8px;background-color: blue;color: antiquewhite;font-size: larger;">Ver Empresas Registradas</button>
-
+</a>
       </div>
     </form>
   </div>
+			<!--__________Ver empresas-->
+	<div id="formulario-ver-empresas" class="modal" style="color:aliceblue" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document" style="background-color: black">
+	    <div class="modal-content modals" style="width:958px">
+	      <div class="modal-header">
+	        <h5 class="modal-title">Ver Empresas Existentes</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+			<?php
+      include_once('clases/class-admin.php');
+    	include_once('clases/class-database.php');
+    	include_once('clases/class-empresa.php');
+      
+    //$rutaArchivo = 'empresas.json';
 
+  $database = new Database();
+  $key = $_GET['id'];
+				 $empresas = Empresa::getEmpresas($database->getDB());
+				$jsonEmpresas = json_decode($empresas,true);
+				foreach($jsonEmpresas as $indice=>$valor){
+					 $nombre = $jsonEmpresas[$indice]['id'];
+					 $direccion=$jsonEmpresas[$indice]['direccion'];
+					 $pais = $jsonEmpresas[$indice]['pais'];
+				echo "Nombre: $nombre, 
+						  	Pais: $pais, 
+								Direccion: $direccion<br><br>"
+						 ;
+
+				}
+			?>
+
+			</div>
+			      <div class="modal-footer">
+
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+			
+	      </div>
+	    </div>
+	  </div>
+	</div>
   <!--navbar para actualizar datos de administrador-->
 
   <div class="modal fade" id="formulario-actualizar-admin" style="color: aliceblue" ; tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -51,12 +96,7 @@
           </button>
         </div>
         <?php
-      include_once('clases/class-admin.php');
-    	include_once('clases/class-database.php');
-    //$rutaArchivo = 'empresas.json';
 
-  $database = new Database();
-  $key = $_GET['id'];
     $infor = Administrador::getAdmin($database->getDB(),$key);
 	$json=json_decode($infor,true);
 

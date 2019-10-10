@@ -14,6 +14,7 @@
 </head>
 
 <body>
+  <a class='btn btn-primary' href='index.php' style='margin-right: 3px;' type='button' >Volver al menu principal</a>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" style="background-color:#255eb3 !important;">
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"

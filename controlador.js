@@ -8,22 +8,8 @@ var productoValido=false;
 var sucursalValida=false;
 var adminValido=false;
 //posteriormente inluir los datos por defeto del administrador
-
+var compraProductos = [];
 //arreglos pra almacenamiento de los registros y compras
-var arrayProductos=[
-
-];
-
-var arrayPromociones=[
-
-];
-var arraySucursales=[
-
-];
-
-var compraProductos=[
-
-];
 
 var CamposLogin = [
    {campo:'clave', valido:false},
@@ -111,16 +97,12 @@ for(let i=0; i<tiposAcceso.length; i++){
 
 }
 
-function validar(formularioEmpresa){//llamada desde el boton de registro de empresa
+//llamada desde el boton de registro de empresa
+function validar(formularioEmpresa){
     RegistrarEmpresa();
     ValidarClave();
     validarCorreo('correo',formularioEmpresa);
-    //if (empresaValida==true) {
-               //Peticion AJAX para enviar la información al servidor
 
-    //return true}
-   //else 
-    //return false
 }
 
 function validarRegistroCliente(formulario){
@@ -199,29 +181,6 @@ $.ajax({
     });
             //let parametros = $('#formularioAgregarCliente').serialize();
                 //console.log('Información a enviar al servidor: ' + parametros );
-    
-    
-/*$.ajax({
-    
-        url:'procesarCliente.php',
-        method:'POST',
-        data:parametros,//La informacion que se envia al servidor, URLEncoded
-        dataType:'json',
-        success:function(res){
-            console.log(res);
-           // anexarRegistroTabla(persona,res.key);
-        },
-        error:function(error){
-            console.error(error);
-           // $("#frmNotification").show();
-        }
-    
-    });
-    */
-  
-    
-    //console.log('yes')
-    //return true;
 
     return true;
     }
@@ -274,7 +233,7 @@ function registrarlogin(){
                 }
             else if (res.id){
                 id=res.clave;
-                window.location.href="empresa.php?id="+id+""
+                window.location.href="dashboard.php?id="+id+""
             }
             else if (res.correoAdmin){
                 id=res.clave;
@@ -290,60 +249,6 @@ function registrarlogin(){
         }
     
     });
-
-  //  registros.push(login);
-    //    console.log(registros);
-        //`${}`
-
-/*if(tipo=='Empresa'){
-    for(let i=0; i<localStorage.length;i++){
-        let registro = JSON.parse(localStorage.getItem(localStorage.key(i)));
-        var empresaEncontrada= false;
-        
-            if(registro.nombreEmpresa){
-                if(usuario==registro.nombreEmpresa && clave==registro.ClaveEmpresa){
-                    //seccionEmpresa(registro);
-                    empresaEncontrada=true;
-                    location.href="dashboard.html";
-                    
-                    
-                }
-
-            }
-        }
-    if(empresaEncontrada==false) alert('Usuario o clave incorrecta');
-    }
-
-    //cliente
-    else if(tipo=='Usuario'){
-    for(let i=0; i<localStorage.length;i++){
-        let registro = JSON.parse(localStorage.getItem(localStorage.key(i)));
-        var clienteEncontrado=false;
-        
-            if(registro.nombreCliente){
-                if(usuario==registro.correoCliente && clave==registro.claveCliente){
-                    clienteEncontrado=true;
-                   // location.href="empresa.html";
-                    location.href="promociones.html";
-                   return
-                    
-                    
-                }
-
-            }
-        }
-    if(clienteEncontrado==false) alert('Usuario o clave incorrecta');
-    }
-//administrador
-    else {
-        if(clave==claveAdmin && usuario==usuarioAdmin){
-           location.href="admin.html"; 
-        } 
-        else{
-
-        }
-        alert('Usuario o clave incorrecta')
-    }*/
 
 }
 
@@ -466,10 +371,6 @@ $.ajax({
 
     });
 
-   // if (productoValido==true) {
-    //return true}
-   //else 
-   // return false
 }
 
 
@@ -780,8 +681,15 @@ ValidarClaveNueva('ClaveAdmin-nueva','ConfirmacionAdmin-nueva',1,camposNuevoAdmi
    adminValido=true;
 
 var datosForm = dataForm_ActualizarAdmin(formularioAdmin);
-      //console.log(datosForm.get("correo"));
-        //console.log(datosForm.get("foto"));
+      /*console.log(datosForm.get("primerNombreAdmin"));
+        console.log(datosForm.get("keyAdmin"));
+        console.log(datosForm.get("primeroApellidoAdmin"));
+        console.log(datosForm.get("pais"));
+        console.log(datosForm.get("direccionAdmin"));
+        console.log(datosForm.get("correo"));
+        console.log(datosForm.get("clave"));*/
+        
+        
 $.ajax({
     cache:false,
     contentType: false,
@@ -1017,10 +925,5 @@ function initialize2() {
         }
     google.maps.event.addDomListener(window, 'load', initialize); //creo debo agregarlo a una funcion
    google.maps.event.addDomListener(window, 'load', initialize2);
-
-
-function agregarAlPerfil(){
-//document.getElementById('perfil').innerHTML+=``;
-    }
 
 

@@ -1,6 +1,4 @@
 <?php
- //corregir
- 	//echo '<script>alert("jkvfk")</script>';
 
 
     //header('Content-Type: application/json'); //Tipod MIME
@@ -9,12 +7,11 @@
 
   $database = new Database();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+if ($_POST!=null){
       $nuevoAdmin= new Administrador(
             $_POST['primerNombreAdmin'],
             $_POST['primeroApellidoAdmin'],
             $_POST['pais'],
-            $_POST['direccion'],
             $_POST['direccionAdmin'],
             $_POST['correo'],
             $_POST['clave']);
@@ -25,7 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     
   exit();
 
-        //header("Location: Registrar-cliente.html");
 }
 
 ?>

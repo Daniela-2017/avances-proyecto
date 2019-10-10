@@ -1,6 +1,7 @@
 
  <?php
 
+//no me funciona :(
     if ($_POST!=null){
     	//obtengo los datos del archivo usuarios.php
 

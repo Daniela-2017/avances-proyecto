@@ -9,11 +9,9 @@
      if($_FILES){
         $pathDestino="./fotosProductos";
         mkdir($pathDestino,0700);
-        
-        //foreach($_FILES as $file){
-        //  $imagen=$_FILES['banner'][0]['tmp_name'];
+ 
           if($_FILES["error"]==UPLOAD_ERR_OK){
-           // print_r ($imagen);
+
             $pathsProductos[]='/'.'productos'."/".$_FILES["urlImagen"]["name"];
             move_uploaded_file($_FILES["urlImagen"]["tmp_name"],
             $pathDestino.'/'.'productos'.'/'.$_FILES["urlImagen"]["name"]);

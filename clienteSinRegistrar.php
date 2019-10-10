@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>Promociones</title>
 
   <link rel="stylesheet" type="text/css" href="style.css">
   <link rel="stylesheet" type="text/css" href="master.css">
@@ -13,6 +13,7 @@
 </head>
 
 <body>
+  <a class='btn btn-primary' href='index.php' style='margin-right: 3px;' type='button' >Volver al menu principal</a>
   <section class="mostrarPerfil" id="perfil">
     <div class="row divProductos">
       <h5 class="categoria col-xl-12 col-md-12 col-sm-12">Promociones</h5>

@@ -29,10 +29,6 @@
         //}
       }
 
-   // $_PUT = array();
-    //if($_SERVER['REQUEST_METHOD']=='PUT'){
-     // parse_str(file_get_contents("php://input"),$_PUT);
-
    
 
       $nuevaEmpresa= new Empresa(
@@ -64,9 +60,7 @@
  if($_FILES){
         $pathDestino="./fotosEmpresa";
         mkdir($pathDestino,0700);
-        
-        //foreach($_FILES as $file){
-        //  $imagen=$_FILES['banner'][0]['tmp_name'];
+
           if($_FILES["error"]==UPLOAD_ERR_OK){
            // print_r ($imagen);
             $pathsBanners[]='/'.'banners'."/".$_FILES["banner"]["name"];
